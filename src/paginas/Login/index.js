@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
@@ -85,7 +85,6 @@ export default function Login() {
                         control={<Checkbox value="remember" color="primary" />}
                         label="Manter conectado"
                     />
-                    <ThemeProvider>
                         <Button className={classes.submit}
                             type="submit"
                             fullWidth
@@ -94,16 +93,10 @@ export default function Login() {
                         >
                         Login
                         </Button>
-                    </ThemeProvider>
                     <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Esqueceu a senha?
-              </Link>
-                        </Grid>
                         <Grid item>
-                            <Link href="/usuario/cad" variant="body2">
-                                {"Não tem conta? Cadastre-se"}
+                            <Link href="" variant="body2">
+                                {"Esqueceu a senha?"}
                             </Link>
                         </Grid>
                     </Grid>
