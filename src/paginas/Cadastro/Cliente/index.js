@@ -104,27 +104,6 @@ export default function CadastroUsuario() {
                 <Header title="Cadastrar Cliente" />
                 <form onSubmit={handleCadastro}>
                     <Grid container spacing={2}>
-                        <Grid item>
-                            {/* <Grid item xs={12} sm={3} display="flex" justifyContent="flex-start"> */}
-                            <Card className={classes.margin} variant="outlined">
-                                <CardContent>
-                                    {/* <img src={ImgNoProfile} alt="Imagem de Perfil" width="120px" height="120px" /> */}
-                                </CardContent>
-                                <Box display="flex" justifyContent="center">
-                                    <CardActions >
-                                        <input
-                                            accept="image/*"
-                                            className={classes.input}
-                                            id="UploadImage"
-                                            type="input"
-                                            size="small"
-                                            value={IMAGEM}
-                                            onChange={e => setImagem(e.target.value)}
-                                        />
-                                    </CardActions>
-                                </Box>
-                            </Card>
-                        </Grid>
                         <Grid item xs={12} sm container spacing={1}>
                             <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth className={classes.margin}>
