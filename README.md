@@ -40,3 +40,4 @@ Comandos para compilar e iniciar/rodar o projeto, use (na raiz do projeto):
 npm run dev
 ```
 
+Na declaração das variáveis de ambiente é necessário utilizar o prefixo 'REACT_APP' na nomenclatura ficando por exemplo (REACT_APP_BASE_URL=).

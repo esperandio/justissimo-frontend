@@ -33,7 +33,7 @@ export default function Login() {
     const classes = useStyles();
 
     const [email, setEmail] = useState('');
-    const [password, setSenha] = useState('');
+    const [senha, setSenha] = useState('');
     const [redirect, setState] = useState(false);
     
     async function handleLogin(e) {
@@ -42,28 +42,24 @@ export default function Login() {
         
         const dados = {
             email,
-            password
+            senha
         };
         
         try {
             
             // Verifica se todos os campos foram preenchidos
-            if (email !== "" && password !== "") {
-                
+            if (email !== "" && senha !== "") {
                 // Envia ao backend/api os dados inseridos no login
-                const login = api.post('login', dados);
+                const login = await api.post('login', dados);
                 // Pega o token
-                const login_token = (await login).data.token;
+                const login_token = (login).data.token;
                 // Seta o token na sessionStorage
                 sessionStorage.setItem('token', login_token);
     
                 // Verifica o 'status code' recebido
-                switch ((await login).status) {
+                switch ((login).status) {
                     case 200:
                         setState({ redirect: true });
-                        break;
-                    case 401:
-                        alert('😐 Usuário não cadastrado');
                         break;
                     default:
                         alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
@@ -73,9 +69,14 @@ export default function Login() {
             } else {
                 alert('Preencha todos os campos!')
             }
-
         } catch (error) {
-            alert("Login Inválido! " + error.message);
+            alert("Login Inválido! " + error.message); 
+            if (error.response.status == 401) {
+                alert("Login Inválido! " + error.response.data.message); 
+            }
+            else {
+                alert("Login Inválido! " + error.message);
+            } 
         }
     }
 
@@ -112,12 +113,12 @@ export default function Login() {
                         margin="normal"
                         required
                         fullWidth
-                        name="password"
+                        name="senha"
                         label="Senha"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={password}
+                        type="senha"
+                        id="senha"
+                        autoComplete="current-senha"
+                        value={senha}
                         onChange={e => setSenha(e.target.value)}
                     />
 

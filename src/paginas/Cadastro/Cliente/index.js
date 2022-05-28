@@ -185,9 +185,9 @@ export default function CadastroUsuario() {
                                         fullWidth
                                         name="senha"
                                         label="Senha"
-                                        type="password"
+                                        type="senha"
                                         id="SENHA"
-                                        autoComplete="current-password"
+                                        autoComplete="current-senha"
                                         value={SENHA}
                                         onChange={e => setSenha(e.target.value)}
                                     />
