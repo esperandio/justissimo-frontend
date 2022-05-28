@@ -4,7 +4,6 @@ import axios from  'axios';
 /**
  * criação de componente para informar o axios onde está o nosso backend (api)
  */
- console.log(process.env.REACT_APP_BASE_URL);
 const api = axios.create ({
     baseURL: process.env.REACT_APP_BASE_URL
 });
