@@ -63,26 +63,33 @@ export default function RedefinirSenha_NovaSenha() {
                 // Verifica se a senha e confirmação de senha são diferentes
                 if (nova_senha !== confirmacao_nova_senha) {
                     alert(`A senha e confirmação de senha não conferem!`);
-                } else {
-                    
-                    // Envia ao backend/api os dados inseridos no login
-                    const senha = await api.post('login/recovery/newpassword', dados);
-                    
-                    // Verifica o 'status code' recebido
-                    switch ((senha).status) {
-                        case 200:
-                            alert(`Senha redefinida com sucesso!`);
-                            
-                            setState({ redirect: true });
-                            
-                            ClearSessionStorage();
-                            
-                            break;
-                        default:
-                            alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
-    
-                            break;
-                    }
+                    return;
+                }
+                
+                const passwordReg = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/
+
+                if (!passwordReg.test(dados.nova_senha)) {
+                    alert('A senha não está de acordo os requisitos');
+                    return;
+                }
+                
+                // Envia ao backend/api os dados inseridos no login
+                const senha = await api.post('login/recovery/newpassword', dados);
+                
+                // Verifica o 'status code' recebido
+                switch ((senha).status) {
+                    case 200:
+                        alert(`Senha redefinida com sucesso!`);
+                        
+                        setState({ redirect: true });
+                        
+                        ClearSessionStorage();
+                        
+                        break;
+                    default:
+                        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+
+                        break;
                 }
 
 
@@ -121,6 +128,12 @@ export default function RedefinirSenha_NovaSenha() {
                         value={nova_senha}
                         onChange={e => setNovaSenha(e.target.value)}
                     />
+
+                    {/* Requisitos */}
+                    <span>Mínimo 8 caracteres</span> <br/>
+                    <span>Caracteres maiúsculos</span> <br/>
+                    <span>Caracteres mínusculos</span> <br/>
+                    <span>Símbolos ou números</span> <br/><br/>
 
                     {/* Input 'Código de recuperação' */}
                     <TextField
