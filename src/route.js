@@ -6,6 +6,9 @@ import CadCliente from './paginas/Cadastro/Cliente'
 //import ListarUsuario from './paginas/Usuario/ListarUsuario'
 import Login from './paginas/Login';
 import Home from './paginas/Home';
+import RedefinirSenha_Email from './paginas/EsqueceuSenha/DefinicaoEmail';
+import RedefinirSenha_Codigo from './paginas/EsqueceuSenha/CodigoEnviado';
+import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
 
 function Routes() {
     return (
@@ -18,6 +21,9 @@ function Routes() {
                 {/* <Route path="/usuario/listar" component={ListarUsuario}/> */}
                 <Route path="/login" component={Login}/>
                 <Route path="/home" component={Home}/>
+                <Route path="/redefinirsenha/email" component={RedefinirSenha_Email}/>
+                <Route path="/redefinirsenha/codigo" component={RedefinirSenha_Codigo}/>
+                <Route path="/redefinirsenha/novasenha" component={RedefinirSenha_NovaSenha}/>
             </Switch>
         </BrowserRouter>
     )

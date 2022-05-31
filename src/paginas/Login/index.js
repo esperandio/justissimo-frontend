@@ -109,13 +109,13 @@ export default function Login() {
                     
                     {/* Input 'Senha' */}
                     <TextField
+                        type="password"
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         name="senha"
                         label="Senha"
-                        type="senha"
                         id="senha"
                         autoComplete="current-senha"
                         value={senha}
@@ -142,7 +142,7 @@ export default function Login() {
                     {/* href (link) 'Esqueceu a senha' */}
                     <Grid container>
                         <Grid item>
-                            <Link href="" variant="body2">
+                            <Link href="redefinirsenha/email" variant="body2">
                                 {"Esqueceu a senha?"}
                             </Link>
                         </Grid>
