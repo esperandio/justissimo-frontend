@@ -9,6 +9,7 @@ import Home from './paginas/Home';
 import RedefinirSenha_Email from './paginas/EsqueceuSenha/DefinicaoEmail';
 import RedefinirSenha_Codigo from './paginas/EsqueceuSenha/CodigoEnviado';
 import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
+import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
 
 function Routes() {
     return (
@@ -24,6 +25,7 @@ function Routes() {
                 <Route path="/redefinirsenha/email" component={RedefinirSenha_Email}/>
                 <Route path="/redefinirsenha/codigo" component={RedefinirSenha_Codigo}/>
                 <Route path="/redefinirsenha/novasenha" component={RedefinirSenha_NovaSenha}/>
+                <Route path="/avaliacao/advogado" component={AvaliacaoAdvogado}/>
             </Switch>
         </BrowserRouter>
     )
