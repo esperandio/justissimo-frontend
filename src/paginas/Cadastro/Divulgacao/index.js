@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CadastroDivulgacao() {
     const classes = useStyles();
-    const [NOME, setNome] = useState('');
+    const [DIVULGACAO, setDivulgacao] = useState('');
+    const [AREA, setArea] = useState('');
+    const [DESCRICAO, setDescricao] = useState('');
 
     return (
         <React.Fragment>
@@ -55,8 +59,8 @@ export default function CadastroDivulgacao() {
                                             placeholder="Título da causa"
                                             multiline
                                             variant="outlined"
-                                            value={NOME}
-                                            onChange={e => setNome(e.target.value)}
+                                            value={DIVULGACAO}
+                                            onChange={e => setDivulgacao(e.target.value)}
                                             margin="normal"
                                         />
                                     </FormControl>
@@ -71,8 +75,8 @@ export default function CadastroDivulgacao() {
                                             placeholder="Área de atuação"
                                             multiline
                                             variant="outlined"
-                                            value={NOME}
-                                            onChange={e => setNome(e.target.value)}
+                                            value={AREA}
+                                            onChange={e => setArea(e.target.value)}
                                             margin="normal"
                                         />
                                     </FormControl>
@@ -86,12 +90,26 @@ export default function CadastroDivulgacao() {
                                             label="Descrição"
                                             placeholder="Descreva a sua causa"
                                             multiline
-                                            rows={5}
+                                            minRows={5}
                                             variant="outlined"
-                                            value={NOME}
-                                            onChange={e => setNome(e.target.value)}
+                                            value={DESCRICAO}
+                                            onChange={e => setDescricao(e.target.value)}
                                             margin="normal"
                                         />
+                                    </FormControl>
+                                </Grid>
+
+                                <Grid item xs={12} sm={12}>
+                                    <FormControl>
+                                        <Button className={classes.submit}
+                                            variant="contained"
+                                            color="primary"
+                                            type="submit"
+                                            startIcon={<SaveIcon />}
+                                            onClick={() => { console.log("teste") }}
+                                        >
+                                            Cadastrar
+                                        </Button>
                                     </FormControl>
                                 </Grid>
                             </Grid>
