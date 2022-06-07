@@ -9,6 +9,9 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,9 +41,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CadastroDivulgacao() {
     const classes = useStyles();
-    const [DIVULGACAO, setDivulgacao] = useState('');
-    const [AREA, setArea] = useState('');
-    const [DESCRICAO, setDescricao] = useState('');
+    const [titulo, setTitulo] = useState('');
+    const [id_area_atuacao, setAreaAtuacao] = useState('');
+    const [descricao, setDescricao] = useState('');
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        const dados = { titulo, id_area_atuacao, descricao }
+
+        console.log(dados);
+    }
 
     return (
         <React.Fragment>
@@ -59,26 +70,30 @@ export default function CadastroDivulgacao() {
                                             placeholder="Título da causa"
                                             multiline
                                             variant="outlined"
-                                            value={DIVULGACAO}
-                                            onChange={e => setDivulgacao(e.target.value)}
+                                            value={titulo}
+                                            onChange={e => setTitulo(e.target.value)}
                                             margin="normal"
                                         />
                                     </FormControl>
                                 </Grid>
 
                                 <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth className={classes.margin}>
-                                        <TextField
+                                    <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                                        <InputLabel id="Area">Área de atuação</InputLabel>
+                                        <Select
                                             required
-                                            id="Nome"
-                                            label="Área de atuação"
-                                            placeholder="Área de atuação"
+                                            labelId="Área de atuação"
+                                            id="AreaSelect"
                                             multiline
                                             variant="outlined"
-                                            value={AREA}
-                                            onChange={e => setArea(e.target.value)}
-                                            margin="normal"
-                                        />
+                                            value={id_area_atuacao}
+                                            onChange={e => setAreaAtuacao(e.target.value)}
+                                            label="Tipo de Usuario"
+                                        >
+                                            <MenuItem value={1}>Administrador</MenuItem>
+                                            <MenuItem value={2}>Agente</MenuItem>
+                                            <MenuItem value={3}>Usuário</MenuItem>
+                                        </Select>
                                     </FormControl>
                                 </Grid>
 
@@ -92,7 +107,7 @@ export default function CadastroDivulgacao() {
                                             multiline
                                             minRows={5}
                                             variant="outlined"
-                                            value={DESCRICAO}
+                                            value={descricao}
                                             onChange={e => setDescricao(e.target.value)}
                                             margin="normal"
                                         />
@@ -106,7 +121,7 @@ export default function CadastroDivulgacao() {
                                             color="primary"
                                             type="submit"
                                             startIcon={<SaveIcon />}
-                                            onClick={() => { console.log("teste") }}
+                                            onClick={ handleSubmit }
                                         >
                                             Cadastrar
                                         </Button>
