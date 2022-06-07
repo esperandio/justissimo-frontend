@@ -13,6 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import api from '../../../service/api';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,6 +46,7 @@ export default function CadastroDivulgacao() {
     const [titulo, setTitulo] = useState('');
     const [id_area_atuacao, setAreaAtuacao] = useState('');
     const [descricao, setDescricao] = useState('');
+    const [redirect, setState] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -55,6 +57,8 @@ export default function CadastroDivulgacao() {
             await api.post('clients/1/divulgations', dados);
 
             alert(`Divulgacação cadastrada com sucesso!`);
+
+            setState({ redirect: true });
         } catch (error) {
             const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -65,6 +69,10 @@ export default function CadastroDivulgacao() {
 
             alert(mensagem_retorno_api);
         }
+    }
+
+    if (redirect) {
+        return <Redirect to='../home' />;
     }
 
     return (
