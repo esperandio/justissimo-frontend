@@ -12,6 +12,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import api from '../../../service/api';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,9 +49,22 @@ export default function CadastroDivulgacao() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const dados = { titulo, id_area_atuacao, descricao }
+        const dados = { titulo, id_area_atuacao, descricao };
 
-        console.log(dados);
+        try {
+            await api.post('clients/1/divulgations', dados);
+
+            alert(`Divulgacação cadastrada com sucesso!`);
+        } catch (error) {
+            const mensagem_retorno_api = error?.response?.data?.message;
+
+            if (mensagem_retorno_api == null) {
+                alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+                return ;
+            }
+
+            alert(mensagem_retorno_api);
+        }
     }
 
     return (
@@ -90,9 +104,7 @@ export default function CadastroDivulgacao() {
                                             onChange={e => setAreaAtuacao(e.target.value)}
                                             label="Tipo de Usuario"
                                         >
-                                            <MenuItem value={1}>Administrador</MenuItem>
-                                            <MenuItem value={2}>Agente</MenuItem>
-                                            <MenuItem value={3}>Usuário</MenuItem>
+                                            <MenuItem value={1}>Trabalhista</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Grid>
