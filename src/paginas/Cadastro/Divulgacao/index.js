@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Header from '../../Main/Header';
@@ -47,6 +47,13 @@ export default function CadastroDivulgacao() {
     const [id_area_atuacao, setAreaAtuacao] = useState('');
     const [descricao, setDescricao] = useState('');
     const [redirect, setState] = useState(false);
+
+    const [areas, setAreas] = useState([]);
+
+    useEffect(async () => {
+        const resultado = await api.get('areas');
+        setAreas(resultado.data);
+    },[])
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -112,7 +119,9 @@ export default function CadastroDivulgacao() {
                                             onChange={e => setAreaAtuacao(e.target.value)}
                                             label="Tipo de Usuario"
                                         >
-                                            <MenuItem value={1}>Trabalhista</MenuItem>
+                                            {areas.map((area)=>{
+                                                return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
+                                            })}
                                         </Select>
                                     </FormControl>
                                 </Grid>
