@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -28,6 +28,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RedefinirSenha_Codigo() {
 
+    // Carrega inicialmente
+    useEffect(() => {
+        // Validação de permissão para acessar a tela de avaliação
+        if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
+            console.log('É necessário estar logado no sistema, para acessar a tela de avaliação');
+            alert('Você não tem permissão para acessar essa tela');
+            setStatePermission({ redirectPermission: true });
+        }
+    });
+    
+
     const classes = useStyles();
 
     // const id_cliente = sessionStorage.getItem('id_cliente');
@@ -45,6 +56,7 @@ export default function RedefinirSenha_Codigo() {
     const [nota, setNota] = useState('');
     const [descricao, setDescricao] = useState('');
     const [redirect, setState] = useState(false);
+    const [redirectPermission, setStatePermission] = useState(false);
 
     /**
      * Handle
@@ -79,7 +91,7 @@ export default function RedefinirSenha_Codigo() {
         try {
             if (/*dados.id_cliente !== "" &&*/ dados.nota !== "") {
                 alert('Como não existe as telas de consulta, não há como puxar os ids do cliente ou do advogado, no momento, o mesmo deve ser setado brasalmente');
-                dados.id_cliente = Number(prompt("Digite o id, do cliente:", "1"));
+                dados.id_cliente = Number(sessionStorage.getItem('id_cliente'));
                 id_advogado = Number(prompt("Digite o id do advogado:", "1"));
 
                 // Converte os dados necessários para o tipo Number
@@ -93,7 +105,7 @@ export default function RedefinirSenha_Codigo() {
                 switch ((lawyer_review).status) {
                     case 200:
                         alert('Obrigado! Advogado avaliado com sucesso!');
-                        setState({ redirect: true });
+                        // setState({ redirect: true });
                         break;
                     default:
                         alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
@@ -116,7 +128,11 @@ export default function RedefinirSenha_Codigo() {
         }
     }
 
-    // Se o 'login' for aceito, redireciona para a tela da criação da nova senha
+    if (redirectPermission) {
+        return <Redirect to='../home'/>;
+    }
+
+    // Se a avaliação for aceita, redireciona para a tela de advogado
     // if (redirect) {
     //     return <Redirect to='novasenha' />;
     // }
