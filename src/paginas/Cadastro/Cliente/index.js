@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import api from '../../Services/api';
+import api from '../../../service/api';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -19,6 +19,7 @@ import Header from '../../Main/Header';
 import Footer from '../../Main/Footer';
 //import validator from 'validator';
 import { green } from '@material-ui/core/colors';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,9 +50,8 @@ const useStyles = makeStyles((theme) => ({
 export default function CadastroUsuario() {
 
     const classes = useStyles();
-    const [NOME, setNome] = useState('');
-    const [SOBRENOME, setSobrenome] = useState('');
-    const [EMAIL, setEmail] = useState('');
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
     const [erroEmail, setErroEmail] = useState('')
     const validarEmail = (e) => {
         var EMAIL = e.target.value
@@ -62,41 +62,74 @@ export default function CadastroUsuario() {
         //     setErroEmail('Entre um E-mail válido!')
         // }
     }
-    const [SENHA, setSenha] = useState('');
+    const [senha, setSenha] = useState('');
+    const [dt_nascimento, setNascimento] = useState('');
+    const [cpf, setCPF] = useState('');
+    const [cnpj, setCNPJ] = useState('');
+    const [cep, setCEP] = useState('');
     const [TELEFONE, setTelefone] = useState('');
     const [id_tpouser, setTipo] = useState('');
-    const [AREA, setArea] = useState('');
-    const [LOCAL, setLocal] = useState('');
-    const [IMAGEM, setImagem] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
+    const [redirect, setState] = useState(false);
 
     async function handleCadastro(e) {
         e.preventDefault();
 
         const dados = {
-            NOME,
-            SOBRENOME,
-            EMAIL,
-            SENHA,
-            TELEFONE,
-            id_tpouser,
-            AREA,
-            LOCAL,
-            IMAGEM
+            nome,
+            email,
+            senha,
+            dt_nascimento,
+            cpf,
+            cnpj,
+            cep,
+            cidade,
+            estado
         };
 
         try {
-            // console.log(dados);
-            // const response = await api.post('usuario', dados);
-            // const id = response.data.id;
-            // console.log(response.data);
-            // alert("o id do usuario é " + id);
+            
+            // Verifica se todos os campos foram preenchidos
+            if (nome !== "" &&
+                email !== "" && 
+                senha !== "" &&
+                dt_nascimento !== "" &&
+                cpf !== "" &&
+                cep !== "" &&
+                cidade !== "" &&
+                estado !== "") {
+                    
+                // Envia ao backend/api os dados inseridos no cadastro
+                const clients = await api.post('clients', dados);
+    
+                // Verifica o 'status code' recebido
+                switch ((clients).status) {
+                    case 201:
+                        alert("Cadastro realizado com sucesso!"); 
+                        setState({ redirect: true });
+                        break;
+                }
 
-            // history.push('/');
+            } else {
+                alert('Preencha todos os campos!')
+            }
         } catch (error) {
-            alert("Erro ao cadastrar usuario " + error.message);
+            if (error.response.status == 400) {
+                alert("Cadastro Inválido! " + error.response.data.message); 
+            }
+            else {
+                alert("Cadastro Inválido! " + error.message);
+            } 
         }
+
     }
 
+    // Se o 'login' for aceito, redireciona para a tela de home
+    if (redirect) {
+        return <Redirect to='../login' />;
+    }
+    
     return (
         <React.Fragment>
             <CssBaseline />
@@ -111,40 +144,26 @@ export default function CadastroUsuario() {
                                         required
                                         id="Nome"
                                         label="Nome"
-                                        placeholder="Digite o primeiro nome"
+                                        placeholder="Digite o nome completo"
                                         multiline
                                         variant="outlined"
-                                        value={NOME}
+                                        value={nome}
                                         onChange={e => setNome(e.target.value)}
                                         margin="normal"
                                     />
                                 </FormControl>
                             </Grid>
+                            
                             <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
                                         required
-                                        id="Sobrenome"
-                                        label="Sobrenome"
-                                        placeholder="Digite apenas o Sobrenome"
-                                        multiline
-                                        variant="outlined"
-                                        value={SOBRENOME}
-                                        onChange={e => setSobrenome(e.target.value)}
-                                        margin="normal"
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <TextField
-                                        required
-                                        id="Email"
+                                        id="email"
                                         label="E-mail"
                                         placeholder="meuemail@email.com"
                                         multiline
                                         variant="outlined"
-                                        value={EMAIL}
+                                        value={email}
                                         onBlur={e => { validarEmail(e) }}
                                         onChange={e => setEmail(e.target.value)}
                                         margin="normal"
@@ -165,44 +184,76 @@ export default function CadastroUsuario() {
                                         name="senha"
                                         label="Senha"
                                         type="senha"
-                                        id="SENHA"
+                                        id="senha"
                                         autoComplete="current-senha"
-                                        value={SENHA}
+                                        value={senha}
                                         onChange={e => setSenha(e.target.value)}
                                     />
                                 </FormControl>
                             </Grid>
 
-                            <Grid item xs={12} sm={4}>
-                                <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
-                                    <InputLabel id="Tipo">Tipo de Usuário</InputLabel>
-                                    <Select
-                                        required
-                                        labelId="Tipo"
-                                        id="TipoUsuario"
-                                        multiline
-                                        variant="outlined"
-                                        value={id_tpouser}
-                                        onChange={e => setTipo(e.target.value)}
-                                        label="Tipo de Usuario"
-                                        margin="normal"
-                                    >
-                                        <MenuItem value={1}>Administrador</MenuItem>
-                                        <MenuItem value={2}>Agente</MenuItem>
-                                        <MenuItem value={3}>Usuário</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
-                                        id="Telefone"
-                                        label="Telefone"
-                                        placeholder="+55 00 999999999"
+                                        required
+                                        id="Data de Nascimento"
+                                        label="Data de Nascimento"
+                                        placeholder="Coloca Data de Nascimento"
                                         multiline
                                         variant="outlined"
-                                        value={TELEFONE}
-                                        onChange={e => setTelefone(e.target.value)}
+                                        value={dt_nascimento}
+                                        onChange={e => setNascimento(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={4}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <InputLabel id="Tipo"></InputLabel>
+                                    <TextField
+                                        
+                                        id="CPF"
+                                        label="CPF"
+                                        placeholder="Digite apenas o CPF"
+                                        multiline
+                                        variant="outlined"
+                                        value={cpf}
+                                        onChange={e => setCPF(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={4}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <InputLabel id="Tipo"></InputLabel>
+                                    <TextField
+                                    
+                                        id="CNPJ"
+                                        label="CNPJ"
+                                        placeholder="Digite apenas o CNPJ"
+                                        multiline
+                                        variant="outlined"
+                                        value={cnpj}
+                                        onChange={e => setCNPJ(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={4}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <InputLabel id="Tipo"></InputLabel>
+                                    <TextField
+                                        required
+                                        id="CEP"
+                                        label="CEP"
+                                        placeholder="Digite apenas o CEP"
+                                        multiline
+                                        variant="outlined"
+                                        value={cep}
+                                        onChange={e => setCEP(e.target.value)}
                                         margin="normal"
                                     />
                                 </FormControl>
@@ -210,13 +261,13 @@ export default function CadastroUsuario() {
                             <Grid item xs={12} sm={4}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
-                                        id="Area"
-                                        label="Área"
-                                        placeholder="Área de Atuação"
+                                        id="Cidade"
+                                        label="Cidade"
+                                        placeholder="Nome da Cidade"
                                         multiline
                                         variant="outlined"
-                                        value={AREA}
-                                        onChange={e => setArea(e.target.value)}
+                                        value={cidade}
+                                        onChange={e => setCidade(e.target.value)}
                                         margin="normal"
                                     />
                                 </FormControl>
@@ -225,31 +276,18 @@ export default function CadastroUsuario() {
                             <Grid item xs={12} sm={12}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
-                                        id="Local"
-                                        label="Local"
-                                        placeholder="Preencha caso seja necessario contato presencial"
+                                        id="Estado"
+                                        label="Estado"
+                                        placeholder="Digite seu Estado"
                                         multiline
                                         variant="outlined"
-                                        value={LOCAL}
-                                        onChange={e => setLocal(e.target.value)}
+                                        value={estado}
+                                        onChange={e => setEstado(e.target.value)}
                                         margin="normal"
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <TextField
-                                        id="Imagem"
-                                        label="Imagem"
-                                        placeholder="Insira o caminho da imagem aqui"
-                                        multiline
-                                        variant="outlined"
-                                        value={IMAGEM}
-                                        onChange={e => setImagem(e.target.value)}
-                                        margin="normal"
-                                    />
-                                </FormControl>
-                            </Grid>
+
                             <Grid item xs={12} sm={12}>
                                 <FormControl>
                                     <Button className={classes.submit}
