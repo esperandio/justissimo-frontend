@@ -41,9 +41,19 @@ export default function AvaliacaoAdvogado() {
     let id_cliente;
     let id_advogado;
 
-    const [nota, setNota] = useState(0);
+    const [nota, setNota] = useState(0.0);
     const [descricao, setDescricao] = useState('');
     const [redirectPermission, setStatePermission] = useState(false);
+
+    /**
+     * Converte os dados para o formato Number (formato correto que deverá chegar na API (backend))
+     * @param {*} nota 
+     * @param {*} id_cliente 
+     * @param {*} id_advogado 
+    */
+    function convertDados(nota) {
+        setNota(Number(nota));
+    };
 
     /**
      * Handle
@@ -58,16 +68,6 @@ export default function AvaliacaoAdvogado() {
             descricao
         };
 
-        /**
-         * Converte os dados para o formato Number (formato correto que deverá chegar na API (backend))
-         * @param {*} nota 
-         * @param {*} id_cliente 
-         * @param {*} id_advogado 
-         */
-        function convertDados(nota/*, id_cliente, id_advogado*/) {
-            setNota(Number(nota))
-        };
-
         try {
             if (dados.nota !== "") {
                 alert('Como não existe as telas de consulta, não há como puxar os ids do cliente ou do advogado, no momento, o mesmo deve ser setado brasalmente');
@@ -75,7 +75,7 @@ export default function AvaliacaoAdvogado() {
                 id_advogado = Number(prompt("Digite o id do advogado:", "1"));
 
                 // Converte os dados necessários para o tipo Number
-                convertDados(dados.nota)
+                convertDados(dados.nota);
 
                 // Envia ao backend/api os dados inseridos
                 // const lawyer_review = await api.post(`lawyers/${sessionStorage.getItem('id_advogado')}/review`, dados);
@@ -96,7 +96,7 @@ export default function AvaliacaoAdvogado() {
                 alert(`Por favor, selecione as estrelas, para avaliar o advogado`)
             }
         } catch (error) {
-            alert(`Algo deu errado!` + `\n\n`
+            alert(`Algo deu errado!\n\n`
                 + `Nota: ` + dados.nota + `\n` 
                 + `Descrição: ` + dados.descricao + `\n` 
                 + `ID Cliente: ` + dados.id_cliente + `\n` 
@@ -131,7 +131,7 @@ export default function AvaliacaoAdvogado() {
                         required 
                         autoFocus
                         value={nota}
-                        onChange={e => setNota(e.target.value)}
+                        onChange={e => convertDados(e.target.value)}
                     />
 
                     <br/>
