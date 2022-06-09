@@ -83,7 +83,6 @@ export default function Login() {
                 alert('Preencha todos os campos!')
             }
         } catch (error) {
-            alert("Login Inválido! " + error.message); 
             if (error.response.status == 401) {
                 alert("Login Inválido! " + error.response.data.message); 
             }

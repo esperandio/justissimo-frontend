@@ -1,7 +1,11 @@
-import {TitleJustissimoStyled} from '../style/title_style';
+import {TitleJustissimoStyled} from '../../Utils/Title/Style/title_style';
 
-export default function TitleJustissimo() {
+function TitleJustissimo() {
+    return(
     <TitleJustissimoStyled>
         JUSTÍSSIMO
     </TitleJustissimoStyled>
+    );
 }
+
+export default TitleJustissimo ;

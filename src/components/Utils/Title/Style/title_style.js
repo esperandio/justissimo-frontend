@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TitleJustissimo = styled.h1`
+export const TitleJustissimoStyled = styled.h1`
     font-family: 'Inter', sans-serif;
     font-weight: 900;
     font-size: 50px;

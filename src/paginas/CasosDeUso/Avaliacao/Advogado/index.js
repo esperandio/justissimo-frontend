@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router';
 import api from '../../../../service/api';
-import {TitleJustissimo} from '../../../../style/Utils/title_style';
+import  TitleJustissimo  from '../../../../components/Utils/Title/title_justissimo';
 import { Rating } from '@mui/material';
 import { TextareaAutosize } from '@material-ui/core';
 
@@ -26,36 +26,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function RedefinirSenha_Codigo() {
+export default function AvaliacaoAdvogado() {
 
     // Carrega inicialmente
     useEffect(() => {
         // Validação de permissão para acessar a tela de avaliação
         if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
-            console.log('É necessário estar logado no sistema, para acessar a tela de avaliação');
-            alert('Você não tem permissão para acessar essa tela');
+            alert('Você não tem permissão para acessar essa tela!');
             setStatePermission({ redirectPermission: true });
         }
-    });
-    
+    }, []);
 
     const classes = useStyles();
-
-    // const id_cliente = sessionStorage.getItem('id_cliente');
-    // const id_advogado = sessionStorage.getItem('id_advogado');
-    
-    // const [id_cliente, setIDCliente] = useState('');
-    // const [id_advogado, setIDAdvogado] = useState('');
-
-    // Digite aqui o id do cliente e advogado
-    // const id_cliente = Number(1);
-    // const id_advogado = Number(1);
     let id_cliente;
     let id_advogado;
 
-    const [nota, setNota] = useState('');
+    const [nota, setNota] = useState(0);
     const [descricao, setDescricao] = useState('');
-    const [redirect, setState] = useState(false);
     const [redirectPermission, setStatePermission] = useState(false);
 
     /**
@@ -71,11 +58,6 @@ export default function RedefinirSenha_Codigo() {
             descricao
         };
 
-        // let id_cliente_cache = prompt("Digite o id, do cliente:", "1");
-        // let id_advogado_cache = prompt("Digite o id do advogado:", "1");
-        // setIDCliente(id_cliente_cache);
-        // setIDAdvogado(id_advogado_cache);
-
         /**
          * Converte os dados para o formato Number (formato correto que deverá chegar na API (backend))
          * @param {*} nota 
@@ -84,18 +66,16 @@ export default function RedefinirSenha_Codigo() {
          */
         function convertDados(nota/*, id_cliente, id_advogado*/) {
             setNota(Number(nota))
-            // setIDCliente(Number(id_cliente))
-            // setIDAdvogado(Number(id_advogado))
         };
 
         try {
-            if (/*dados.id_cliente !== "" &&*/ dados.nota !== "") {
+            if (dados.nota !== "") {
                 alert('Como não existe as telas de consulta, não há como puxar os ids do cliente ou do advogado, no momento, o mesmo deve ser setado brasalmente');
                 dados.id_cliente = Number(sessionStorage.getItem('id_cliente'));
                 id_advogado = Number(prompt("Digite o id do advogado:", "1"));
 
                 // Converte os dados necessários para o tipo Number
-                convertDados(dados.nota/*, dados.id_cliente, id_advogado*/)
+                convertDados(dados.nota)
 
                 // Envia ao backend/api os dados inseridos
                 // const lawyer_review = await api.post(`lawyers/${sessionStorage.getItem('id_advogado')}/review`, dados);
@@ -132,18 +112,10 @@ export default function RedefinirSenha_Codigo() {
         return <Redirect to='../home'/>;
     }
 
-    // Se a avaliação for aceita, redireciona para a tela de advogado
-    // if (redirect) {
-    //     return <Redirect to='novasenha' />;
-    // }
-
     return (
-        
         // Form
         <Container component="main" maxWidth="xs">
-            <TitleJustissimo>
-                JUSTÍSSIMO
-            </TitleJustissimo>
+            <TitleJustissimo/>
 
             <CssBaseline />
             <div className={classes.paper}>
@@ -156,7 +128,6 @@ export default function RedefinirSenha_Codigo() {
                         defaultValue={3} 
                         precision={0.5}
                         size='large'
-                        
                         required 
                         autoFocus
                         value={nota}
@@ -180,15 +151,11 @@ export default function RedefinirSenha_Codigo() {
                         id="descricao"
                         name="descricao"
                         autoComplete="descricao"
-                        
                         autoFocus
-                        fullWidth
                         margin="normal"
                         variant="outlined"
-                        // label="Aqui vai uma descrição da sua avaliação"
                         placeholder="Aqui vai uma descrição da sua avaliação"
                         aria-label="minimum height"
-                        
                         minRows={3}
                         value={descricao}
                         style={{ width: '100%' }}
