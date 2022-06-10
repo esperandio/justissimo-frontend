@@ -53,8 +53,21 @@ export default function Login() {
                 const login = await api.post('login', dados);
                 // Pega o token
                 const login_token = (login).data.token;
+                // Pega o tipo do usuario
+                const tipo_usuario = (login).data.tipo_usuario;
+                
                 // Seta o token na sessionStorage
                 sessionStorage.setItem('token', login_token);
+                sessionStorage.setItem('tipo_usuario', tipo_usuario);
+                
+                // Pega o id e seta na sessionStorage, de acordo o tipo do usuario
+                if (tipo_usuario === 'Cliente') {
+                    const id_cliente = (login).data.id_cliente;
+                    sessionStorage.setItem('id_cliente', id_cliente);
+                } else if (tipo_usuario === 'Advogado') {
+                    const id_advogado = (login).data.id_advogado;
+                    sessionStorage.setItem('id_advogado', id_advogado);
+                }
     
                 // Verifica o 'status code' recebido
                 switch ((login).status) {
@@ -70,7 +83,6 @@ export default function Login() {
                 alert('Preencha todos os campos!')
             }
         } catch (error) {
-            alert("Login Inválido! " + error.message); 
             if (error.response.status == 401) {
                 alert("Login Inválido! " + error.response.data.message); 
             }
