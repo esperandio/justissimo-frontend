@@ -46,13 +46,24 @@ export default function CadastroDivulgacao() {
     const [titulo, setTitulo] = useState('');
     const [id_area_atuacao, setAreaAtuacao] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [redirect, setState] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     const [areas, setAreas] = useState([]);
 
-    useEffect(async () => {
-        const resultado = await api.get('areas');
-        setAreas(resultado.data);
+    useEffect(() => {
+        function validarSessao() {
+            if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
+                alert('Você precisa conectado como cliente para acessar essa tela!');
+                setRedirect({ redirect: true });
+            }
+        }
+        async function buscarAreas() {
+            const resultado = await api.get('areas');
+            setAreas(resultado.data);
+        }
+        
+        validarSessao();
+        buscarAreas();
     },[])
 
     async function handleSubmit(e) {
@@ -60,12 +71,14 @@ export default function CadastroDivulgacao() {
 
         const dados = { titulo, id_area_atuacao, descricao };
 
+        const id_cliente = sessionStorage.getItem('id_cliente');
+
         try {
-            await api.post('clients/1/divulgations', dados);
+            await api.post(`clients/${id_cliente}/divulgations`, dados);
 
             alert(`Divulgacação cadastrada com sucesso!`);
 
-            setState({ redirect: true });
+            setRedirect({ redirect: true });
         } catch (error) {
             const mensagem_retorno_api = error?.response?.data?.message;
 
