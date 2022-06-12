@@ -30,7 +30,7 @@ export default function InformacoesAdvogado() {
     const classes = useStyles();
     const params = useParams();
 
-    const [advogado, setAdvogado] = useState([]);
+    const [advogado, setAdvogado] = useState({});
 
     useEffect(() => {
         async function buscarInformacoesAdvogado() {
@@ -49,24 +49,24 @@ export default function InformacoesAdvogado() {
                 <div className={classes.paper}>
                     <TitleJustissimo/>
                     <img src={logo} className={classes.user} alt="logo" />
-                    <h1>Nome completo</h1>
+                    <h1>{advogado.nome}</h1>
                     <Rating 
                         id="nota"
                         name="nota" 
                         size='large'
                         autoFocus
                         readOnly
-                        value={4}
+                        value={advogado.nota ?? 0}
                     />
-                    <p>50 avaliações</p>
+                    <p>{advogado._count?.avaliacoes} avaliações</p>
                 </div>
 
                 <Divider/>
 
                 <div>
                     <h2>Descrição</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis deleniti quidem dolorem soluta non quis, magnam facilis magni error totam ullam fugit tenetur necessitatibus autem explicabo hic debitis labore corporis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, alias culpa tenetur eveniet nesciunt magni ipsum illo id molestiae dignissimos maiores doloribus quos optio dolore laudantium magnam quod! Porro, officiis.</p>
-                    <p>E-mail: teste@teste.com</p>
+                    <p>{advogado.info}</p>
+                    <p>E-mail: {advogado.usuario?.email}</p>
                 </div>
 
                 <Grid item xs={12} sm={6}>
