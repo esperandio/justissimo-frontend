@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import  TitleJustissimo  from '../../components/Utils/Title/title_justissimo';
@@ -27,17 +28,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InformacoesAdvogado() {
     const classes = useStyles();
+    const params = useParams();
 
     const [advogado, setAdvogado] = useState([]);
 
     useEffect(() => {
         async function buscarInformacoesAdvogado() {
-            const resultado = await api.get('lawyers/3');
+            const resultado = await api.get(`lawyers/${params.id}`);
             setAdvogado(resultado.data);
         }
 
         buscarInformacoesAdvogado();
-    },[]);
+    },[params.id]);
 
     return (
         <React.Fragment>
