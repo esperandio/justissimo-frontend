@@ -30,6 +30,7 @@ const sections = [
   { title: 'Cadastrar Advogado', url: '/advogado/cad' },
   { title: 'Cadastrar Cliente', url: '/cliente/cad' },
   { title: 'Cadastrar Divulgação', url: '/divulgacao/cad' },
+  { title: 'Pesquisa Simples e Avançada', url: '/advogado/listar' },
   { title: 'Home', url: '/home' },
 ];
 
