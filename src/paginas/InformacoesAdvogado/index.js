@@ -6,7 +6,7 @@ import  TitleJustissimo  from '../../components/Utils/Title/title_justissimo';
 import { Rating } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Main/Header';
-import logo from '../../logo.svg';
+import logo from '../../user.svg';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     user: {
-        width: '40vh',
+        width: '20vh',
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
