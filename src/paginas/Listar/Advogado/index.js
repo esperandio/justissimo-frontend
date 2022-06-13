@@ -8,6 +8,8 @@ import TitleJustissimo from '../../../components/Utils/Title/title_justissimo';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,19 +38,31 @@ export default function ListarAdvogado() {
 
                     <h2>Busque advogados</h2>
 
-                    <Grid item xs={12} sm container spacing={1}>
-                        <Grid item xs={12} sm={12}>
-                            <FormControl fullWidth className={classes.margin}>
-                                <TextField
-                                    required
-                                    id="Nome"
-                                    label="Digite o título da sua causa"
-                                    placeholder="Título da causa"
-                                    multiline
-                                    variant="outlined"
-                                    margin="normal"
-                                />
-                            </FormControl>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm container spacing={1}>
+                            <Grid item xs={12} sm={12}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        id="Pesquisa"
+                                        label="Pesquise aqui"
+                                        placeholder="Pesquise aqui"
+                                        multiline
+                                        variant="outlined"
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={12}>
+                                <Button className={classes.submit}
+                                    variant="contained"
+                                    color="primary"
+                                    type="submit"
+                                    startIcon={<FilterAltIcon />}
+                                >
+                                    Filtrar
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </div>
