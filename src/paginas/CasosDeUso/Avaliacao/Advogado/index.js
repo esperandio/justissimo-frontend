@@ -28,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AvaliacaoAdvogado() {
 
-    // // Carrega inicialmente
-    // useEffect(() => {
-    //     // Validação de permissão para acessar a tela de avaliação.
-    //     if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
-    //         alert('Você não tem permissão para acessar essa tela!');
-    //         setStatePermission({ redirectPermission: true });
-    //     }
-    // }, []);
+    // Carrega inicialmente
+    useEffect(() => {
+        // Validação de permissão para acessar a tela de avaliação.
+        if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
+            alert('Você não tem permissão para acessar essa tela!');
+            setStatePermission({ redirectPermission: true });
+        }
+    }, []);
 
     const classes = useStyles();
     let id_cliente;
