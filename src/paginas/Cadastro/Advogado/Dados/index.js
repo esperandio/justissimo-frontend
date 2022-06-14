@@ -110,7 +110,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={nome}
                                         onChange={e => setNome(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
@@ -125,7 +125,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={dt_nascimento}
                                         onChange={e => setDataNascimento(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
@@ -139,12 +139,12 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={nr_cna}
                                         onChange={e => setRegistroCna(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                                <FormControl fullWidth variant="outlined"  className={classes.margin}>
                                     <InputLabel id="ufcna">UF da CNA</InputLabel>
                                     <Select
                                         required
@@ -153,7 +153,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={uf_cna}
                                         onChange={e => setUfCna(e.target.value)}
-                                        margin="normal"
+                                        
                                     >
                                         <MenuItem value="SC">Santa Catarina</MenuItem>
                                         <MenuItem value={2}>São Luís</MenuItem>
@@ -171,7 +171,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={cpf}
                                         onChange={e => setCpfCnpj(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
@@ -185,7 +185,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={tel_celular}
                                         onChange={e => setTelefone(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
@@ -199,7 +199,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={cep}
                                         onChange={e => setCep(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
@@ -213,7 +213,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={cidade}
                                         onChange={e => setCidade(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
@@ -227,7 +227,7 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={estado}
                                         onChange={e => setEstado(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
@@ -241,12 +241,12 @@ export default function CadastroUsuarioDados() {
                                         variant="outlined"
                                         value={area_atuacao}
                                         onChange={e => setArea(e.target.value)}
-                                        margin="normal"
+                                        
                                     />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={6} sm={6}>
-                                <FormControl fullWitdh classname={classes.margin}>
+                                <FormControl className={classes.margin}>
                                     <Button className={classes.submit}
                                         variant="contained"
                                         color="primary"
