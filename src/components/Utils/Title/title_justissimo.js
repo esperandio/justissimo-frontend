@@ -1,3 +1,4 @@
+import React from 'react'
 import {TitleJustissimoStyled} from '../../Utils/Title/Style/title_style';
 
 function TitleJustissimo() {
