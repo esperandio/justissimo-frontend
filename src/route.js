@@ -12,6 +12,7 @@ import RedefinirSenha_Codigo from './paginas/EsqueceuSenha/CodigoEnviado';
 import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
 import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
 import ListarAdvogado from './paginas/Listar/Advogado';
+import InformacoesAdvogado from './paginas/InformacoesAdvogado';
 
 function Routes() {
     return (
@@ -30,6 +31,7 @@ function Routes() {
                 <Route path="/redefinirsenha/novasenha" component={RedefinirSenha_NovaSenha}/>
                 <Route path="/avaliacao/advogado" component={AvaliacaoAdvogado}/>
                 <Route path="/advogado/listar" component={ListarAdvogado}/>
+                <Route path="/advogado/:id" component={InformacoesAdvogado}/>
             </Switch>
         </BrowserRouter>
     )
