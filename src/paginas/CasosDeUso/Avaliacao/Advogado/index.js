@@ -124,20 +124,22 @@ export default function AvaliacaoAdvogado() {
                 <form className={classes.form} /*onSubmit={handleLogin}*/>
 
                     {/* Input Rating */}
-                    <Rating 
-                        style={{
-                            color: '#FFCB45'
-                        }}
-                        id="nota"
-                        name="nota" 
-                        defaultValue={3} 
-                        precision={0.5}
-                        size='large'
-                        required 
-                        autoFocus
-                        value={nota}
-                        onChange={e => convertDados(e.target.value)}
-                    />
+                    <div className={classes.paper}>
+                        <Rating 
+                            style={{
+                                color: '#FFCB45'
+                            }}
+                            id="nota"
+                            name="nota" 
+                            defaultValue={3} 
+                            precision={0.5}
+                            size='large'
+                            required 
+                            autoFocus
+                            value={nota}
+                            onChange={e => convertDados(e.target.value)}
+                            />
+                    </div>
 
                     <div 
                         style={{
