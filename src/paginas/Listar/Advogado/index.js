@@ -10,6 +10,8 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import logo from '../../../user.svg';
+import { Rating } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-    },
+    }
 }));
 
 export default function ListarAdvogado() {
@@ -62,6 +64,58 @@ export default function ListarAdvogado() {
                                 >
                                     Filtrar
                                 </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm container spacing={1}>
+                            <Grid item xs={12} sm={4} className={classes.submit}>
+                                <div className={classes.paper}>
+                                    <img src={logo} className={classes.user} alt="logo" />
+                                    <h2>Advogado 1</h2>
+                                    <Rating 
+                                        id="nota"
+                                        name="nota" 
+                                        size='large'
+                                        autoFocus
+                                        readOnly
+                                        value={4}
+                                    />
+                                    <p>{50} avaliações</p>
+                                </div>
+                            </Grid>
+
+                            <Grid item xs={12} sm={4} className={classes.submit}>
+                                <div className={classes.paper}>
+                                    <img src={logo} className={classes.user} alt="logo" />
+                                    <h2>Advogado 2</h2>
+                                    <Rating 
+                                        id="nota"
+                                        name="nota" 
+                                        size='large'
+                                        autoFocus
+                                        readOnly
+                                        value={4}
+                                    />
+                                    <p>{50} avaliações</p>
+                                </div>
+                            </Grid>
+
+                            <Grid item xs={12} sm={4} className={classes.submit}>
+                                <div className={classes.paper}>
+                                    <img src={logo} className={classes.user} alt="logo" />
+                                    <h2>Advogado 3</h2>
+                                    <Rating 
+                                        id="nota"
+                                        name="nota" 
+                                        size='large'
+                                        autoFocus
+                                        readOnly
+                                        value={4}
+                                    />
+                                    <p>{50} avaliações</p>
+                                </div>
                             </Grid>
                         </Grid>
                     </Grid>
