@@ -9,3 +9,11 @@ export const TitleJustissimoStyled = styled.h1`
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 `;
+
+export const TitlePageStyled = styled.h2`
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 25px;
+    text-align: center;
+    color: #3B485E;
+`;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import  TitleJustissimo  from '../../components/Utils/Title/title_justissimo';
+import { TitleJustissimo }  from '../../components/Utils/title';
 import { Rating } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Main/Header';

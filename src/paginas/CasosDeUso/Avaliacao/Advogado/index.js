@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router';
 import api from '../../../../service/api';
-import  TitleJustissimo  from '../../../../components/Utils/Title/title_justissimo';
+import { TitleJustissimo, TitlePage } from '../../../../components/Utils/title';
+import Textarea from '../../../../components/Utils/input';
 import { Rating } from '@mui/material';
-import { TextareaAutosize } from '@material-ui/core';
+import ButtonOutlined from '../../../../components/Utils/buttom';
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +69,7 @@ export default function AvaliacaoAdvogado() {
         };
 
         try {
-            if (dados.nota !== "") {
+            if (dados.nota !== "" && dados.nota > 0) {
                 alert('Como não existe as telas de consulta, não há como puxar os ids do cliente ou do advogado, no momento, o mesmo deve ser setado brasalmente');
                 dados.id_cliente = Number(sessionStorage.getItem('id_cliente'));
                 id_advogado = Number(prompt("Digite o id do advogado:", "1"));
@@ -115,39 +115,53 @@ export default function AvaliacaoAdvogado() {
     return (
         // Form
         <Container component="main" maxWidth="xs">
+            
             <TitleJustissimo/>
+            <TitlePage internal="Avaliar Advogado" />
 
             <CssBaseline />
             <div className={classes.paper}>
                 <form className={classes.form} /*onSubmit={handleLogin}*/>
 
                     {/* Input Rating */}
-                    <Rating 
-                        id="nota"
-                        name="nota" 
-                        defaultValue={3} 
-                        precision={0.5}
-                        size='large'
-                        required 
-                        autoFocus
-                        value={nota}
-                        onChange={e => convertDados(e.target.value)}
-                    />
+                    <div className={classes.paper}>
+                        <Rating 
+                            style={{
+                                color: '#FFCB45'
+                            }}
+                            id="nota"
+                            name="nota" 
+                            defaultValue={3} 
+                            precision={0.5}
+                            size='large'
+                            required 
+                            autoFocus
+                            value={nota}
+                            onChange={e => convertDados(e.target.value)}
+                            />
+                    </div>
 
-                    <br/>
-                    <br/>
-                    <span>
-                        <b>
-                            Descrição
-                        </b>
-                    </span> <br/>
-                    <span>
-                        Descreva sua avaliação
-                    </span>
-                    <br/>
+                    <div 
+                        style={{
+                            "font-family": "'Inter', sans-serif",
+                            "color": '#3B485E'
+                        }}
+                    >
+
+                        <br/><br/>
+                        <span>
+                            <b>
+                                Descrição
+                            </b>
+                        </span> <br/>
+                        <span>
+                            Descreva sua avaliação
+                        </span>
+                        <br/>
+                    </div>
 
                     {/* Input TextArea 'Descrição' */}
-                    <TextareaAutosize
+                    <Textarea
                         id="descricao"
                         name="descricao"
                         autoComplete="descricao"
@@ -155,24 +169,18 @@ export default function AvaliacaoAdvogado() {
                         margin="normal"
                         variant="outlined"
                         placeholder="Aqui vai uma descrição da sua avaliação"
-                        aria-label="minimum height"
-                        minRows={3}
                         value={descricao}
-                        style={{ width: '100%' }}
                         
                         onChange={e => setDescricao(e.target.value)}
                     />
 
-                    {/* Button 'Avaliar' */}
-                    <Button className={classes.submit}
+                    <ButtonOutlined 
+                        className={classes.submit}
+                        internal="AVALIAR" 
                         type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
+                        variant="outlined"
                         onClick={handleAvaliacaoAdvogado}
-                    >
-                    AVALIAR
-                    </Button>
+                    />
 
                 </form>
             </div>
