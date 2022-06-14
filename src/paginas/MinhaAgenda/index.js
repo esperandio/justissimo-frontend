@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../../../service/api';
+import api from '../../service/api';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -15,8 +15,8 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
-import Header from '../../Main/Header';
-import Footer from '../../Main/Footer';
+import Header from '../Main/Header';
+import Footer from '../Main/Footer';
 //import validator from 'validator';
 import { green } from '@material-ui/core/colors';
 import { Redirect } from 'react-router-dom';
@@ -74,14 +74,11 @@ export default function CadastroUsuario() {
 
         const dados = {
             nome,
-            email,
-            senha,
-            dt_nascimento,
-            cpf,
-            cnpj,
-            cep,
-            cidade,
-            estado
+            causa,
+            data,
+            semanal,
+            hora,
+            email
         };
 
     //     try {
@@ -134,13 +131,10 @@ export default function CadastroUsuario() {
                 <form onSubmit={handleCadastro}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm container spacing={1}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12} sm={12}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
-                                        required
                                         id="Nome"
-                                        label="Nome"
-                                        placeholder="Digite o nome completo"
                                         multiline
                                         variant="outlined"
                                         value={nome}
@@ -148,16 +142,63 @@ export default function CadastroUsuario() {
                                         margin="normal"
                                     />
                                 </FormControl>
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        id="Causa"
+                                        multiline
+                                        variant="outlined"
+                                        value={causa}
+                                        onChange={e => setCausa(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        id="Data"
+                                        multiline
+                                        variant="outlined"
+                                        value={data}
+                                        onChange={e => setData(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        id="Semanal"
+                                        multiline
+                                        variant="outlined"
+                                        value={semanal}
+                                        onChange={e => setSemanal(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        id="hora"
+                                        multiline
+                                        variant="outlined"
+                                        value={hora}
+                                        onChange={e => setHora(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        id="Email"
+                                        multiline
+                                        variant="outlined"
+                                        value={nome}
+                                        onChange={e => setEmail(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
                                 <FormControl>
                                     <Button className={classes.submit}
                                         variant="contained"
-                                        color="primary"
+                                        color="red"
                                         type="submit"
-                                        startIcon={<SaveIcon />}
-                                    >
-                                        Cadastrar
+                                        startIcon={<SaveIcon />}>
+                                        ENCERRAR
                                     </Button>
                                 </FormControl>
                             </Grid>
