@@ -1,0 +1,19 @@
+.myTable {
+    display : flex;
+    flex-direction : row;
+}
+
+.button {
+    color: red;
+    display : flex;
+    flex-direction:row;
+    outline:none;
+}
+
+.nome {
+    justify-content: flex-start;
+}
+
+.causa {
+    justify-content: flex-end
+}

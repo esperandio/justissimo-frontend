@@ -29,7 +29,7 @@ function Routes() {
                 <Route path="/redefinirsenha/codigo" component={RedefinirSenha_Codigo}/>
                 <Route path="/redefinirsenha/novasenha" component={RedefinirSenha_NovaSenha}/>
                 <Route path="/avaliacao/advogado" component={AvaliacaoAdvogado}/>
-                <Route path="/MinhaAgenda" componet={MinhaAgenda}/>
+                <Route path="/minha-agenda" component={MinhaAgenda}/>
             </Switch>
         </BrowserRouter>
     )
