@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Header from '../../Main/Header';
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListarAdvogado() {
     const classes = useStyles();
+    const history = useHistory();
 
     const [nome, setNome] = useState("");
     const [advogados, setAdvogados] = useState([]);
@@ -59,6 +61,10 @@ export default function ListarAdvogado() {
 
             alert(mensagem_retorno_api);
         }
+    }
+
+    async function handleExibirAdvogado(id_advogado) {
+        history.push(`/advogado/${id_advogado}`);
     }
 
     return (
@@ -119,6 +125,14 @@ export default function ListarAdvogado() {
                                                 value={advogado.nota}
                                             />
                                             <p>{advogado._count?.avaliacoes} avaliações</p>
+
+                                            <Button className={classes.submit}
+                                                variant="contained"
+                                                type="submit"
+                                                onClick={ () => handleExibirAdvogado(advogado.id_advogado) }
+                                            >
+                                                Visualizar
+                                            </Button>
                                         </div>
                                     </Grid>
                         })}
