@@ -83,7 +83,7 @@ export default function ListarAdvogado() {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm container spacing={1}>
                         {advogados.map((advogado)=>{
-                            return  <Grid item xs={12} sm={4} className={classes.submit}>
+                            return  <Grid key={advogado.id_advogado} item xs={12} sm={4} className={classes.submit}>
                                         <div className={classes.paper}>
                                             <img src={logo} className={classes.user} alt="logo" />
                                             <h2>{advogado.nome}</h2>
@@ -95,7 +95,7 @@ export default function ListarAdvogado() {
                                                 readOnly
                                                 value={advogado.nota}
                                             />
-                                            <p>{50} avaliações</p>
+                                            <p>{advogado._count?.avaliacoes} avaliações</p>
                                         </div>
                                     </Grid>
                         })}
