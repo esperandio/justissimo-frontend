@@ -39,7 +39,7 @@ export default function ListarAdvogado() {
 
     const [nome, setNome] = useState("");
     const [advogados, setAdvogados] = useState([]);
-    const [isChecked, setIsChecked] = useState(false);
+    const [usarFiltroAvancado, setUsarFiltroAvancado] = useState(false);
     const [id_area_atuacao, setAreaAtuacao] = useState("");
 
     const [areas, setAreas] = useState([]);
@@ -66,8 +66,14 @@ export default function ListarAdvogado() {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        let filtroApi = `nome=${nome}`;
+
+        if (usarFiltroAvancado === true) {
+            filtroApi = `${filtroApi}&area=${id_area_atuacao}`;
+        }
+
         try {
-            const resultado = await api.get(`lawyers?nome=${nome}&area=${id_area_atuacao}`);
+            const resultado = await api.get(`lawyers?${filtroApi}`);
             setAdvogados(resultado.data);
         } catch (error) {
             const mensagem_retorno_api = error?.response?.data?.message;
@@ -113,12 +119,12 @@ export default function ListarAdvogado() {
 
                             <Grid item xs={12} sm={12}>
                                 <FormControlLabel
-                                    control={<Switch checked={isChecked} color="primary" onChange={() => {
-                                        setIsChecked((prev) => !prev);
+                                    control={<Switch checked={usarFiltroAvancado} color="primary" onChange={() => {
+                                        setUsarFiltroAvancado((prev) => !prev);
                                     }} />}
                                     label="Filtros avançados"
                                 />
-                                <Collapse in={isChecked}>
+                                <Collapse in={usarFiltroAvancado}>
                                     <Grid item xs={12} sm={12}>
                                         <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
                                         <Autocomplete
