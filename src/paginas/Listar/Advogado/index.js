@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ListarAdvogado() {
     const classes = useStyles();
 
+    const [nome, setNome] = useState("");
     const [advogados, setAdvogados] = useState([]);
 
     useEffect(() => {
@@ -41,6 +42,24 @@ export default function ListarAdvogado() {
 
         buscarAdvogados();
     }, []);
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        try {
+            const resultado = await api.get(`lawyers?nome=${nome}`);
+            setAdvogados(resultado.data);
+        } catch (error) {
+            const mensagem_retorno_api = error?.response?.data?.message;
+
+            if (mensagem_retorno_api == null) {
+                alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+                return ;
+            }
+
+            alert(mensagem_retorno_api);
+        }
+    }
 
     return (
         <React.Fragment>
@@ -60,9 +79,10 @@ export default function ListarAdvogado() {
                                         id="Pesquisa"
                                         label="Pesquise aqui"
                                         placeholder="Pesquise aqui"
-                                        multiline
                                         variant="outlined"
                                         margin="normal"
+                                        value={nome}
+                                        onChange={e => setNome(e.target.value)}
                                     />
                                 </FormControl>
                             </Grid>
@@ -73,6 +93,7 @@ export default function ListarAdvogado() {
                                     color="primary"
                                     type="submit"
                                     startIcon={<FilterAltIcon />}
+                                    onClick={ handleSubmit }
                                 >
                                     Filtrar
                                 </Button>
