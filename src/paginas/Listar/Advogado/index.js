@@ -101,6 +101,8 @@ export default function ListarAdvogado() {
                         </Grid>
                     </Grid>
 
+                    {advogados.length === 0 ? <h3>Nenhum advogado encontrado</h3> : ""}
+
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm container spacing={1}>
                         {advogados.map((advogado)=>{
