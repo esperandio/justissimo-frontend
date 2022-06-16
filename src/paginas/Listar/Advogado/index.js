@@ -8,12 +8,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import TitleJustissimo from '../../../components/Utils/Title/title_justissimo';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import logo from '../../../user.svg';
 import api from '../../../service/api';
 import { Rating } from '@mui/material';
+import Collapse from '@material-ui/core/Collapse';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,6 +39,10 @@ export default function ListarAdvogado() {
 
     const [nome, setNome] = useState("");
     const [advogados, setAdvogados] = useState([]);
+    const [isChecked, setIsChecked] = useState(false);
+    const [id_area_atuacao, setAreaAtuacao] = useState("");
+
+    const [areas, setAreas] = useState([]);
 
     useEffect(() => {
         async function buscarAdvogados() {
@@ -42,14 +50,24 @@ export default function ListarAdvogado() {
             setAdvogados(resultado.data);
         }
 
+        async function buscarAreas() {
+            const resultado = await api.get('areas');
+            setAreas(resultado.data);
+        }
+
         buscarAdvogados();
+        buscarAreas();
     }, []);
+
+    function handleAutocompleteAreaChange(event, values) {
+        setAreaAtuacao(values.id);
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         try {
-            const resultado = await api.get(`lawyers?nome=${nome}`);
+            const resultado = await api.get(`lawyers?nome=${nome}&area=${id_area_atuacao}`);
             setAdvogados(resultado.data);
         } catch (error) {
             const mensagem_retorno_api = error?.response?.data?.message;
@@ -91,6 +109,32 @@ export default function ListarAdvogado() {
                                         onChange={e => setNome(e.target.value)}
                                     />
                                 </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={12}>
+                                <FormControlLabel
+                                    control={<Switch checked={isChecked} color="primary" onChange={() => {
+                                        setIsChecked((prev) => !prev);
+                                    }} />}
+                                    label="Filtros avançados"
+                                />
+                                <Collapse in={isChecked}>
+                                    <Grid item xs={12} sm={12}>
+                                        <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                                        <Autocomplete
+                                            options={areas.map((x) => { 
+                                                return {
+                                                    label: x.titulo,
+                                                    id: x.id_area_atuacao
+                                                }
+                                            })}
+                                            renderInput={(params) => <TextField {...params} label="Área de atuação" />}
+                                            isOptionEqualToValue={(option, value) => option.value === value.value}
+                                            onChange={ handleAutocompleteAreaChange }
+                                        />
+                                        </FormControl>
+                                    </Grid>
+                                </Collapse>
                             </Grid>
 
                             <Grid item xs={12} sm={12}>
