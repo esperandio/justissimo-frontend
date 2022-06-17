@@ -32,7 +32,6 @@ const sections = [
   { title: 'Cadastrar Divulgação', url: '/divulgacao/cad' },
   { title: 'Pesquisa Simples e Avançada', url: '/advogado/listar' },
   { title: 'Home', url: '/home' },
-  { title: 'Busca informações do advogado', url: '/advogado/1' },
 ];
 
 
