@@ -41,8 +41,11 @@ export default function ListarAdvogado() {
     const [advogados, setAdvogados] = useState([]);
     const [usarFiltroAvancado, setUsarFiltroAvancado] = useState(false);
     const [id_area_atuacao, setAreaAtuacao] = useState("");
+    const [estado, setEstado] = useState("");
 
     const [areas, setAreas] = useState([]);
+    const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
+    'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
 
     useEffect(() => {
         async function buscarAdvogados() {
@@ -63,14 +66,20 @@ export default function ListarAdvogado() {
         setAreaAtuacao(values.id);
     }
 
+    function handleAutocompleteEstadoChange(event, values) {
+        setEstado(values);
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
 
         let filtroApi = `nome=${nome}`;
 
         if (usarFiltroAvancado === true) {
-            filtroApi = `${filtroApi}&area=${id_area_atuacao}`;
+            filtroApi = `${filtroApi}&area=${id_area_atuacao ?? ""}&estado=${estado ?? ""}`;
         }
+
+        console.log(filtroApi);
 
         try {
             const resultado = await api.get(`lawyers?${filtroApi}`);
@@ -125,20 +134,33 @@ export default function ListarAdvogado() {
                                     label="Filtros avançados"
                                 />
                                 <Collapse in={usarFiltroAvancado}>
-                                    <Grid item xs={12} sm={12}>
-                                        <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
-                                        <Autocomplete
-                                            options={areas.map((x) => { 
-                                                return {
-                                                    label: x.titulo,
-                                                    id: x.id_area_atuacao
-                                                }
-                                            })}
-                                            renderInput={(params) => <TextField {...params} label="Área de atuação" />}
-                                            isOptionEqualToValue={(option, value) => option.value === value.value}
-                                            onChange={ handleAutocompleteAreaChange }
-                                        />
-                                        </FormControl>
+                                    <Grid item xs={12} sm container spacing={1}>
+                                        <Grid item xs={12} sm={4}>
+                                            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                                            <Autocomplete
+                                                options={areas.map((x) => { 
+                                                    return {
+                                                        label: x.titulo,
+                                                        id: x.id_area_atuacao
+                                                    }
+                                                })}
+                                                renderInput={(params) => <TextField {...params} label="Área de atuação" />}
+                                                isOptionEqualToValue={(option, value) => option.value === value.value}
+                                                onChange={ handleAutocompleteAreaChange }
+                                            />
+                                            </FormControl>
+                                        </Grid>
+
+                                        <Grid item xs={12} sm={4}>
+                                            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                                            <Autocomplete
+                                                options={estados}
+                                                renderInput={(params) => <TextField {...params} label="Estado" />}
+                                                isOptionEqualToValue={(option, value) => option.value === value.value}
+                                                onChange={ handleAutocompleteEstadoChange }
+                                            />
+                                            </FormControl>
+                                        </Grid>
                                     </Grid>
                                 </Collapse>
                             </Grid>
