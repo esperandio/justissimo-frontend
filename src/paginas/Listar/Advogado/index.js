@@ -117,8 +117,8 @@ export default function ListarAdvogado() {
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
                                         id="Pesquisa"
-                                        label="Pesquise aqui"
-                                        placeholder="Pesquise aqui"
+                                        label="Nome do advogado"
+                                        placeholder="Nome do advogado"
                                         variant="outlined"
                                         margin="normal"
                                         value={nome}
