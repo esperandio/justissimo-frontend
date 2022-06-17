@@ -11,6 +11,13 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import api from '../../service/api';
+import TextField from '@mui/material/TextField';    
+import FormControl from '@material-ui/core/FormControl';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -96,10 +103,42 @@ export default function InformacoesAdvogado() {
                     </Button>
                 </Grid>
 
+                {' '}
+
                 <Grid item xs={12} sm={6}>
                     {habilitarAgendamento === true
                         ? (
-                            "Horários diponíveis"
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm container spacing={1}>
+                                    <Grid item xs={12} sm={12}>
+                                        <FormControl fullWidth className={classes.margin}>
+                                        <TextField
+                                            label="Data do agendamento"
+                                            placeholder="Data do agendamento"
+                                            variant="outlined"
+                                            margin="normal"
+                                            // value={dataAgendamento}
+                                            // onChange={e => setDataAgendamento(e.target.value)}
+                                        />
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={12}>
+                                        <FormControl>
+                                            <FormLabel id="demo-row-radio-buttons-group-label">Horários disponíveis</FormLabel>
+                                            <RadioGroup
+                                                row
+                                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                                name="row-radio-buttons-group"
+                                            >
+                                                <FormControlLabel value="08:00" control={<Radio />} label="08:00" />
+                                                <FormControlLabel value="08:30" control={<Radio />} label="08:30" />
+                                                <FormControlLabel value="09:00" control={<Radio />} label="09:00" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         )
                         : ""
                     }
