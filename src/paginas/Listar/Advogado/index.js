@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import Header from '../../Main/Header';
 import Footer from '../../Main/Footer';
 import { makeStyles } from '@material-ui/core/styles';
-import TitleJustissimo from '../../../components/Utils/Title/title_justissimo';
+import { TitleJustissimo } from '../../../components/Utils/title';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
