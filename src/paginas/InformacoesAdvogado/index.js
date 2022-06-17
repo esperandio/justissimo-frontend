@@ -39,6 +39,7 @@ export default function InformacoesAdvogado() {
 
     const [advogado, setAdvogado] = useState({});
     const [habilitarAgendamento, setHabilitarAgendamento] = useState(false);
+    const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
 
     useEffect(() => {
         async function buscarInformacoesAdvogado() {
@@ -103,40 +104,64 @@ export default function InformacoesAdvogado() {
                     </Button>
                 </Grid>
 
+                <Divider/>
+
                 {' '}
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                     {habilitarAgendamento === true
                         ? (
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm container spacing={1}>
                                     <Grid item xs={12} sm={12}>
-                                        <FormControl fullWidth className={classes.margin}>
-                                        <TextField
-                                            label="Data do agendamento"
-                                            placeholder="Data do agendamento"
-                                            variant="outlined"
-                                            margin="normal"
-                                            // value={dataAgendamento}
-                                            // onChange={e => setDataAgendamento(e.target.value)}
-                                        />
-                                        </FormControl>
+                                        <h2>Dados do agendamento</h2>
                                     </Grid>
 
-                                    <Grid item xs={12} sm={12}>
-                                        <FormControl>
-                                            <FormLabel id="demo-row-radio-buttons-group-label">Horários disponíveis</FormLabel>
-                                            <RadioGroup
-                                                row
-                                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                                name="row-radio-buttons-group"
+                                    <Grid item xs={12}>
+                                        <Grid item xs={12} sm={6}>
+                                            <FormControl fullWidth className={classes.margin}>
+                                                <TextField
+                                                    label="Data do agendamento"
+                                                    placeholder="Data do agendamento"
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    // value={dataAgendamento}
+                                                    // onChange={e => setDataAgendamento(e.target.value)}
+                                                />
+                                            </FormControl>
+                                        </Grid>
+
+                                        <Grid item xs={12} sm={6}>
+                                            <Button 
+                                                className={classes.submit}
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() => setExibirHorariosDisponiveis(true)}
                                             >
-                                                <FormControlLabel value="08:00" control={<Radio />} label="08:00" />
-                                                <FormControlLabel value="08:30" control={<Radio />} label="08:30" />
-                                                <FormControlLabel value="09:00" control={<Radio />} label="09:00" />
-                                            </RadioGroup>
-                                        </FormControl>
+                                                Buscar horários
+                                            </Button>
+                                        </Grid>
                                     </Grid>
+
+                                    {exibirHorariosDisponiveis === true
+                                        ? (
+                                            <Grid item xs={12} sm={12}>
+                                                <FormControl>
+                                                    <FormLabel id="demo-row-radio-buttons-group-label">Horários disponíveis</FormLabel>
+                                                    <RadioGroup
+                                                        row
+                                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                                        name="row-radio-buttons-group"
+                                                    >
+                                                        <FormControlLabel value="08:00" control={<Radio />} label="08:00" />
+                                                        <FormControlLabel value="08:30" control={<Radio />} label="08:30" />
+                                                        <FormControlLabel value="09:00" control={<Radio />} label="09:00" />
+                                                    </RadioGroup>
+                                                </FormControl>
+                                            </Grid>
+                                        )
+                                        : ""
+                                    }
                                 </Grid>
                             </Grid>
                         )
