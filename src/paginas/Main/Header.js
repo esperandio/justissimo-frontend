@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [  
+  { title: 'Home', url: '/home' },
   { title: 'Cadastrar Advogado', url: '/advogado/cad' },
   { title: 'Cadastrar Cliente', url: '/cliente/cad' },
   { title: 'Cadastrar Divulgação', url: '/divulgacao/cad' },
   { title: 'Pesquisar Advogado', url: '/advogado/listar' },
-  { title: 'Home', url: '/home' },
 ];
 
 
