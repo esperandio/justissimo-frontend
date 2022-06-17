@@ -21,6 +21,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { ptBR } from "date-fns/locale";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +46,7 @@ export default function InformacoesAdvogado() {
     const params = useParams();
 
     const [advogado, setAdvogado] = useState({});
+    const [dataAgendamento, setDataAgendamento] = useState(new Date());
     const [horarios, setHorarios] = useState([]);
     const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
 
@@ -134,16 +139,22 @@ export default function InformacoesAdvogado() {
                         <DialogContentText>
                             1° Passo - Selecionar a data do agendamento
                         </DialogContentText>
+
+                        <br />
+
                         <FormControl fullWidth className={classes.margin}>
-                            <TextField
-                                label="Data do agendamento"
-                                placeholder="Data do agendamento"
-                                variant="outlined"
-                                margin="normal"
-                                // value={dataAgendamento}
-                                // onChange={e => setDataAgendamento(e.target.value)}
-                            />
+                            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                                <DatePicker
+                                    label="Data do agendamento"
+                                    value={dataAgendamento}
+                                    onChange={(newValue) => { setDataAgendamento(newValue) }}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
                         </FormControl>
+
+                        <br />
+                        <br />
 
                         <Button 
                             variant="contained"
