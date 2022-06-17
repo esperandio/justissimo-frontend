@@ -42,6 +42,7 @@ export default function ListarAdvogado() {
     const [usarFiltroAvancado, setUsarFiltroAvancado] = useState(false);
     const [id_area_atuacao, setAreaAtuacao] = useState("");
     const [estado, setEstado] = useState("");
+    const [cidade, setCidade] = useState("");
 
     const [areas, setAreas] = useState([]);
     const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
@@ -76,7 +77,7 @@ export default function ListarAdvogado() {
         let filtroApi = `nome=${nome}`;
 
         if (usarFiltroAvancado === true) {
-            filtroApi = `${filtroApi}&area=${id_area_atuacao ?? ""}&estado=${estado ?? ""}`;
+            filtroApi = `${filtroApi}&area=${id_area_atuacao ?? ""}&estado=${estado ?? ""}&cidade=${cidade ?? ""}`;
         }
 
         console.log(filtroApi);
@@ -159,6 +160,20 @@ export default function ListarAdvogado() {
                                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                                 onChange={ handleAutocompleteEstadoChange }
                                             />
+                                            </FormControl>
+                                        </Grid>
+
+                                        <Grid item xs={12} sm={4}>
+                                            <FormControl fullWidth className={classes.margin}>
+                                                <TextField
+                                                    id="Cidade"
+                                                    label="Cidade"
+                                                    placeholder="Cidade"
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    value={cidade}
+                                                    onChange={e => setCidade(e.target.value)}
+                                                />
                                             </FormControl>
                                         </Grid>
                                     </Grid>
