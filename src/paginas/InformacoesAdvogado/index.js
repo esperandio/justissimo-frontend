@@ -16,7 +16,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -39,8 +43,9 @@ export default function InformacoesAdvogado() {
 
     const [advogado, setAdvogado] = useState({});
     const [horarios, setHorarios] = useState([]);
-    const [habilitarAgendamento, setHabilitarAgendamento] = useState(false);
     const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
+
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         async function buscarInformacoesAdvogado() {
@@ -50,6 +55,14 @@ export default function InformacoesAdvogado() {
 
         buscarInformacoesAdvogado();
     },[params.id]);
+
+    function handleAbrirModalAgendamento() {
+        setOpen(true);
+    }
+
+    function handleFecharModalAgendamento() {
+        setOpen(false);
+    }
 
     function handleBuscarHorarios() {
         setExibirHorariosDisponiveis(false);
@@ -108,67 +121,72 @@ export default function InformacoesAdvogado() {
                         variant="contained"
                         color="primary"
                         type="submit"
-                        onClick={() => setHabilitarAgendamento(true)}
+                        onClick={ handleAbrirModalAgendamento }
                     >
                         Agendar uma consulta
                     </Button>
                 </Grid>
 
-                <br/>
+                <Dialog open={open} onClose={handleFecharModalAgendamento}>
+                    <DialogTitle>Realizar agendamento</DialogTitle>
 
-                {habilitarAgendamento === true
-                    ? (
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6} container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth className={classes.margin}>
-                                        <TextField
-                                            label="Data do agendamento"
-                                            placeholder="Data do agendamento"
-                                            variant="outlined"
-                                            margin="normal"
-                                            // value={dataAgendamento}
-                                            // onChange={e => setDataAgendamento(e.target.value)}
-                                        />
+                    <DialogContent>
+                        <DialogContentText>
+                            1° Passo - Selecionar a data do agendamento
+                        </DialogContentText>
+                        <FormControl fullWidth className={classes.margin}>
+                            <TextField
+                                label="Data do agendamento"
+                                placeholder="Data do agendamento"
+                                variant="outlined"
+                                margin="normal"
+                                // value={dataAgendamento}
+                                // onChange={e => setDataAgendamento(e.target.value)}
+                            />
+                        </FormControl>
+
+                        <Button 
+                            variant="contained"
+                            color="primary"
+                            onClick={ handleBuscarHorarios }
+                        >
+                            Buscar horários
+                        </Button>
+
+                        <br/>
+                        <br/>
+
+                        {exibirHorariosDisponiveis === true
+                            ? (
+                                <>
+                                    <DialogContentText>
+                                        2° Passo - Selecionar o horário do agendamento
+                                    </DialogContentText>
+
+                                    <FormControl>
+                                        <RadioGroup
+                                            row
+                                            aria-labelledby="demo-row-radio-buttons-group-label"
+                                            name="row-radio-buttons-group"
+                                        >
+                                            {horarios.map((x) => {
+                                                return <FormControlLabel key={x} value={x} control={<Radio />} label={x} />
+                                            })}
+                                        </RadioGroup>
                                     </FormControl>
-                                </Grid>
+                                </>
+                            )
+                            : ""
+                        }
+                    </DialogContent>
 
-                                <Grid item xs={12} sm={6}>
-                                    <Button 
-                                        className={classes.submit}
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={ handleBuscarHorarios }
-                                    >
-                                        Buscar horários
-                                    </Button>
-                                </Grid>
-                            </Grid>
-
-                            <Grid item xs={12} sm={6}>
-                                {exibirHorariosDisponiveis === true
-                                    ? (
-                                        <FormControl>
-                                            <FormLabel id="demo-row-radio-buttons-group-label">Horários disponíveis</FormLabel>
-                                            <RadioGroup
-                                                row
-                                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                                name="row-radio-buttons-group"
-                                            >
-                                                {horarios.map((x) => {
-                                                    return <FormControlLabel key={x} value={x} control={<Radio />} label={x} />
-                                                })}
-                                            </RadioGroup>
-                                        </FormControl>
-                                    )
-                                    : ""
-                                }
-                            </Grid>
-                        </Grid>
-                    )
-                    : ""
-                }
+                    <DialogActions>
+                        <Button onClick={handleFecharModalAgendamento}>Cancelar</Button>
+                        <Button onClick={handleFecharModalAgendamento} disabled={true}>Confirmar</Button>
+                    </DialogActions>
+                </Dialog>
             </Container>
         </React.Fragment>
     );
 }
+
