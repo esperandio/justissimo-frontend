@@ -38,6 +38,7 @@ export default function InformacoesAdvogado() {
     const params = useParams();
 
     const [advogado, setAdvogado] = useState({});
+    const [horarios, setHorarios] = useState([]);
     const [habilitarAgendamento, setHabilitarAgendamento] = useState(false);
     const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
 
@@ -49,6 +50,15 @@ export default function InformacoesAdvogado() {
 
         buscarInformacoesAdvogado();
     },[params.id]);
+
+    function handleBuscarHorarios() {
+        setExibirHorariosDisponiveis(false);
+
+        // TODO: chamar a API aqui
+        setHorarios(["08:00", "08:30", "09:00"]);
+
+        setExibirHorariosDisponiveis(true);
+    }
 
     return (
         <React.Fragment>
@@ -136,7 +146,7 @@ export default function InformacoesAdvogado() {
                                                 className={classes.submit}
                                                 variant="contained"
                                                 color="primary"
-                                                onClick={() => setExibirHorariosDisponiveis(true)}
+                                                onClick={ handleBuscarHorarios }
                                             >
                                                 Buscar horários
                                             </Button>
@@ -153,9 +163,9 @@ export default function InformacoesAdvogado() {
                                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                                         name="row-radio-buttons-group"
                                                     >
-                                                        <FormControlLabel value="08:00" control={<Radio />} label="08:00" />
-                                                        <FormControlLabel value="08:30" control={<Radio />} label="08:30" />
-                                                        <FormControlLabel value="09:00" control={<Radio />} label="09:00" />
+                                                        {horarios.map((x) => {
+                                                            return <FormControlLabel key={x} value={x} control={<Radio />} label={x} />
+                                                        })}
                                                     </RadioGroup>
                                                 </FormControl>
                                             </Grid>
