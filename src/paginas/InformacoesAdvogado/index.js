@@ -31,6 +31,7 @@ export default function InformacoesAdvogado() {
     const params = useParams();
 
     const [advogado, setAdvogado] = useState({});
+    const [habilitarAgendamento, setHabilitarAgendamento] = useState(false);
 
     useEffect(() => {
         async function buscarInformacoesAdvogado() {
@@ -71,14 +72,16 @@ export default function InformacoesAdvogado() {
 
                 <Grid item xs={12} sm={6}>
                     {advogado.tel_celular != null 
-                        ?   <Button className={classes.submit}
+                        ? (
+                            <Button className={classes.submit}
                                 variant="contained"
                                 color="primary"
                                 onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, '_blank'); } }
                             >
                                 Entrar em contato
                             </Button>
-                        :   ""
+                        )
+                        : ""
                     }
 
                     {' '}
@@ -87,9 +90,19 @@ export default function InformacoesAdvogado() {
                         variant="contained"
                         color="primary"
                         type="submit"
+                        onClick={() => setHabilitarAgendamento(true)}
                     >
                         Agendar uma consulta
                     </Button>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                    {habilitarAgendamento === true
+                        ? (
+                            "Horários diponíveis"
+                        )
+                        : ""
+                    }
                 </Grid>
             </Container>
         </React.Fragment>
