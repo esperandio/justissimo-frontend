@@ -105,7 +105,7 @@ export default function ListarAdvogado() {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
-                <Header title="Cadastrar divulgação" />
+                <Header title="Pesquisar Advogado" />
                 <div className={classes.paper}>
                     <TitleJustissimo/>
 
