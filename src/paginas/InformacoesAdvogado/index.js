@@ -70,13 +70,16 @@ export default function InformacoesAdvogado() {
                 </div>
 
                 <Grid item xs={12} sm={6}>
-                    <Button className={classes.submit}
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                    >
-                        Entrar em contato
-                    </Button>
+                    {advogado.tel_celular != null 
+                        ?   <Button className={classes.submit}
+                                variant="contained"
+                                color="primary"
+                                onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, '_blank'); } }
+                            >
+                                Entrar em contato
+                            </Button>
+                        :   ""
+                    }
 
                     {' '}
 
