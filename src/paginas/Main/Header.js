@@ -53,7 +53,10 @@ export default function Header(props) {
         </Typography>
         <Button variant="outlined" size="small" href="/login" >
         <LogoutIcon></LogoutIcon>
-          Sair
+          {sessionStorage.getItem('token') === null
+            ? "Entrar"
+            : "Sair"
+          }
         </Button>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
