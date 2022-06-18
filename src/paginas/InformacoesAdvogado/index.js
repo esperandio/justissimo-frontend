@@ -47,6 +47,8 @@ export default function InformacoesAdvogado() {
 
     const [advogado, setAdvogado] = useState({});
     const [dataAgendamento, setDataAgendamento] = useState(new Date());
+    const [horarioAgendamento, setHorarioAgendamento] = useState("");
+
     const [horarios, setHorarios] = useState([]);
     const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
 
@@ -59,13 +61,24 @@ export default function InformacoesAdvogado() {
         }
 
         buscarInformacoesAdvogado();
-    },[params.id]);
+    }, [params.id]);
 
     function handleAbrirModalAgendamento() {
         setOpen(true);
     }
 
     function handleFecharModalAgendamento() {
+        setOpen(false);
+    }
+
+    function handleConfirmarAgendamento() {
+        console.log(dataAgendamento);
+        console.log(horarioAgendamento);
+
+        setDataAgendamento(new Date());
+        setHorarioAgendamento("");
+        setExibirHorariosDisponiveis(false);
+
         setOpen(false);
     }
 
@@ -181,7 +194,12 @@ export default function InformacoesAdvogado() {
                                             name="row-radio-buttons-group"
                                         >
                                             {horarios.map((x) => {
-                                                return <FormControlLabel key={x} value={x} control={<Radio />} label={x} />
+                                                return <FormControlLabel 
+                                                    key={x} 
+                                                    value={x} 
+                                                    checked={x === horarioAgendamento}
+                                                    control={<Radio />} label={x} onChange={() => setHorarioAgendamento(x)} 
+                                                />
                                             })}
                                         </RadioGroup>
                                     </FormControl>
@@ -193,7 +211,7 @@ export default function InformacoesAdvogado() {
 
                     <DialogActions>
                         <Button onClick={handleFecharModalAgendamento}>Cancelar</Button>
-                        <Button onClick={handleFecharModalAgendamento} disabled={true}>Confirmar</Button>
+                        <Button onClick={handleConfirmarAgendamento} disabled={horarioAgendamento === ""}>Confirmar</Button>
                     </DialogActions>
                 </Dialog>
             </Container>
