@@ -25,6 +25,9 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ptBR } from "date-fns/locale";
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +49,9 @@ export default function InformacoesAdvogado() {
     const params = useParams();
 
     const [advogado, setAdvogado] = useState({});
+    const [advogadoAreas, setAdvogadoAreas] = useState([]);
     const [dataAgendamento, setDataAgendamento] = useState(new Date());
+    const [id_area_atuacao, setAreaAtuacao] = useState("");
     const [horarioAgendamento, setHorarioAgendamento] = useState("");
 
     const [horarios, setHorarios] = useState([]);
@@ -58,6 +63,7 @@ export default function InformacoesAdvogado() {
         async function buscarInformacoesAdvogado() {
             const resultado = await api.get(`lawyers/${params.id}`);
             setAdvogado(resultado.data);
+            setAdvogadoAreas(resultado.data.areas)
         }
 
         buscarInformacoesAdvogado();
@@ -85,11 +91,17 @@ export default function InformacoesAdvogado() {
         alert("Agendamento confirmado!!!");
 
         setDataAgendamento(new Date());
+        setAreaAtuacao("");
         setHorarioAgendamento("");
+
         setExibirHorariosDisponiveis(false);
     }
 
     function handleBuscarHorarios() {
+        if (id_area_atuacao === "") {
+            return;
+        }
+
         setExibirHorariosDisponiveis(false);
 
         // TODO: chamar a API aqui
@@ -157,7 +169,7 @@ export default function InformacoesAdvogado() {
 
                     <DialogContent>
                         <DialogContentText>
-                            1° Passo - Selecionar a data do agendamento
+                            1° Passo - Selecionar a data do agendamento e área de atuação
                         </DialogContentText>
 
                         <br />
@@ -171,6 +183,24 @@ export default function InformacoesAdvogado() {
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
+                        </FormControl>
+
+                        <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                            <InputLabel id="Area">Área de atuação</InputLabel>
+                            <Select
+                                required
+                                labelId="Área de atuação"
+                                id="AreaSelect"
+                                multiline
+                                variant="outlined"
+                                value={id_area_atuacao}
+                                onChange={e => setAreaAtuacao(e.target.value)}
+                                label="Tipo de Usuario"
+                            >
+                                {advogadoAreas.map((area)=>{
+                                    return <MenuItem key={area.areaAtuacao.id_area_atuacao} value={area.areaAtuacao.id_area_atuacao}>{area.areaAtuacao.titulo}</MenuItem>
+                                })}
+                            </Select>
                         </FormControl>
 
                         <br />
