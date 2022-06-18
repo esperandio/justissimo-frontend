@@ -75,11 +75,13 @@ export default function InformacoesAdvogado() {
         console.log(dataAgendamento);
         console.log(horarioAgendamento);
 
+        setOpen(false);
+
+        alert("Agendamento confirmado!!!");
+
         setDataAgendamento(new Date());
         setHorarioAgendamento("");
         setExibirHorariosDisponiveis(false);
-
-        setOpen(false);
     }
 
     function handleBuscarHorarios() {
