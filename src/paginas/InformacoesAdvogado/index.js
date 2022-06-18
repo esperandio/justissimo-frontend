@@ -64,6 +64,11 @@ export default function InformacoesAdvogado() {
     }, [params.id]);
 
     function handleAbrirModalAgendamento() {
+        if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Cliente') {
+            alert('Você precisa conectado como cliente para acessar essa tela!');
+            return;
+        }
+
         setOpen(true);
     }
 
