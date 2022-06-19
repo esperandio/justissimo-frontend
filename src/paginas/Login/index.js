@@ -11,10 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
+import { TitleJustissimo, TitlePage } from '../../components/Utils/title';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -83,7 +83,7 @@ export default function Login() {
                 alert('Preencha todos os campos!')
             }
         } catch (error) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
                 alert("Login Inválido! " + error.response.data.message); 
             }
             else {
@@ -101,6 +101,8 @@ export default function Login() {
         // Form
         <Container component="main" maxWidth="xs">
             <CssBaseline />
+            <TitleJustissimo/>
+            <TitlePage internal="ENTRAR" />
             <div className={classes.paper}>
                 <form className={classes.form} /*onSubmit={handleLogin}*/>
 
