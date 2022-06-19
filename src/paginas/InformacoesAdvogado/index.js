@@ -99,7 +99,6 @@ export default function InformacoesAdvogado() {
                 fk_advogado,
                 fk_cliente,
                 fk_advogado_area,
-                causa: "Teste causa",
                 data_agendamento,
                 horario,
                 observacao
