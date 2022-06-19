@@ -97,17 +97,35 @@ export default function InformacoesAdvogado() {
         setExibirHorariosDisponiveis(false);
     }
 
-    function handleBuscarHorarios() {
+    async function handleBuscarHorarios() {
         if (id_area_atuacao === "") {
             return;
         }
 
         setExibirHorariosDisponiveis(false);
 
-        // TODO: chamar a API aqui
-        setHorarios(["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30"]);
+        const dataAgendamentoFormatada = `${dataAgendamento.getUTCFullYear()}` 
+            + "-"
+            + `${dataAgendamento.getUTCMonth() + 1}`.padStart(2, 0)
+            + "-"
+            + `${dataAgendamento.getDate()}`.padStart(2, 0);
 
-        setExibirHorariosDisponiveis(true);
+        try {
+            const horarios = await api.get(`hour-schedulings/${advogado?.id_advogado}?data_para_agendamento=${dataAgendamentoFormatada}`);
+
+            setHorarios(horarios.data?.horarios_disponiveis ?? []);
+
+            setExibirHorariosDisponiveis(true);
+        } catch (error) {
+            const mensagem_retorno_api = error?.response?.data?.message;
+
+            if (mensagem_retorno_api == null) {
+                alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+                return ;
+            }
+
+            alert(mensagem_retorno_api);
+        }
     }
 
     return (
