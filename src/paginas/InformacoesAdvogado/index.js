@@ -128,6 +128,13 @@ export default function InformacoesAdvogado() {
         }
     }
 
+    function handleChangeDataAgendamento(newValue) {
+        setDataAgendamento(newValue);
+
+        setHorarios([]);
+        setExibirHorariosDisponiveis(false);
+    }
+
     return (
         <React.Fragment>
             <CssBaseline />
@@ -197,7 +204,7 @@ export default function InformacoesAdvogado() {
                                 <DatePicker
                                     label="Data do agendamento"
                                     value={dataAgendamento}
-                                    onChange={(newValue) => { setDataAgendamento(newValue) }}
+                                    onChange={(newValue) => { handleChangeDataAgendamento(newValue) }}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
