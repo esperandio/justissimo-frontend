@@ -62,7 +62,14 @@ export default function RedefinirSenha_Email() {
                 alert('Preencha todos os campos!')
             }
         } catch (error) {
-            alert('Digite o email correto');
+            const mensagem_retorno_api = error?.response?.data?.message;
+
+            if (mensagem_retorno_api == null) {
+                alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+                return ;
+            }
+
+            alert(mensagem_retorno_api);
         }
     }
 
