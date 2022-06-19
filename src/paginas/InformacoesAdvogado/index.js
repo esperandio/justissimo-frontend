@@ -78,11 +78,11 @@ export default function InformacoesAdvogado() {
         setOpen(true);
     }
 
-    function handleFecharModalAgendamento() {
+    function handleClickFecharModalAgendamento() {
         setOpen(false);
     }
 
-    function handleConfirmarAgendamento() {
+    function handleClickConfirmarAgendamento() {
         console.log(dataAgendamento);
         console.log(horarioAgendamento);
 
@@ -97,7 +97,7 @@ export default function InformacoesAdvogado() {
         setExibirHorariosDisponiveis(false);
     }
 
-    async function handleBuscarHorarios() {
+    async function handleClickBuscarHorarios() {
         if (id_area_atuacao === "") {
             return;
         }
@@ -189,7 +189,7 @@ export default function InformacoesAdvogado() {
                     </Button>
                 </Grid>
 
-                <Dialog open={open} onClose={handleFecharModalAgendamento}>
+                <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
                     <DialogTitle>Realizar agendamento</DialogTitle>
 
                     <DialogContent>
@@ -234,7 +234,7 @@ export default function InformacoesAdvogado() {
                         <Button 
                             variant="contained"
                             color="primary"
-                            onClick={ handleBuscarHorarios }
+                            onClick={ handleClickBuscarHorarios }
                         >
                             Buscar horários
                         </Button>
@@ -272,8 +272,8 @@ export default function InformacoesAdvogado() {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={handleFecharModalAgendamento}>Cancelar</Button>
-                        <Button onClick={handleConfirmarAgendamento} disabled={horarioAgendamento === ""}>Confirmar</Button>
+                        <Button onClick={handleClickFecharModalAgendamento}>Cancelar</Button>
+                        <Button onClick={handleClickConfirmarAgendamento} disabled={horarioAgendamento === ""}>Confirmar</Button>
                     </DialogActions>
                 </Dialog>
             </Container>
