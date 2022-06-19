@@ -53,6 +53,7 @@ export default function InformacoesAdvogado() {
     const [dataAgendamento, setDataAgendamento] = useState(new Date());
     const [id_area_atuacao, setAreaAtuacao] = useState("");
     const [horarioAgendamento, setHorarioAgendamento] = useState("");
+    const [observacao, setObservacao] = useState("");
 
     const [horarios, setHorarios] = useState([]);
     const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
@@ -101,7 +102,7 @@ export default function InformacoesAdvogado() {
                 causa: "Teste causa",
                 data_agendamento,
                 horario,
-                observacao: "Teste observação"
+                observacao
             }
     
             await api.post(`clients/scheduling`, dados);
@@ -295,6 +296,28 @@ export default function InformacoesAdvogado() {
                                             })}
                                         </RadioGroup>
                                     </FormControl>
+
+                                    <br />
+                                    <br />
+
+                                    <DialogContentText>
+                                        3° Passo - Adicione uma observação
+                                    </DialogContentText>
+
+                                    <FormControl fullWidth className={classes.margin}>
+                                        <TextField
+                                            required
+                                            id="Nome"
+                                            label="Observação"
+                                            placeholder="Observação"
+                                            multiline
+                                            minRows={5}
+                                            variant="outlined"
+                                            value={observacao}
+                                            onChange={e => setObservacao(e.target.value)}
+                                            margin="normal"
+                                        />
+                                    </FormControl>
                                 </>
                             )
                             : ""
@@ -303,7 +326,7 @@ export default function InformacoesAdvogado() {
 
                     <DialogActions>
                         <Button onClick={handleClickFecharModalAgendamento}>Cancelar</Button>
-                        <Button onClick={handleClickConfirmarAgendamento} disabled={horarioAgendamento === ""}>Confirmar</Button>
+                        <Button onClick={handleClickConfirmarAgendamento} disabled={horarioAgendamento === "" || observacao === ""}>Confirmar</Button>
                     </DialogActions>
                 </Dialog>
             </Container>
