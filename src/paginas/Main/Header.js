@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const sections = [  
+  { title: 'Home', url: '/home' },
+  { title: 'Pesquisar Advogado', url: '/advogado/listar' },
   { title: 'Cadastrar Advogado', url: '/advogado/cad' },
   { title: 'Cadastrar Cliente', url: '/cliente/cad' },
   { title: 'Cadastrar Divulgação', url: '/divulgacao/cad' },
-  { title: 'Pesquisar Advogado', url: '/advogado/listar' },
-  { title: 'Home', url: '/home' },
 ];
 
 
@@ -53,7 +53,10 @@ export default function Header(props) {
         </Typography>
         <Button variant="outlined" size="small" href="/login" >
         <LogoutIcon></LogoutIcon>
-          Sair
+          {sessionStorage.getItem('token') === null
+            ? "Entrar"
+            : "Sair"
+          }
         </Button>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>

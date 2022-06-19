@@ -183,7 +183,7 @@ export default function CadastroUsuario() {
                                         fullWidth
                                         name="senha"
                                         label="Senha"
-                                        type="senha"
+                                        type="password"
                                         id="senha"
                                         autoComplete="current-senha"
                                         value={senha}
