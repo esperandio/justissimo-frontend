@@ -81,6 +81,12 @@ export default function InformacoesAdvogado() {
 
     function handleClickFecharModalAgendamento() {
         setOpen(false);
+        setDataAgendamento(new Date());
+        setAreaAtuacao("");
+        setHorarioAgendamento("");
+        setObservacao("");
+
+        setExibirHorariosDisponiveis(false);
     }
 
     async function handleClickConfirmarAgendamento() {
@@ -113,6 +119,7 @@ export default function InformacoesAdvogado() {
             setDataAgendamento(new Date());
             setAreaAtuacao("");
             setHorarioAgendamento("");
+            setObservacao("");
     
             setExibirHorariosDisponiveis(false);
         } catch (error) {
@@ -313,6 +320,7 @@ export default function InformacoesAdvogado() {
                                             minRows={5}
                                             variant="outlined"
                                             value={observacao}
+                                            inputProps={{ maxLength: 200 }}
                                             onChange={e => setObservacao(e.target.value)}
                                             margin="normal"
                                         />
