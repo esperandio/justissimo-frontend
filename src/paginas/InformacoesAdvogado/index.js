@@ -82,19 +82,49 @@ export default function InformacoesAdvogado() {
         setOpen(false);
     }
 
-    function handleClickConfirmarAgendamento() {
-        console.log(dataAgendamento);
-        console.log(horarioAgendamento);
+    async function handleClickConfirmarAgendamento() {
+        try {
+            const fk_advogado = advogado?.id_advogado;
+            const fk_cliente = parseInt(sessionStorage.getItem('id_cliente'));
+            const fk_advogado_area = id_area_atuacao;
+            const data_agendamento = `${dataAgendamento.getUTCFullYear()}` 
+                + "-"
+                + `${dataAgendamento.getUTCMonth() + 1}`.padStart(2, 0)
+                + "-"
+                + `${dataAgendamento.getDate()}`.padStart(2, 0);
+            const horario = horarioAgendamento; 
+    
+            const dados = {
+                fk_advogado,
+                fk_cliente,
+                fk_advogado_area,
+                causa: "Teste causa",
+                data_agendamento,
+                horario,
+                observacao: "Teste observação"
+            }
+    
+            await api.post(`clients/scheduling`, dados);
+    
+            setOpen(false);
+    
+            alert("Agendamento confirmado!!!");
+    
+            setDataAgendamento(new Date());
+            setAreaAtuacao("");
+            setHorarioAgendamento("");
+    
+            setExibirHorariosDisponiveis(false);
+        } catch (error) {
+            const mensagem_retorno_api = error?.response?.data?.message;
 
-        setOpen(false);
+            if (mensagem_retorno_api == null) {
+                alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+                return ;
+            }
 
-        alert("Agendamento confirmado!!!");
-
-        setDataAgendamento(new Date());
-        setAreaAtuacao("");
-        setHorarioAgendamento("");
-
-        setExibirHorariosDisponiveis(false);
+            alert(mensagem_retorno_api);
+        }
     }
 
     async function handleClickBuscarHorarios() {
