@@ -28,6 +28,7 @@ import { ptBR } from "date-fns/locale";
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 export default function InformacoesAdvogado() {
     const classes = useStyles();
     const params = useParams();
+    const history = useHistory();
 
     const [advogado, setAdvogado] = useState({});
     const [advogadoAreas, setAdvogadoAreas] = useState([]);
@@ -172,6 +174,10 @@ export default function InformacoesAdvogado() {
         setExibirHorariosDisponiveis(false);
     }
 
+    function handleClickAvaliarAdvogado() {
+        history.push(`/avaliacao/advogado`);
+    }
+
     return (
         <React.Fragment>
             <CssBaseline />
@@ -223,6 +229,17 @@ export default function InformacoesAdvogado() {
                         onClick={ handleAbrirModalAgendamento }
                     >
                         Agendar uma consulta
+                    </Button>
+
+                    {' '}
+
+                    <Button className={classes.submit}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        onClick={ () => handleClickAvaliarAdvogado() }
+                    >
+                        Avaliar advogado
                     </Button>
                 </Grid>
 
