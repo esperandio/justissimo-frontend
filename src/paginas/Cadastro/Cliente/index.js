@@ -20,6 +20,7 @@ import Footer from '../../Main/Footer';
 //import validator from 'validator';
 import { green } from '@material-ui/core/colors';
 import { Redirect } from 'react-router-dom';
+import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -135,6 +136,9 @@ export default function CadastroUsuario() {
             <CssBaseline />
             <Container maxWidth="lg">
                 <Header title="Cadastrar Cliente" />
+                <TitleJustissimo/>
+                <TitlePage internal="Cadastro de cliente" />
+
                 <form onSubmit={handleCadastro}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm container spacing={1}>
