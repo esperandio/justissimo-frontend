@@ -14,6 +14,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import api from '../../../service/api';
 import { Redirect } from 'react-router-dom';
+import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,78 +101,81 @@ export default function CadastroDivulgacao() {
             <CssBaseline />
             <Container maxWidth="lg">
                 <Header title="Cadastrar divulgação" />
-                    <form>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm container spacing={1}>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth className={classes.margin}>
-                                        <TextField
-                                            required
-                                            id="Nome"
-                                            label="Digite o título da sua causa"
-                                            placeholder="Título da causa"
-                                            multiline
-                                            variant="outlined"
-                                            value={titulo}
-                                            onChange={e => setTitulo(e.target.value)}
-                                            margin="normal"
-                                        />
-                                    </FormControl>
-                                </Grid>
+                <TitleJustissimo/>
+                <TitlePage internal="Divulgue sua causa" />
 
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
-                                        <InputLabel id="Area">Área de atuação</InputLabel>
-                                        <Select
-                                            required
-                                            labelId="Área de atuação"
-                                            id="AreaSelect"
-                                            multiline
-                                            variant="outlined"
-                                            value={id_area_atuacao}
-                                            onChange={e => setAreaAtuacao(e.target.value)}
-                                            label="Tipo de Usuario"
-                                        >
-                                            {areas.map((area)=>{
-                                                return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
-                                            })}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
+                <form>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm container spacing={1}>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        required
+                                        id="Nome"
+                                        label="Digite o título da sua causa"
+                                        placeholder="Título da causa"
+                                        multiline
+                                        variant="outlined"
+                                        value={titulo}
+                                        onChange={e => setTitulo(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </Grid>
 
-                                <Grid item xs={12}>
-                                    <FormControl fullWidth className={classes.margin}>
-                                        <TextField
-                                            required
-                                            id="Nome"
-                                            label="Descrição"
-                                            placeholder="Descreva a sua causa"
-                                            multiline
-                                            minRows={5}
-                                            variant="outlined"
-                                            value={descricao}
-                                            onChange={e => setDescricao(e.target.value)}
-                                            margin="normal"
-                                        />
-                                    </FormControl>
-                                </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                                    <InputLabel id="Area">Área de atuação</InputLabel>
+                                    <Select
+                                        required
+                                        labelId="Área de atuação"
+                                        id="AreaSelect"
+                                        multiline
+                                        variant="outlined"
+                                        value={id_area_atuacao}
+                                        onChange={e => setAreaAtuacao(e.target.value)}
+                                        label="Tipo de Usuario"
+                                    >
+                                        {areas.map((area)=>{
+                                            return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
-                                <Grid item xs={12} sm={12}>
-                                    <FormControl>
-                                        <Button className={classes.submit}
-                                            variant="contained"
-                                            color="primary"
-                                            type="submit"
-                                            startIcon={<SaveIcon />}
-                                            onClick={ handleSubmit }
-                                        >
-                                            Cadastrar
-                                        </Button>
-                                    </FormControl>
-                                </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        required
+                                        id="Nome"
+                                        label="Descrição"
+                                        placeholder="Descreva a sua causa"
+                                        multiline
+                                        minRows={5}
+                                        variant="outlined"
+                                        value={descricao}
+                                        onChange={e => setDescricao(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={12}>
+                                <FormControl>
+                                    <Button className={classes.submit}
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                        startIcon={<SaveIcon />}
+                                        onClick={ handleSubmit }
+                                    >
+                                        Cadastrar
+                                    </Button>
+                                </FormControl>
                             </Grid>
                         </Grid>
-                    </form>
+                    </Grid>
+                </form>
                 <Footer />
             </Container>
         </React.Fragment>
