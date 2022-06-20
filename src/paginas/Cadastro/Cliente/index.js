@@ -157,44 +157,6 @@ export default function CadastroUsuario() {
                                     />
                                 </FormControl>
                             </Grid>
-                            
-                            <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <TextField
-                                        required
-                                        id="email"
-                                        label="E-mail"
-                                        placeholder="meuemail@email.com"
-                                        multiline
-                                        variant="outlined"
-                                        value={email}
-                                        onBlur={e => { validarEmail(e) }}
-                                        onChange={e => setEmail(e.target.value)}
-                                        margin="normal"
-                                    />
-                                    <span style={{
-                                        fontWeight: 'bold',
-                                        color: 'red',
-                                    }}>{erroEmail}</span>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        name="senha"
-                                        label="Senha"
-                                        type="password"
-                                        id="senha"
-                                        autoComplete="current-senha"
-                                        value={senha}
-                                        onChange={e => setSenha(e.target.value)}
-                                    />
-                                </FormControl>
-                            </Grid>
 
                             <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth className={classes.margin}>
@@ -212,11 +174,10 @@ export default function CadastroUsuario() {
                                 </FormControl>
                             </Grid>
 
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <InputLabel id="Tipo"></InputLabel>
                                     <TextField
-                                        
                                         id="CPF"
                                         label="CPF"
                                         placeholder="Digite apenas o CPF"
@@ -229,7 +190,7 @@ export default function CadastroUsuario() {
                                 </FormControl>
                             </Grid>
 
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <InputLabel id="Tipo"></InputLabel>
                                     <TextField
@@ -262,6 +223,22 @@ export default function CadastroUsuario() {
                                     />
                                 </FormControl>
                             </Grid>
+
+                            <Grid item xs={12} sm={4}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        id="Estado"
+                                        label="Estado"
+                                        placeholder="Digite seu Estado"
+                                        multiline
+                                        variant="outlined"
+                                        value={estado}
+                                        onChange={e => setEstado(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </Grid>
+
                             <Grid item xs={12} sm={4}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
@@ -276,18 +253,42 @@ export default function CadastroUsuario() {
                                     />
                                 </FormControl>
                             </Grid>
-                            
-                            <Grid item xs={12} sm={12}>
+
+                            <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth className={classes.margin}>
                                     <TextField
-                                        id="Estado"
-                                        label="Estado"
-                                        placeholder="Digite seu Estado"
+                                        required
+                                        id="email"
+                                        label="E-mail"
+                                        placeholder="meuemail@email.com"
                                         multiline
                                         variant="outlined"
-                                        value={estado}
-                                        onChange={e => setEstado(e.target.value)}
+                                        value={email}
+                                        onBlur={e => { validarEmail(e) }}
+                                        onChange={e => setEmail(e.target.value)}
                                         margin="normal"
+                                    />
+                                    <span style={{
+                                        fontWeight: 'bold',
+                                        color: 'red',
+                                    }}>{erroEmail}</span>
+                                </FormControl>
+                            </Grid>
+                            
+                            <Grid item xs={12} sm={6}>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="senha"
+                                        label="Senha"
+                                        type="password"
+                                        id="senha"
+                                        autoComplete="current-senha"
+                                        value={senha}
+                                        onChange={e => setSenha(e.target.value)}
                                     />
                                 </FormControl>
                             </Grid>
