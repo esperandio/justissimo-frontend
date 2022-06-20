@@ -11,13 +11,15 @@ import RedefinirSenha_Email from './paginas/EsqueceuSenha/DefinicaoEmail';
 import RedefinirSenha_Codigo from './paginas/EsqueceuSenha/CodigoEnviado';
 import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
 import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
+import ListarAdvogado from './paginas/Listar/Advogado';
+import InformacoesAdvogado from './paginas/InformacoesAdvogado';
 import MinhaAgenda from './paginas/MinhaAgenda';
 
 function Routes() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact={true} component={Login}/>
+                <Route path="/" exact={true} component={Home}/>
                 <Route path="/advogado/cad" component={CadAdvogado}/>
                 <Route path="/cliente/cad" component={CadCliente}/>
                 <Route path="/divulgacao/cad" component={CadDivulgacao}/>
@@ -29,6 +31,8 @@ function Routes() {
                 <Route path="/redefinirsenha/codigo" component={RedefinirSenha_Codigo}/>
                 <Route path="/redefinirsenha/novasenha" component={RedefinirSenha_NovaSenha}/>
                 <Route path="/avaliacao/advogado" component={AvaliacaoAdvogado}/>
+                <Route path="/advogado/listar" component={ListarAdvogado}/>
+                <Route path="/advogado/:id" component={InformacoesAdvogado}/>
                 <Route path="/minha-agenda" component={MinhaAgenda}/>
             </Switch>
         </BrowserRouter>
