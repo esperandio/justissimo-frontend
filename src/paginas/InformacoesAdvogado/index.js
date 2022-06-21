@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { TitleJustissimo }  from '../../components/Utils/title';
+import { TitleJustissimo, TitlePage }  from '../../components/Utils/title';
 import { Rating } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Main/Header';
@@ -186,7 +186,7 @@ export default function InformacoesAdvogado() {
                 <div className={classes.paper}>
                     <TitleJustissimo/>
                     <img src={logo} className={classes.user} alt="logo" />
-                    <h1>{advogado.nome}</h1>
+                    <TitlePage internal={advogado.nome} />
                     <Rating 
                         id="nota"
                         name="nota" 
