@@ -91,7 +91,7 @@ export default function MinhaAgenda() {
                         </Typography>
                         
                         <Typography gutterBottom variant="h5" component="div" class="causa">
-                        Causa Trabalhista
+                        Causa: Trabalhista
                         </Typography>
 
                         <Typography gutterBottom variant="h6" component="div">
