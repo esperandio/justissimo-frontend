@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Header from '../Main/Header';
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/Material/Container';
+import Container from '@material-ui/core/Container';
 import { TitleJustissimo, TitlePage } from '../../components/Utils/title';
 import { useState } from 'react';
 
@@ -79,7 +79,6 @@ export default function MinhaAgenda() {
     <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
-                <Header title="Minha Agenda" />
                 <div>
                   <TitleJustissimo/>
 
@@ -87,16 +86,6 @@ export default function MinhaAgenda() {
 
                     <Card id="myTable" sx={{ maxWidth: 500 }}>
                       <CardContent>
-                      <FormControl fullWidth>
-                            <TextField variant="h5" component="div" class="nome"
-                                id="id_cliente"
-                                label="Nome do ciente"
-                                placeholder="Nome do cliente"
-                                margin="normal"
-                                value={id_cliente}
-                                onChange={e => setId_cliente(e.target.value)}
-                            />
-                        </FormControl>
                         <Typography gutterBottom variant="h5" component="div" class="nome">
                         Matheus Esperandio
                         </Typography>
