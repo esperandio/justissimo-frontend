@@ -10,11 +10,11 @@ import { Rating } from '@mui/material';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import { useParams } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
+import Header from '../../../Main/Header';
 
 // Style
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -121,76 +121,78 @@ export default function AvaliacaoAdvogado() {
 
     return (
         // Form
-        <Container component="main" maxWidth="xs">
-            
+        <Container maxWidth="lg">
+            <Header title="Avaliar Advogado" />
             <TitleJustissimo/>
             <TitlePage internal="Avaliar Advogado" />
 
-            <CssBaseline />
-            <div className={classes.paper}>
-                <form className={classes.form} /*onSubmit={handleLogin}*/>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <form className={classes.form} /*onSubmit={handleLogin}*/>
 
-                    {/* Input Rating */}
-                    <div className={classes.paper}>
-                        <Rating 
+                        {/* Input Rating */}
+                        <div className={classes.paper}>
+                            <Rating 
+                                style={{
+                                    color: '#FFCB45'
+                                }}
+                                id="nota"
+                                name="nota" 
+                                defaultValue={3} 
+                                precision={0.5}
+                                size='large'
+                                required 
+                                autoFocus
+                                value={nota}
+                                onChange={e => convertDados(e.target.value)}
+                                />
+                        </div>
+
+                        <div 
                             style={{
-                                color: '#FFCB45'
+                                "font-family": "'Inter', sans-serif",
+                                "color": '#3B485E'
                             }}
-                            id="nota"
-                            name="nota" 
-                            defaultValue={3} 
-                            precision={0.5}
-                            size='large'
-                            required 
+                        >
+
+                            <br/><br/>
+                            <span>
+                                <b>
+                                    Descrição
+                                </b>
+                            </span> <br/>
+                            <span>
+                                Descreva sua avaliação
+                            </span>
+                            <br/>
+                        </div>
+
+                        {/* Input TextArea 'Descrição' */}
+                        <Textarea
+                            id="descricao"
+                            name="descricao"
+                            autoComplete="descricao"
                             autoFocus
-                            value={nota}
-                            onChange={e => convertDados(e.target.value)}
-                            />
-                    </div>
+                            margin="normal"
+                            variant="outlined"
+                            placeholder="Aqui vai uma descrição da sua avaliação"
+                            value={descricao}
+                            
+                            onChange={e => setDescricao(e.target.value)}
+                        />
 
-                    <div 
-                        style={{
-                            "font-family": "'Inter', sans-serif",
-                            "color": '#3B485E'
-                        }}
-                    >
+                        <ButtonOutlined 
+                            className={classes.submit}
+                            internal="AVALIAR" 
+                            type="submit"
+                            variant="outlined"
+                            onClick={handleAvaliacaoAdvogado}
+                        />
 
-                        <br/><br/>
-                        <span>
-                            <b>
-                                Descrição
-                            </b>
-                        </span> <br/>
-                        <span>
-                            Descreva sua avaliação
-                        </span>
-                        <br/>
-                    </div>
-
-                    {/* Input TextArea 'Descrição' */}
-                    <Textarea
-                        id="descricao"
-                        name="descricao"
-                        autoComplete="descricao"
-                        autoFocus
-                        margin="normal"
-                        variant="outlined"
-                        placeholder="Aqui vai uma descrição da sua avaliação"
-                        value={descricao}
-                        
-                        onChange={e => setDescricao(e.target.value)}
-                    />
-
-                    <ButtonOutlined 
-                        className={classes.submit}
-                        internal="AVALIAR" 
-                        type="submit"
-                        variant="outlined"
-                        onClick={handleAvaliacaoAdvogado}
-                    />
-
-                </form>
-            </div>
+                    </form>
+                </div>
+            </Container>
         </Container>
     );
 }
