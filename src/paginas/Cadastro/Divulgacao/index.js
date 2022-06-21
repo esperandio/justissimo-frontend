@@ -54,7 +54,7 @@ export default function CadastroDivulgacao() {
     useEffect(() => {
         function validarSessao() {
             if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
-                alert('Você precisa conectado como cliente para acessar essa tela!');
+                alert('Você precisa estar conectado como cliente para acessar essa tela!');
                 setRedirect({ redirect: true });
             }
         }

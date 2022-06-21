@@ -39,7 +39,7 @@ export default function AvaliacaoAdvogado() {
     useEffect(() => {
         // Validação de permissão para acessar a tela de avaliação.
         if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
-            alert('Você não tem permissão para acessar essa tela!');
+            alert('Você precisa estar conectado como cliente para acessar essa tela!');
             setStatePermission({ redirectPermission: true });
 
             return;
@@ -116,7 +116,7 @@ export default function AvaliacaoAdvogado() {
     }
 
     if (redirectPermission) {
-        return <Redirect to='../home'/>;
+        return <Redirect to='../../home'/>;
     }
 
     return (
