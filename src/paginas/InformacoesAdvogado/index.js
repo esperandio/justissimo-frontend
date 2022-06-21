@@ -175,7 +175,7 @@ export default function InformacoesAdvogado() {
     }
 
     function handleClickAvaliarAdvogado() {
-        history.push(`/avaliacao/advogado`);
+        history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
     }
 
     return (

@@ -8,6 +8,7 @@ import { TitleJustissimo, TitlePage } from '../../../../components/Utils/title';
 import Textarea from '../../../../components/Utils/input';
 import { Rating } from '@mui/material';
 import ButtonOutlined from '../../../../components/Utils/buttom';
+import { useParams } from "react-router-dom";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -27,19 +28,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AvaliacaoAdvogado() {
+    const classes = useStyles();
+    const params = useParams();
 
+    const [id_advogado, setIdAdvogado] = useState({});
+    
     // Carrega inicialmente
     useEffect(() => {
         // Validação de permissão para acessar a tela de avaliação.
         if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') === 'Advogado') {
             alert('Você não tem permissão para acessar essa tela!');
             setStatePermission({ redirectPermission: true });
-        }
-    }, []);
 
-    const classes = useStyles();
+            return;
+        }
+
+        setIdAdvogado(params.id);
+    }, [params.id]);
+
     let id_cliente;
-    let id_advogado;
 
     const [nota, setNota] = useState(0.0);
     const [descricao, setDescricao] = useState('');
@@ -70,9 +77,7 @@ export default function AvaliacaoAdvogado() {
 
         try {
             if (dados.nota !== "" && dados.nota > 0) {
-                alert('Como não existe as telas de consulta, não há como puxar os ids do cliente ou do advogado, no momento, o mesmo deve ser setado brasalmente');
                 dados.id_cliente = Number(sessionStorage.getItem('id_cliente'));
-                id_advogado = Number(prompt("Digite o id do advogado:", "1"));
 
                 // Converte os dados necessários para o tipo Number
                 convertDados(dados.nota);
