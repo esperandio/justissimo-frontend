@@ -13,22 +13,36 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { TitleJustissimo, TitlePage } from '../../components/Utils/title';
 import { useState } from 'react';
+import api from '../../service/api';
+import { useEffect } from 'react';
+import { useParams } from "react-router-dom";
 
 
 export default function MinhaAgenda() {
-
+  const params = useParams();
  /* const classes = useStyles();
     let id_cliente;
     let id_advogado;*/
 
   const [id_cliente, setId_cliente] = useState("");
-  const [id_advogado, setId_advogado] = useState("");  
+  const [id_advogado, setId_advogado] = useState("");
+  const [agenda, setAgenda] = useState("");  
   const [causa, setCausa] = useState("");
   const [data_agendamento, setData_agendamento] = useState("");
   const [duracao, setDuracao] = useState("");
   const [horario, setHorario] = useState("");
   const [observacao, setObservacao] = useState("");
   const [contato_cliente, setContato_cliente] = useState("");
+
+  useEffect(() => {
+    async function buscarInformacoesAgendaAdvogado() {
+        const id = sessionStorage.getItem('id_advogado');
+        const resultado = await api.get(`schedulings/lawyer/${id}`);
+        // setAgenda(resultado.data)
+        console.log(resultado);
+    }
+    buscarInformacoesAgendaAdvogado();
+  });
 
   //async function handleMinhaAgenda {}
 
@@ -86,11 +100,11 @@ export default function MinhaAgenda() {
 
                     <Card id="myTable" sx={{ maxWidth: 500 }}>
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" class="nome">
+                        <Typography gutterBottom variant="h5" component="div">
                         Matheus Esperandio
                         </Typography>
                         
-                        <Typography gutterBottom variant="h5" component="div" class="causa">
+                        <Typography gutterBottom variant="h5" component="div">
                         Causa: Trabalhista
                         </Typography>
 
