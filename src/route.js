@@ -13,12 +13,14 @@ import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
 import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
 import ListarAdvogado from './paginas/Listar/Advogado';
 import InformacoesAdvogado from './paginas/InformacoesAdvogado';
+import App from './App';
 
 function Routes() {
     return (
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact={true} component={Home}/>
+                {/* <Route path="/" exact={true} component={App}/> */}
                 <Route path="/advogado/cad" component={CadAdvogado}/>
                 <Route path="/cliente/cad" component={CadCliente}/>
                 <Route path="/divulgacao/cad" component={CadDivulgacao}/>

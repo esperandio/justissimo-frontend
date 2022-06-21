@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { withWebChat } from '@ibm-watson/assistant-web-chat-react';
-import CustomResponsePortalsContainer from './components/watson/CustomResponsePortalsContainer';
+import CustomResponsePortalsContainer from './CustomResponsePortalsContainer';
 
 function App({ createWebChatInstance }) {
   const [instance, setInstance] = useState(null);
 
   useEffect(() => {
     const watsonAssistantChatOptions = {
-      integrationID: '8cf40cb5-8eb4-43ba-ae35-b3e5908902d9',
-      region: 'us-south',
+      integrationID: process.env.REACT_APP_INTEGRATIO_ID,
+      region: process.env.REACT_APP_REGION,
       onLoad: wacInstance => {
         setInstance(wacInstance);
         wacInstance.render();
