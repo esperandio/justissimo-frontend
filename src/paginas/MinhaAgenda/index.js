@@ -24,9 +24,10 @@ export default function MinhaAgenda() {
     let id_cliente;
     let id_advogado;*/
 
+  const [agendas, setAgendas] = useState([]);  
+
   const [id_cliente, setId_cliente] = useState("");
   const [id_advogado, setId_advogado] = useState("");
-  const [agenda, setAgenda] = useState("");  
   const [causa, setCausa] = useState("");
   const [data_agendamento, setData_agendamento] = useState("");
   const [duracao, setDuracao] = useState("");
@@ -38,11 +39,12 @@ export default function MinhaAgenda() {
     async function buscarInformacoesAgendaAdvogado() {
         const id = sessionStorage.getItem('id_advogado');
         const resultado = await api.get(`schedulings/lawyer/${id}`);
-        // setAgenda(resultado.data)
+        
+        setAgendas(resultado.data)
         console.log(resultado);
     }
     buscarInformacoesAgendaAdvogado();
-  });
+  }, []);
 
   //async function handleMinhaAgenda {}
 
@@ -98,38 +100,42 @@ export default function MinhaAgenda() {
 
                   <h2>Minha Agenda</h2>
 
-                    <Card id="myTable" sx={{ maxWidth: 500 }}>
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                        Matheus Esperandio
-                        </Typography>
-                        
-                        <Typography gutterBottom variant="h5" component="div">
-                        Causa: Trabalhista
-                        </Typography>
+                  {agendas.map((agenda) => {
+                    return <>
+                      <Card id="myTable" sx={{ maxWidth: 500 }}>
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="div">
+                          Matheus Esperandio
+                          </Typography>
+                          
+                          <Typography gutterBottom variant="h5" component="div">
+                          Causa: Trabalhista
+                          </Typography>
 
-                        <Typography gutterBottom variant="h6" component="div">
-                        08/04/2022
-                        </Typography>
+                          <Typography gutterBottom variant="h6" component="div">
+                          08/04/2022
+                          </Typography>
 
-                        <Typography gutterBottom variant="h7" component="div">
-                        Sexta-Feira
-                        </Typography>
+                          <Typography gutterBottom variant="h7" component="div">
+                          Sexta-Feira
+                          </Typography>
 
-                        <Typography gutterBottom variant="h8" component="div">
-                        15:00h
-                        </Typography>
+                          <Typography gutterBottom variant="h8" component="div">
+                          15:00h
+                          </Typography>
 
-                        <Typography gutterBottom variant="h6" component="div">
-                        Contato em matheusesperandio@gmail.com
-                        </Typography>
-                      </CardContent>
-                      <CardActions>
-                            <Button size="small" color="primary">
-                                ENCERRAR
-                            </Button>
-                      </CardActions>
-                    </Card>
+                          <Typography gutterBottom variant="h6" component="div">
+                          Contato em {agenda.contato_cliente}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                              <Button size="small" color="primary">
+                                  ENCERRAR
+                              </Button>
+                        </CardActions>
+                      </Card>
+                    </>
+                  })}
                 </div>
       </Container>
     </React.Fragment>
