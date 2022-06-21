@@ -8,43 +8,27 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Box from '@material-ui/core/Box';
 import Header from '../../Main/Header';
 import Footer from '../../Main/Footer';
-//import validator from 'validator';
-import { green } from '@material-ui/core/colors';
 import { Redirect } from 'react-router-dom';
 import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { ptBR } from "date-fns/locale";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    paper: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
+        alignItems: 'center'
     },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: '25ch',
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
+    user: {
+        width: '20vh',
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-    },
-    input: {
-        display: 'none',
     },
 }));
 
@@ -53,23 +37,11 @@ export default function CadastroUsuario() {
     const classes = useStyles();
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
-    const [erroEmail, setErroEmail] = useState('')
-    const validarEmail = (e) => {
-        var EMAIL = e.target.value
-        
-        // if (validator.isEmail(EMAIL)) {
-        //     setErroEmail('E-mail válido!')
-        // } else {
-        //     setErroEmail('Entre um E-mail válido!')
-        // }
-    }
     const [senha, setSenha] = useState('');
-    const [dt_nascimento, setNascimento] = useState('');
+    const [dt_nascimento, setNascimento] = useState(new Date());
     const [cpf, setCPF] = useState('');
     const [cnpj, setCNPJ] = useState('');
     const [cep, setCEP] = useState('');
-    const [TELEFONE, setTelefone] = useState('');
-    const [id_tpouser, setTipo] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
     const [redirect, setState] = useState(false);
@@ -77,11 +49,17 @@ export default function CadastroUsuario() {
     async function handleCadastro(e) {
         e.preventDefault();
 
+        const dt_nascimento_formatado = `${dt_nascimento.getUTCFullYear()}` 
+            + "-"
+            + `${dt_nascimento.getUTCMonth() + 1}`.padStart(2, 0)
+            + "-"
+            + `${dt_nascimento.getDate()}`.padStart(2, 0);
+
         const dados = {
             nome,
             email,
             senha,
-            dt_nascimento,
+            dt_nascimento: dt_nascimento_formatado,
             cpf,
             cnpj,
             cep,
@@ -110,13 +88,15 @@ export default function CadastroUsuario() {
                         alert("Cadastro realizado com sucesso!"); 
                         setState({ redirect: true });
                         break;
+                    default:
+                        
                 }
 
             } else {
                 alert('Preencha todos os campos!')
             }
         } catch (error) {
-            if (error.response.status == 400) {
+            if (error.response.status === 400) {
                 alert("Cadastro Inválido! " + error.response.data.message); 
             }
             else {
@@ -159,18 +139,15 @@ export default function CadastroUsuario() {
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <TextField
-                                        required
-                                        id="Data de Nascimento"
-                                        label="Data de Nascimento"
-                                        placeholder="Coloca Data de Nascimento"
-                                        multiline
-                                        variant="outlined"
-                                        value={dt_nascimento}
-                                        onChange={e => setNascimento(e.target.value)}
-                                        margin="normal"
-                                    />
+                                <FormControl fullWidth>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                                        <DatePicker
+                                            label="Data de nascimento"
+                                            value={dt_nascimento}
+                                            onChange={newValue => setNascimento(newValue)}
+                                            renderInput={(params) => <TextField {...params} variant="outlined" margin="normal" />}
+                                        />
+                                    </LocalizationProvider>
                                 </FormControl>
                             </Grid>
 
@@ -264,14 +241,9 @@ export default function CadastroUsuario() {
                                         multiline
                                         variant="outlined"
                                         value={email}
-                                        onBlur={e => { validarEmail(e) }}
                                         onChange={e => setEmail(e.target.value)}
                                         margin="normal"
                                     />
-                                    <span style={{
-                                        fontWeight: 'bold',
-                                        color: 'red',
-                                    }}>{erroEmail}</span>
                                 </FormControl>
                             </Grid>
                             
