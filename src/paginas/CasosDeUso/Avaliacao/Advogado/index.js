@@ -9,6 +9,7 @@ import Textarea from '../../../../components/Utils/input';
 import { Rating } from '@mui/material';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import { useParams } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AvaliacaoAdvogado() {
     const classes = useStyles();
     const params = useParams();
+    const history = useHistory();
 
     const [id_advogado, setIdAdvogado] = useState({});
     
@@ -90,7 +92,7 @@ export default function AvaliacaoAdvogado() {
                 switch ((lawyer_review).status) {
                     case 200:
                         alert('Obrigado! Advogado avaliado com sucesso!');
-                        // setState({ redirect: true });
+                        history.push(`/advogado/${id_advogado}`);
                         break;
                     default:
                         alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
