@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import api from '../../../service/api';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
@@ -17,6 +17,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ptBR } from "date-fns/locale";
+import Autocomplete from '@mui/material/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    teste: {
+        minHeight: '56px'
+    }
 }));
 
 export default function CadastroUsuario() {
@@ -45,6 +49,9 @@ export default function CadastroUsuario() {
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
     const [redirect, setState] = useState(false);
+
+    const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
+    'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
 
     async function handleCadastro(e) {
         e.preventDefault();
@@ -123,7 +130,7 @@ export default function CadastroUsuario() {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm container spacing={1}>
                             <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
+                                <FormControl fullWidth>
                                     <TextField
                                         required
                                         id="Nome"
@@ -152,7 +159,7 @@ export default function CadastroUsuario() {
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
+                                <FormControl fullWidth>
                                     <InputLabel id="Tipo"></InputLabel>
                                     <TextField
                                         id="CPF"
@@ -168,7 +175,7 @@ export default function CadastroUsuario() {
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
+                                <FormControl fullWidth>
                                     <InputLabel id="Tipo"></InputLabel>
                                     <TextField
                                     
@@ -185,7 +192,7 @@ export default function CadastroUsuario() {
                             </Grid>
 
                             <Grid item xs={12} sm={4}>
-                                <FormControl fullWidth className={classes.margin}>
+                                <FormControl fullWidth>
                                     <InputLabel id="Tipo"></InputLabel>
                                     <TextField
                                         required
@@ -202,22 +209,18 @@ export default function CadastroUsuario() {
                             </Grid>
 
                             <Grid item xs={12} sm={4}>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <TextField
-                                        id="Estado"
-                                        label="Estado"
-                                        placeholder="Digite seu Estado"
-                                        multiline
-                                        variant="outlined"
-                                        value={estado}
-                                        onChange={e => setEstado(e.target.value)}
-                                        margin="normal"
+                                <FormControl fullWidth>
+                                    <Autocomplete
+                                        options={estados}
+                                        isOptionEqualToValue={(option, value) => option.value === value.value}
+                                        onChange={ (_, v) => { setEstado(v); } }
+                                        renderInput={(params) => <TextField {...params} variant="outlined" margin="normal" multiline label="Estado" />}
                                     />
                                 </FormControl>
                             </Grid>
 
                             <Grid item xs={12} sm={4}>
-                                <FormControl fullWidth className={classes.margin}>
+                                <FormControl fullWidth>
                                     <TextField
                                         id="Cidade"
                                         label="Cidade"
@@ -232,7 +235,7 @@ export default function CadastroUsuario() {
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
+                                <FormControl fullWidth>
                                     <TextField
                                         required
                                         id="email"
@@ -248,7 +251,7 @@ export default function CadastroUsuario() {
                             </Grid>
                             
                             <Grid item xs={12} sm={6}>
-                                <FormControl fullWidth className={classes.margin}>
+                                <FormControl fullWidth>
                                     <TextField
                                         variant="outlined"
                                         margin="normal"
