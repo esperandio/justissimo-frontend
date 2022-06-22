@@ -151,7 +151,6 @@ export default function AvaliacaoAdvogado() {
 
                         <div 
                             style={{
-                                "font-family": "'Inter', sans-serif",
                                 "color": '#3B485E'
                             }}
                         >
