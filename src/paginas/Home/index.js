@@ -7,7 +7,7 @@ import { TitleJustissimo }  from '../../components/Utils/title';
 import Footer from '../Main/Footer';
 import Typography from '@mui/material/Typography';
 import App from '../../components/watson/watson_component';
-
+import InputTelefone from '../../components/Utils/mask/inputTelefoneMask';
 const useStyles = makeStyles((theme) => ({
     paper: {
         display: 'flex',
@@ -23,9 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home() {
-
     return (
-
         <React.Fragment>
             <App/>
             <CssBaseline />
