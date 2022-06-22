@@ -137,12 +137,6 @@ export default function MinhaAgenda() {
                     Causa: Trabalhista
                     </Typography>
 
-                    
-                    
-                    <Typography gutterBottom variant="h6" component="div">
-                    Causa: Trabalhista
-                    </Typography>
-
                     <Typography gutterBottom variant="h7" component="div">
                     {agenda.data_agendamento}
                     </Typography>
