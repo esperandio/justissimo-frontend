@@ -65,13 +65,22 @@ export default function MinhaAgenda() {
   //async function handleMinhaAgenda {}
 
 
-    function deleteAgenda(id_agenda) {
+    async function deleteAgenda(id_agenda) {
       const agendaDepois = agendas.filter((x) => {
         if (x.id_agenda != id_agenda) {
           return x
         }
       });
 
+      const id = sessionStorage.getItem('id_advogado');
+
+      await api.delete(`scheduling`, {
+        data: {
+          id_advogado: parseInt(id),
+          id_agenda: parseInt(id_agenda)
+        }
+      });
+      
       setAgendas(agendaDepois);
     }
 
