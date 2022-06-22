@@ -7,7 +7,7 @@ function App({ createWebChatInstance }) {
 
   useEffect(() => {
     const watsonAssistantChatOptions = {
-      integrationID: process.env.REACT_APP_INTEGRATIO_ID,
+      integrationID: process.env.REACT_APP_INTEGRATION_ID,
       region: process.env.REACT_APP_REGION,
       onLoad: wacInstance => {
         setInstance(wacInstance);
