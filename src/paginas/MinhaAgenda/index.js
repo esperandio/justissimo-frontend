@@ -16,9 +16,25 @@ import { useState } from 'react';
 import api from '../../service/api';
 import { useEffect } from 'react';
 import { useParams } from "react-router-dom";
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+  },
+  user: {
+      width: '20vh',
+  },
+  submit: {
+      margin: theme.spacing(3, 0, 2),
+  }
+}));
 
 export default function MinhaAgenda() {
+  const classes = useStyles();
   const params = useParams();
  /* const classes = useStyles();
     let id_cliente;
@@ -49,10 +65,15 @@ export default function MinhaAgenda() {
   //async function handleMinhaAgenda {}
 
 
-    function deleteRow(r) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("myTable").deleteRow(i);
-      }
+    function deleteAgenda(id_agenda) {
+      const agendaDepois = agendas.filter((x) => {
+        if (x.id_agenda != id_agenda) {
+          return x
+        }
+      });
+
+      setAgendas(agendaDepois);
+    }
 
     const dados = {
       id_advogado,
@@ -96,50 +117,61 @@ export default function MinhaAgenda() {
       <CssBaseline />
       <Container maxWidth="lg">
         <div>
-          <TitleJustissimo/>
+          <div className={classes.paper}>
+            <TitleJustissimo/>
 
-          <h2>Minha Agenda</h2>
+            <h2>Minha Agenda</h2>
 
-          {agendas.map((agenda) => {
-            return (
-              <Card key={agenda.id_agenda} id="myTable" sx={{ maxWidth: 500 }}>
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
-                  {agenda.cliente.nome}
-                  {' | '}
-                  Causa: Trabalhista
-                  </Typography>
+            Configuração da Agenda
 
-                  
-                  
-                  <Typography gutterBottom variant="h6" component="div">
-                  Causa: Trabalhista
-                  </Typography>
+            Filtro
 
-                  <Typography gutterBottom variant="h7" component="div">
-                  {agenda.data_agendamento}
-                  </Typography>
+            {agendas.map((agenda) => {
+              return (
 
-                  <Typography gutterBottom variant="h8" component="div">
-                  Sexta-Feira
-                  </Typography>
+                <Card key={agenda.id_agenda} id="myTable" sx={{ maxWidth: 500 }}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                    {agenda.cliente.nome}
+                    {' | '}
+                    Causa: Trabalhista
+                    </Typography>
 
-                  <Typography gutterBottom variant="h8" component="div">
-                  15:00h{agenda.horario}
-                  </Typography>
+                    
+                    
+                    <Typography gutterBottom variant="h6" component="div">
+                    Causa: Trabalhista
+                    </Typography>
 
-                  <Typography gutterBottom variant="h7" component="div">
-                  Contato em {agenda.contato_cliente}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                      <Button>
-                          ENCERRAR
-                      </Button>
-                </CardActions>
-              </Card>
-            )
-          })}
+                    <Typography gutterBottom variant="h7" component="div">
+                    {agenda.data_agendamento}
+                    </Typography>
+
+                    <Typography gutterBottom variant="h8" component="div">
+                    Sexta-Feira
+                    </Typography>
+
+                    <Typography gutterBottom variant="h8" component="div">
+                    15:00h{agenda.horario}
+                    </Typography>
+
+                    <Typography gutterBottom variant="h7" component="div">
+                    Contato em {agenda.contato_cliente}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                        <Button className={classes.submit}
+                                                variant="contained"
+                                                type="submit"
+                                                onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                            ENCERRAR
+                        </Button>
+                  </CardActions>
+                </Card>
+              )
+            })}
+
+          </div>
         </div>
       </Container>
     </React.Fragment>
