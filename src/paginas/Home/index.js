@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Header from '../Main/Header';
@@ -6,7 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TitleJustissimo }  from '../../components/Utils/title';
 import Footer from '../Main/Footer';
 import Typography from '@mui/material/Typography';
-
+import App from '../../components/watson/watson_component';
+import InputTelefone from '../../components/Utils/mask/inputTelefoneMask';
 const useStyles = makeStyles((theme) => ({
     paper: {
         display: 'flex',
@@ -22,15 +23,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home() {
-    const classes = useStyles();
-
     return (
         <React.Fragment>
+            <App/>
             <CssBaseline />
             <Container maxWidth="lg">
                 <Header title="Home" />
 
-                <div className={classes.paper}>
+                <div >
                     <TitleJustissimo/>
                 </div>
 
@@ -45,6 +45,6 @@ export default function Home() {
                 </Typography>
             </Container>
             <Footer />
-        </React.Fragment>
+        </React.Fragment>  
     );
 }
