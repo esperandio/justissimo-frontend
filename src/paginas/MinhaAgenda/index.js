@@ -82,6 +82,8 @@ export default function MinhaAgenda() {
       });
       
       setAgendas(agendaDepois);
+
+      alert("excluido com sucesso")
     }
 
     const dados = {
