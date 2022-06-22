@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 const sections = [  
   { title: 'Home', url: '/home' },
   { title: 'Pesquisar Advogado', url: '/advogado/listar' },
-  { title: 'Cadastrar Advogado', url: '/advogado/cad' },
   { title: 'Cadastrar Cliente', url: '/cliente/cad' },
   { title: 'Cadastrar Divulgação', url: '/divulgacao/cad' },
 ];
