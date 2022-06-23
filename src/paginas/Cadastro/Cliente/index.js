@@ -18,6 +18,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ptBR } from "date-fns/locale";
 import Autocomplete from '@mui/material/Autocomplete';
+import InputCepMask from '../../../components/Utils/mask/inputCepMask';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -69,7 +70,7 @@ export default function CadastroUsuario() {
             dt_nascimento: dt_nascimento_formatado,
             cpf,
             cnpj,
-            cep,
+            cep: cep.replace(/\D/g, ""),
             cidade,
             estado
         };
@@ -194,16 +195,9 @@ export default function CadastroUsuario() {
                             <Grid item xs={12} sm={4}>
                                 <FormControl fullWidth>
                                     <InputLabel id="Tipo"></InputLabel>
-                                    <TextField
-                                        required
-                                        id="CEP"
-                                        label="CEP"
-                                        placeholder="Digite apenas o CEP"
-                                        multiline
-                                        variant="outlined"
+                                    <InputCepMask  
                                         value={cep}
                                         onChange={e => setCEP(e.target.value)}
-                                        margin="normal"
                                     />
                                 </FormControl>
                             </Grid>
