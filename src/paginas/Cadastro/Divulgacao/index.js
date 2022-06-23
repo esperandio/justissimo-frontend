@@ -152,6 +152,7 @@ export default function CadastroDivulgacao() {
                                         placeholder="Descreva a sua causa"
                                         multiline
                                         minRows={5}
+                                        inputProps={{ maxLength: 200 }}
                                         variant="outlined"
                                         value={descricao}
                                         onChange={e => setDescricao(e.target.value)}

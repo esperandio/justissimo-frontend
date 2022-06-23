@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router';
 import api from '../../../../service/api';
 import { TitleJustissimo, TitlePage } from '../../../../components/Utils/title';
-import Textarea from '../../../../components/Utils/input';
+import TextArea from '../../../../components/Utils/input';
 import { Rating } from '@mui/material';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import { useParams } from "react-router-dom";
@@ -80,7 +80,10 @@ export default function AvaliacaoAdvogado() {
         try {
             if (dados.nota !== "" && dados.nota > 0) {
                 dados.id_cliente = Number(sessionStorage.getItem('id_cliente'));
-
+                if(dados.descricao.length > 200) {
+                    alert("Por gentileza informe uma descrição de até 200 caracteres!")
+                    return
+                }
                 // Converte os dados necessários para o tipo Number
                 convertDados(dados.nota);
 
@@ -158,17 +161,15 @@ export default function AvaliacaoAdvogado() {
                             <br/><br/>
                             <span>
                                 <b>
-                                    Descrição
+                                    Deixe um comentário
                                 </b>
                             </span> <br/>
-                            <span>
-                                Descreva sua avaliação
-                            </span>
+
                             <br/>
                         </div>
 
                         {/* Input TextArea 'Descrição' */}
-                        <Textarea
+                        <TextArea
                             id="descricao"
                             name="descricao"
                             autoComplete="descricao"
@@ -177,7 +178,6 @@ export default function AvaliacaoAdvogado() {
                             variant="outlined"
                             placeholder="Aqui vai uma descrição da sua avaliação"
                             value={descricao}
-                            
                             onChange={e => setDescricao(e.target.value)}
                         />
 
