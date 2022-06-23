@@ -45,6 +45,7 @@ export default function CadastroUsuario() {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [senhaConfirmacao, setSenhaConfirmacao] = useState('');
     const [dt_nascimento, setNascimento] = useState(new Date());
     const [cpf, setCPF] = useState('');
     const [cnpj, setCNPJ] = useState('');
@@ -61,6 +62,11 @@ export default function CadastroUsuario() {
 
     async function handleCadastro(e) {
         e.preventDefault();
+
+        if (senha !== senhaConfirmacao) {
+            alert(`A senha e confirmação de senha não conferem!`);
+            return;
+        }
 
         const dt_nascimento_formatado = `${dt_nascimento.getUTCFullYear()}` 
             + "-"
@@ -209,7 +215,7 @@ export default function CadastroUsuario() {
                                 </FormControl>
                             </Grid>
 
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12} sm={12}>
                                 <FormControl fullWidth>
                                     <TextField
                                         required
@@ -241,6 +247,31 @@ export default function CadastroUsuario() {
                                         onChange={e => setSenha(e.target.value)}
                                     />
                                 </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <FormControl fullWidth>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="senha"
+                                        label="Confirmar senha"
+                                        type="password"
+                                        id="senha"
+                                        autoComplete="current-senha"
+                                        value={senhaConfirmacao}
+                                        onChange={e => setSenhaConfirmacao(e.target.value)}
+                                    />
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={12}>
+                                <span>Mínimo 8 caracteres</span> <br/>
+                                <span>Caracteres maiúsculos</span> <br/>
+                                <span>Caracteres mínusculos</span> <br/>
+                                <span>Símbolos ou números</span> <br/>
                             </Grid>
 
                             <Grid item xs={12} sm={12}>
