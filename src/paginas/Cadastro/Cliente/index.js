@@ -19,6 +19,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ptBR } from "date-fns/locale";
 import Autocomplete from '@mui/material/Autocomplete';
 import InputCepMask from '../../../components/Utils/mask/inputCepMask';
+import InputCnpjMask from '../../../components/Utils/mask/inputCnpjMask';
+import InputCpfMask from '../../../components/Utils/mask/inputCpfMask';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -49,10 +51,13 @@ export default function CadastroUsuario() {
     const [cep, setCEP] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
+    const [tipoPessoa, setTipoPessoa] = useState('Física');
     const [redirect, setState] = useState(false);
 
     const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
     'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
+
+    const [tiposPessoa] = useState(['Física', 'Jurídica']);
 
     async function handleCadastro(e) {
         e.preventDefault();
@@ -68,40 +73,24 @@ export default function CadastroUsuario() {
             email,
             senha,
             dt_nascimento: dt_nascimento_formatado,
-            cpf,
-            cnpj,
+            cpf: cpf.replace(/\D/g, ""),
+            cnpj: cnpj.replace(/\D/g, ""),
             cep: cep.replace(/\D/g, ""),
             cidade,
             estado
         };
 
-        try {
-            
-            // Verifica se todos os campos foram preenchidos
-            if (nome !== "" &&
-                email !== "" && 
-                senha !== "" &&
-                dt_nascimento !== "" &&
-                cpf !== "" &&
-                cep !== "" &&
-                cidade !== "" &&
-                estado !== "") {
-                    
-                // Envia ao backend/api os dados inseridos no cadastro
-                const clients = await api.post('clients', dados);
-    
-                // Verifica o 'status code' recebido
-                switch ((clients).status) {
-                    case 201:
-                        alert("Cadastro realizado com sucesso!"); 
-                        setState({ redirect: true });
-                        break;
-                    default:
-                        
-                }
+        try {   
+            // Envia ao backend/api os dados inseridos no cadastro
+            const clients = await api.post('clients', dados);
 
-            } else {
-                alert('Preencha todos os campos!')
+            // Verifica o 'status code' recebido
+            switch ((clients).status) {
+                case 201:
+                    alert("Cadastro realizado com sucesso!"); 
+                    setState({ redirect: true });
+                    break;
+                default:   
             }
         } catch (error) {
             if (error.response.status === 400) {
@@ -161,16 +150,13 @@ export default function CadastroUsuario() {
 
                             <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth>
-                                    <InputLabel id="Tipo"></InputLabel>
-                                    <TextField
-                                        id="CPF"
-                                        label="CPF"
-                                        placeholder="Digite apenas o CPF"
-                                        multiline
-                                        variant="outlined"
-                                        value={cpf}
-                                        onChange={e => setCPF(e.target.value)}
-                                        margin="normal"
+                                    <Autocomplete
+                                        options={ tiposPessoa }
+                                        isOptionEqualToValue={(option, value) => option.value === value.value}
+                                        onChange={ (_, v) => { setTipoPessoa(v); setCPF(""); setCNPJ("") } }
+                                        clearIcon={ false }
+                                        value={ tipoPessoa }
+                                        renderInput={(params) => <TextField {...params}  variant="outlined" margin="normal" multiline label="Tipo de pessoa" />}
                                     />
                                 </FormControl>
                             </Grid>
@@ -178,17 +164,10 @@ export default function CadastroUsuario() {
                             <Grid item xs={12} sm={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="Tipo"></InputLabel>
-                                    <TextField
-                                    
-                                        id="CNPJ"
-                                        label="CNPJ"
-                                        placeholder="Digite apenas o CNPJ"
-                                        multiline
-                                        variant="outlined"
-                                        value={cnpj}
-                                        onChange={e => setCNPJ(e.target.value)}
-                                        margin="normal"
-                                    />
+                                    {tipoPessoa === "Física"
+                                        ? <InputCpfMask required onChange={e => setCPF(e.target.value)} />
+                                        : <InputCnpjMask required onChange={e => setCNPJ(e.target.value)} />
+                                    }
                                 </FormControl>
                             </Grid>
 
@@ -198,6 +177,7 @@ export default function CadastroUsuario() {
                                     <InputCepMask  
                                         value={cep}
                                         onChange={e => setCEP(e.target.value)}
+                                        required
                                     />
                                 </FormControl>
                             </Grid>
@@ -208,7 +188,7 @@ export default function CadastroUsuario() {
                                         options={estados}
                                         isOptionEqualToValue={(option, value) => option.value === value.value}
                                         onChange={ (_, v) => { setEstado(v); } }
-                                        renderInput={(params) => <TextField {...params} variant="outlined" margin="normal" multiline label="Estado" />}
+                                        renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Estado" />}
                                     />
                                 </FormControl>
                             </Grid>
@@ -216,6 +196,7 @@ export default function CadastroUsuario() {
                             <Grid item xs={12} sm={4}>
                                 <FormControl fullWidth>
                                     <TextField
+                                        required
                                         id="Cidade"
                                         label="Cidade"
                                         placeholder="Nome da Cidade"
