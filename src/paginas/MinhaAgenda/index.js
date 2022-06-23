@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
       margin: theme.spacing(3, 0, 2),
+      backgroundColor:" ff0000",
   }
 }));
 
@@ -166,6 +168,7 @@ export default function MinhaAgenda() {
                   </CardContent>
                   <CardActions>
                         <Button className={classes.submit}
+                                      style = {{backgroundColor:'#ec2300'}}
                                                 variant="contained"
                                                 type="submit"
                                                 onClick={ () => deleteAgenda(agenda.id_agenda) }>
