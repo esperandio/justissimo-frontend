@@ -13,6 +13,7 @@ import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
 import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
 import ListarAdvogado from './paginas/Listar/Advogado';
 import InformacoesAdvogado from './paginas/InformacoesAdvogado';
+import ConfiguracaoAgenda from './paginas/CasosDeUso/Agenda/Configuracao';
 
 function Routes() {
     return (
@@ -32,6 +33,7 @@ function Routes() {
                 <Route path="/avaliacao/advogado" component={AvaliacaoAdvogado}/>
                 <Route path="/advogado/listar" component={ListarAdvogado}/>
                 <Route path="/advogado/:id" component={InformacoesAdvogado}/>
+                <Route path="/agenda/configuracao" component={ConfiguracaoAgenda}/>
             </Switch>
         </BrowserRouter>
     )
