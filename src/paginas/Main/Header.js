@@ -63,13 +63,20 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-        <Button variant="outlined" size="small" href="/login" >
-        <LogoutIcon></LogoutIcon>
-          {sessionStorage.getItem('token') === null
-            ? "Entrar"
-            : "Sair"
-          }
-        </Button>
+        {sessionStorage.getItem('token') === null
+          ? <>
+            <Button variant="outlined" size="small" href="/login" >
+              <LogoutIcon></LogoutIcon>
+              Entrar
+            </Button>
+          </>
+          : <>
+            <Button variant="outlined" size="small" href="/login" onClick={() => sessionStorage.clear()} >
+              <LogoutIcon></LogoutIcon>
+              Sair
+            </Button>
+          </>
+        }
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (
