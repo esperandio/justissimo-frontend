@@ -80,8 +80,6 @@ export default function ListarAdvogado() {
             filtroApi = `${filtroApi}&area=${id_area_atuacao ?? ""}&estado=${estado ?? ""}&cidade=${cidade ?? ""}`;
         }
 
-        console.log(filtroApi);
-
         try {
             const resultado = await api.get(`lawyers?${filtroApi}`);
             setAdvogados(resultado.data);
