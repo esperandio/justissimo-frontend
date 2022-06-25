@@ -30,7 +30,7 @@ function Routes() {
                 <Route path="/redefinirsenha/email" component={RedefinirSenha_Email}/>
                 <Route path="/redefinirsenha/codigo" component={RedefinirSenha_Codigo}/>
                 <Route path="/redefinirsenha/novasenha" component={RedefinirSenha_NovaSenha}/>
-                <Route path="/avaliacao/advogado" component={AvaliacaoAdvogado}/>
+                <Route path="/avaliacao/advogado/:id" component={AvaliacaoAdvogado}/>
                 <Route path="/advogado/listar" component={ListarAdvogado}/>
                 <Route path="/advogado/:id" component={InformacoesAdvogado}/>
                 <Route path="/minha-agenda" component={MinhaAgenda}/>

@@ -6,11 +6,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router';
 import api from '../../../service/api';
+import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
 
 // Style
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -77,6 +77,8 @@ export default function RedefinirSenha_Codigo() {
         // Form
         <Container component="main" maxWidth="xs">
             <CssBaseline />
+            <TitleJustissimo/>
+            <TitlePage internal="Redefinir Senha" />
             <div className={classes.paper}>
                 <form className={classes.form} /*onSubmit={handleLogin}*/>
 
