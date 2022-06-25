@@ -178,36 +178,35 @@ function handleClickFecharModalAgendamento() {
                     </div>
 
             <div className='cards'>
-            {agendas.map((agenda) => (
+                {agendas.map((agenda) => (
                 <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"45%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
                     <CardContent>
-                  
-                    <Typography gutterBottom variant="h6" component="div" >
-                    <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : 'N/I'))}</span></b>
-                    </Typography>
-                    <Typography gutterBottom variant="h7" component="div">
-                    <b>{formatDate(agenda.data_agendamento)}</b>
-                    </Typography>
+                        <Typography gutterBottom variant="h6" component="div" >
+                            <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : 'N/I'))}</span></b>
+                        </Typography>
+                        <Typography gutterBottom variant="h7" component="div">
+                            <b>{formatDate(agenda.data_agendamento)}</b>
+                        </Typography>
 
-                    <Typography gutterBottom variant="h8" component="div">
-                    Sexta-Feira
-                    </Typography>
+                        <Typography gutterBottom variant="h8" component="div">
+                            Sexta-Feira
+                        </Typography>
 
-                    <Typography gutterBottom variant="h8" component="div">
-                    {formatTime(new Date(agenda.horario))}h
-                    </Typography>
+                        <Typography gutterBottom variant="h8" component="div">
+                            {formatTime(new Date(agenda.horario))}h
+                        </Typography>
 
-                    <Typography gutterBottom variant="h7" component="div">
-                    Contato em {agenda.contato_cliente}
-                    </Typography>
-                  </CardContent>
+                        <Typography gutterBottom variant="h7" component="div">
+                            Contato em {agenda.contato_cliente}
+                        </Typography>
+                    </CardContent>
                   <CardActions>
                         <Button className={classes.submit}
-                           style={{ color: " #e31837", backgroundColor:"transparent", border:"none", boxShadow:"none", marginLeft:"80%"}}
-                          variant="contained"
-                          type="submit"
-                          onClick={ () => deleteAgenda(agenda.id_agenda) }>
-                           <b> ENCERRAR</b>
+                            style={{ color: " #e31837", backgroundColor:"transparent", border:"none", boxShadow:"none", marginLeft:"80%"}}
+                            variant="contained"
+                            type="submit"
+                            onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                            <b> ENCERRAR</b>
                         </Button>
                   </CardActions>
                 </Card>
@@ -218,7 +217,7 @@ function handleClickFecharModalAgendamento() {
             <DialogTitle>Filtrar Agendamentos</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                    <FormControl fullWidth className={classes.margin}>
+                        <FormControl fullWidth className={classes.margin}>
                             <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
                                 <DatePicker
                                     label="De:"
