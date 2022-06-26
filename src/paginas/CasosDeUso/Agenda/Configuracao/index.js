@@ -6,13 +6,26 @@ import ButtonOutlined from '../../../../components/Utils/buttom';
 import api from '../../../../service/api';
 
 export default function ConfiguracaoAgenda() {
+    
+    // dias inserir
+    let dias_inserir = [];
+    function setDiasInserir(diaInserirDados) {
+        dias_inserir.push(diaInserirDados)
+    };
+
+    // dias remover
+    let dias_remover = [];
+    function setDiasRemover(diaRemoverDados) {
+        dias_remover.push(diaRemoverDados)
+    };
+
     const [value, setValue] = useState('');
     const [error, setError] = useState(false);
     const [redirect, setState] = useState(false);
     const [helperText, setHelperText] = useState('Choose wisely');
 
-    const [horarioInicio, setHorarioInicio] = useState("");
-    const [horarioFinal, setHorarioFinal] = useState("");
+    const [hora_inicio, setHorarioInicio] = useState("");
+    const [hora_final, setHorarioFinal] = useState("");
     const [horarios] = useState([
         '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', 
         '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30',
@@ -26,12 +39,13 @@ export default function ConfiguracaoAgenda() {
     const [dias] = useState(['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta']);
     const [dias_api_format] = useState(['segunda', 'terca', 'quarta', 'quinta', 'sexta']);
 
-    const [duracao, setDuracao] = useState("");
+    const [duracao, setDuracao] = useState(0);
     const [duracoes] = useState([
         '30', '45', '60', '75', '90',
         '105', '120', '135', '150', '165']);
 
-    const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'))
+    // const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'))
+    const fk_advogado = parseInt(1)
     
     async function handleConfiguracao(e) {
         
@@ -39,63 +53,39 @@ export default function ConfiguracaoAgenda() {
         
         const arrayObject = [];
         
-        dias_api_format.forEach(dia => {
-            setDia(dia);
-            
-            arrayObject.push("{" + 
-                horarioInicio,
-                horarioFinal,
+        dias_api_format.map((dia) => (
+
+            setDia(dia),
+
+            setDiasInserir({
                 fk_advogado,
-                duracao,
-                dia + "}"
-            );
+                dia,
+                hora_inicio,
+                hora_final,
+                duracao
+            })
 
-        });
+        ));
 
+        const dados = {
+            dias_inserir, 
+            dias_remover
+        };
+
+        const dadosApi = {
+            dados
+        };    
         
         try {
             
             // Verifica se todos os campos foram preenchidos
             if (true) {
 
-
-                // const objectJson = {
-                //     "dados":
-                //     {
-                //         "dias_inserir":[
-                //         { 
-                //             "fk_advogado": 1,
-                //             "dia": "terca",
-                //             "hora_inicio": "07:30",
-                //             "hora_final": "18:00",
-                //             "duracao":40
-                //         }
-                //     ],
-                //         "dias_remover": [
-                        
-                //         ]   
-                //     }
-                // };
-
-
-                alert(arrayObject);
-
-                const objectJson = {
-                    "dados":
-                    {
-                        "dias_inserir":[
-                            arrayObject
-                    ],
-                        "dias_remover": [
-                        
-                        ]   
-                    }
-                };
-
-                alert(objectJson);
+                alert(dias_inserir[0].duracao);
+                console.log(dados);
 
                 // Envia ao backend/api os dados inseridos na configuração da agenda
-                const configuracaoAgenda = await api.post('lawyers/config-schedule', objectJson);
+                const configuracaoAgenda = await api.post('lawyers/config-schedule', dadosApi);
     
                 // Verifica o 'status code' recebido
                 switch ((configuracaoAgenda).status) {
@@ -142,7 +132,7 @@ export default function ConfiguracaoAgenda() {
     }
 
     function handleDuracaoChange(event, values) {
-        setDuracao(values);
+        setDuracao(parseInt(values));
     }
 
     return (
