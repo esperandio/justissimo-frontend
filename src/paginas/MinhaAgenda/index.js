@@ -186,7 +186,7 @@ export default function MinhaAgenda() {
                     </Button>
                 </div>
 
-                <div className='cards'>
+                <div>
                     {agendas.map((agenda) => (
                     <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
                         <CardContent>
