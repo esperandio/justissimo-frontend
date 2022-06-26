@@ -193,7 +193,7 @@ export default function MinhaAgenda() {
                 <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
                     <CardContent>
                         <Typography gutterBottom variant="h6" component="div" >
-                            <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : 'N/I'))}</span></b>
+                            <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</span></b>
                         </Typography>
                         <Typography gutterBottom variant="h7" component="div">
                             <b>{formatDate(agenda.data_agendamento)}</b>
