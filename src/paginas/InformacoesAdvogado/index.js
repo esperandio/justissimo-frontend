@@ -178,6 +178,11 @@ export default function InformacoesAdvogado() {
     }
 
     function handleClickAvaliarAdvogado() {
+        if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Cliente') {
+            alert('Você precisa estar conectado como cliente para acessar essa tela!');
+            return;
+        }
+
         history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
     }
 
