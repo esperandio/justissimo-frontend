@@ -171,112 +171,110 @@ export default function MinhaAgenda() {
     }
   return (
     <React.Fragment>
-        <div style={{paddingLeft:"2%", paddingRight:"2%"}}>
+        <Container maxWidth="lg">
             <Header title="Minha Agenda" />
             <TitleJustissimo/>
             <TitlePage internal="Minha Agenda" />
 
-            <Container className={classes.paper}>
-                <div className={classes.paper}>
-                    <div id="opcaoAgenda" style={{display:"flex", justifyContent:"space-between", width:"95%", paddingLeft:"2%",marginBottom:"3%", marginTop:"5%"}}>
-                        <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
-                            Configuração da Agenda
-                        </Button>
-                        <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleAbrirModalAgendamento }>
-                            Filtro
-                        </Button>
-                    </div>
-
-                    <div className='cards'>
-                        {agendas.map((agenda) => (
-                        <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="div" >
-                                    <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</span></b>
-                                </Typography>
-                                <Typography gutterBottom variant="h7" component="div">
-                                    <b>{formatDate(agenda.data_agendamento)}</b>
-                                </Typography>
-
-                                <Typography gutterBottom variant="h8" component="div">
-                                    Sexta-Feira
-                                </Typography>
-
-                                <Typography gutterBottom variant="h8" component="div">
-                                    {formatTime(new Date(agenda.horario))}h
-                                </Typography>
-
-                                <Typography gutterBottom variant="h7" component="div">
-                                    Contato em {agenda.contato_cliente}
-                                </Typography>
-                            </CardContent>
-                        <CardActions>
-                                <Button className={classes.submit}
-                                    style={{ color: " #e31837", backgroundColor:"transparent", border:"none", boxShadow:"none", marginLeft:"80%"}}
-                                    variant="contained"
-                                    type="submit"
-                                    onClick={ () => deleteAgenda(agenda.id_agenda) }>
-                                    <b> ENCERRAR</b>
-                                </Button>
-                        </CardActions>
-                        </Card>
-                    ))}
-                    </div>
+            <div className={classes.paper}>
+                <div id="opcaoAgenda" style={{display:"flex", justifyContent:"space-between", width:"95%", paddingLeft:"2%",marginBottom:"3%", marginTop:"5%"}}>
+                    <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
+                        Configuração da Agenda
+                    </Button>
+                    <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleAbrirModalAgendamento }>
+                        Filtro
+                    </Button>
                 </div>
 
-                <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
-                    <DialogTitle>Filtrar Agendamentos</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                                        <DatePicker
-                                            label="De:"
-                                            value={dataAgendamentoDe}
-                                            onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                        <DatePicker
-                                            label="Até:"
-                                            value={dataAgendamentoAte}
-                                            onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </FormControl>
-                                <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
-                                    <InputLabel id="Area">Área de atuação</InputLabel>
-                                    <Select
-                                        required
-                                        labelId="Área de atuação"
-                                        id="AreaSelect"
-                                        multiline
-                                        variant="outlined"
-                                        value={id_area_atuacao}
-                                        onChange={e => setAreaAtuacao(e.target.value)}
-                                        label="Tipo de Usuario"
-                                    >
-                                        {areas.map((area)=>{
-                                            return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
-                                        })}
-                                    </Select>
-                                </FormControl>
+                <div className='cards'>
+                    {agendas.map((agenda) => (
+                    <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
+                        <CardContent>
+                            <Typography gutterBottom variant="h6" component="div" >
+                                <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</span></b>
+                            </Typography>
+                            <Typography gutterBottom variant="h7" component="div">
+                                <b>{formatDate(agenda.data_agendamento)}</b>
+                            </Typography>
 
-                                <br />
-                                <br />
+                            <Typography gutterBottom variant="h8" component="div">
+                                Sexta-Feira
+                            </Typography>
 
-                                <Button 
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={handleClickBuscarHorarios}
+                            <Typography gutterBottom variant="h8" component="div">
+                                {formatTime(new Date(agenda.horario))}h
+                            </Typography>
+
+                            <Typography gutterBottom variant="h7" component="div">
+                                Contato em {agenda.contato_cliente}
+                            </Typography>
+                        </CardContent>
+                    <CardActions>
+                            <Button className={classes.submit}
+                                style={{ color: " #e31837", backgroundColor:"transparent", border:"none", boxShadow:"none", marginLeft:"80%"}}
+                                variant="contained"
+                                type="submit"
+                                onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                                <b> ENCERRAR</b>
+                            </Button>
+                    </CardActions>
+                    </Card>
+                ))}
+                </div>
+            </div>
+
+            <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
+                <DialogTitle>Filtrar Agendamentos</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            <FormControl fullWidth className={classes.margin}>
+                                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                                    <DatePicker
+                                        label="De:"
+                                        value={dataAgendamentoDe}
+                                        onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    />
+                                    <DatePicker
+                                        label="Até:"
+                                        value={dataAgendamentoAte}
+                                        onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    />
+                                </LocalizationProvider>
+                            </FormControl>
+                            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+                                <InputLabel id="Area">Área de atuação</InputLabel>
+                                <Select
+                                    required
+                                    labelId="Área de atuação"
+                                    id="AreaSelect"
+                                    multiline
+                                    variant="outlined"
+                                    value={id_area_atuacao}
+                                    onChange={e => setAreaAtuacao(e.target.value)}
+                                    label="Tipo de Usuario"
                                 >
-                                    Filtrar
-                                </Button>
-                            </DialogContentText>
-                        </DialogContent>
-                </Dialog>
-            </Container>   
-        </div> 
+                                    {areas.map((area)=>{
+                                        return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
+                                    })}
+                                </Select>
+                            </FormControl>
+
+                            <br />
+                            <br />
+
+                            <Button 
+                                variant="contained"
+                                color="primary"
+                                onClick={handleClickBuscarHorarios}
+                            >
+                                Filtrar
+                            </Button>
+                        </DialogContentText>
+                    </DialogContent>
+            </Dialog>
+        </Container>
       </React.Fragment>          
   );
 }
