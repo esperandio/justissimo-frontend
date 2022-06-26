@@ -46,7 +46,7 @@ export default function CadastroUsuario() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [senhaConfirmacao, setSenhaConfirmacao] = useState('');
-    const [dt_nascimento, setNascimento] = useState(new Date());
+    const [dt_nascimento, setNascimento] = useState(null);
     const [cpf, setCPF] = useState('');
     const [cnpj, setCNPJ] = useState('');
     const [cep, setCEP] = useState('');
