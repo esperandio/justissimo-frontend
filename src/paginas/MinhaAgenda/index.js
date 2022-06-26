@@ -28,6 +28,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Redirect } from 'react-router-dom';
+import Footer from '../Main/Footer';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -279,6 +280,7 @@ export default function MinhaAgenda() {
                     </DialogContent>
             </Dialog>
         </Container>
+        <Footer />
       </React.Fragment>          
   );
 }
