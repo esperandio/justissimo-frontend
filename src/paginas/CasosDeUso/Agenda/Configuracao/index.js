@@ -43,20 +43,15 @@ export default function ConfiguracaoAgenda() {
     const [duracoes] = useState([
         '30', '45', '60', '75', '90',
         '105', '120', '135', '150', '165']);
-
-    // const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'))
-    const fk_advogado = parseInt(1)
+        
+    const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'));
     
     async function handleConfiguracao(e) {
         
         e.preventDefault();
         
-        const arrayObject = [];
-        
         dias_api_format.map((dia) => (
-
             setDia(dia),
-
             setDiasInserir({
                 fk_advogado,
                 dia,
@@ -81,9 +76,6 @@ export default function ConfiguracaoAgenda() {
             // Verifica se todos os campos foram preenchidos
             if (true) {
 
-                alert(dias_inserir[0].duracao);
-                console.log(dados);
-
                 // Envia ao backend/api os dados inseridos na configuração da agenda
                 const configuracaoAgenda = await api.post('lawyers/config-schedule', dadosApi);
     
@@ -91,7 +83,7 @@ export default function ConfiguracaoAgenda() {
                 switch ((configuracaoAgenda).status) {
                     case 200:
                         setState({ redirect: true });
-                        alert(`SUCESSO`);
+                        alert(`Cadastro de horarios efetuado com sucesso!`);
                         break;
                     default:
                         alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
