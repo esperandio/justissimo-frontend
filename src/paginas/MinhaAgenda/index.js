@@ -112,24 +112,28 @@ export default function MinhaAgenda() {
     }, []);
 
     async function deleteAgenda(id_agenda) {
-      const agendaDepois = agendas.filter((x) => {
-        if (x.id_agenda !== id_agenda) {
-          return x
+        if (window.confirm("Confirmar encerramento do agendamento?") === false) {
+            return;
         }
-      });
 
-      const id = sessionStorage.getItem('id_advogado');
+        const agendaDepois = agendas.filter((x) => {
+            if (x.id_agenda !== id_agenda) {
+                return x
+            }
+        });
 
-      await api.delete(`scheduling`, {
-        data: {
-          id_advogado: parseInt(id),
-          id_agenda: parseInt(id_agenda)
-        }
-      });
-      
-      setAgendas(agendaDepois);
+        const id = sessionStorage.getItem('id_advogado');
 
-      alert("excluido com sucesso")
+        await api.delete(`scheduling`, {
+            data: {
+                id_advogado: parseInt(id),
+                id_agenda: parseInt(id_agenda)
+            }
+        });
+
+        setAgendas(agendaDepois);
+
+        alert("excluido com sucesso")
     }
 
     async function handleClickBuscarHorarios() {
