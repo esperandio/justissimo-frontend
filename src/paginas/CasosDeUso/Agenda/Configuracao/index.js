@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, TextField } from '@material-ui/core';
 import { Autocomplete } from '@mui/material';
 import { TitleJustissimo, TitlePage } from '../../../../components/Utils/title';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import api from '../../../../service/api';
+import Header from '../../../Main/Header';
+import Footer from '../../../Main/Footer';
+import { Redirect } from 'react-router-dom';
 
 export default function ConfiguracaoAgenda() {
     
@@ -19,10 +22,7 @@ export default function ConfiguracaoAgenda() {
         dias_remover.push(diaRemoverDados)
     };
 
-    const [value, setValue] = useState('');
-    const [error, setError] = useState(false);
-    const [redirect, setState] = useState(false);
-    const [helperText, setHelperText] = useState('Choose wisely');
+    const [redirect, setRedirect] = useState(false);
 
     const [hora_inicio, setHorarioInicio] = useState("");
     const [hora_final, setHorarioFinal] = useState("");
@@ -36,6 +36,8 @@ export default function ConfiguracaoAgenda() {
         '21:00', '21:30', '22:00', '22:30', '23:00', '23:30']);
 
     const [dia, setDia] = useState("");
+    const [diaInicio, setDiaInicio] = useState("");
+    const [diaFim, setDiaFim] = useState("");
     const [dias] = useState(['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta']);
     const [dias_api_format] = useState(['segunda', 'terca', 'quarta', 'quinta', 'sexta']);
 
@@ -45,22 +47,49 @@ export default function ConfiguracaoAgenda() {
         '105', '120', '135', '150', '165']);
 
     const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'));
-    
+
+      // Carrega inicialmente
+  useEffect(() => {
+        function validarSessao() {
+        if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Advogado') {
+                alert('Você precisa estar conectado como Advogado para acessar essa tela!');
+                setRedirect({ redirect: true });
+            }
+        }
+        validarSessao();
+    }, []);
+
     async function handleConfiguracao(e) {
         
         e.preventDefault();
         
-        dias_api_format.map((dia) => (
-            setDia(dia),
+        if(diaInicio === diaFim) {
+            setDia(diaInicio.toLowerCase());
             setDiasInserir({
                 fk_advogado,
                 dia,
                 hora_inicio,
                 hora_final,
                 duracao
-            })
+            });
+        }
+        else {
+            let indexInicio = dias.indexOf(diaInicio);
+            let indexFim = dias.indexOf(diaFim);
+            dias_api_format.map((dia, index) =>{
+                if((index >= indexInicio) && (index <= indexFim)){ 
+                    setDia(dia);
+                    setDiasInserir({
+                        fk_advogado,
+                        dia,
+                        hora_inicio,
+                        hora_final,
+                        duracao
+                    });
+                }
+            });
+        }
 
-        ));
 
         const dados = {
             dias_inserir, 
@@ -82,7 +111,6 @@ export default function ConfiguracaoAgenda() {
                 // Verifica o 'status code' recebido
                 switch ((configuracaoAgenda).status) {
                     case 200:
-                        setState({ redirect: true });
                         alert(`Cadastro de horarios efetuado com sucesso!`);
                         break;
                     default:
@@ -103,23 +131,6 @@ export default function ConfiguracaoAgenda() {
         }
     }
 
-    const handleRadioChange = (event) => {
-        setValue((event.target).value);
-        setHelperText(' ');
-        setError(false);
-
-        if (value === 'best') {
-        setHelperText('You got it!');
-        setError(false);
-        } else if (value === 'worst') {
-        setHelperText('Sorry, wrong answer!');
-        setError(true);
-        } else {
-        setHelperText('Please select an option.');
-        setError(true);
-        }
-    };
-
     function handleHorarioInicioChange(event, values) {
         setHorarioInicio(values);
     }
@@ -132,58 +143,85 @@ export default function ConfiguracaoAgenda() {
         setDuracao(parseInt(values));
     }
 
+    if (redirect) {
+        return <Redirect to='../home' />;
+    }
     return (
-        <Container component="main" maxWidth="xs">
-
+        <React.Fragment>
+        <Container component="main" maxWidth="lg">
+            <Header title="Configuração da Agenda" />
             <TitleJustissimo/>
             <TitlePage internal="Configuração da Agenda" />
 
-            <br/>
-            <br/>
+            <Container component="conteudo" maxWidth="sm">
+                <br/>
+                <br/>
 
-            <span> <b>
-                Segunda-feira à Sexta-feira
-            </b> </span>
+                <span> <b>
+                    Defina por gentileza o perído da semana em que realiza atendimentos:
+                </b> </span>
+                <br/>
 
-            <p>
-                Digite suas informações de atendimento
-            </p>
+                <Autocomplete
+                    options={dias}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    onChange={ (_, v) => { setDiaInicio(v); } }
+                    renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="De:" />}
+                />
 
-            <Autocomplete
-                options={horarios}
-                renderInput={(params) => <TextField {...params} label="Horário inicial dos atendimentos" />}
-                isOptionEqualToValue={(option, value) => option.value === value.value}
-                onChange={ handleHorarioInicioChange }
-            />
+                <Autocomplete
+                    options={dias}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    onChange={ (_, v) => { setDiaFim(v); } }
+                    renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Até:" />}
+                />
+                <br/>
+                <span> <b>
+                    Agora defina o horário inicial e final de atendimento:
+                </b> </span>
+                <br/>
 
-            <Autocomplete
-                options={horarios}
-                renderInput={(params) => <TextField {...params} label="Horário final dos atendimentos" />}
-                isOptionEqualToValue={(option, value) => option.value === value.value}
-                onChange={ handleHorarioFinalChange }
-            />
+                <Autocomplete
+                    options={horarios}
+                    renderInput={(params) => <TextField {...params} required label="Horário inicial dos atendimentos" />}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    onChange={ handleHorarioInicioChange }
+                />
+                <br/>
+                <Autocomplete
+                    options={horarios}
+                    renderInput={(params) => <TextField {...params} required label="Horário final dos atendimentos" />}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    onChange={ handleHorarioFinalChange }
+                />
 
-            <br/>
-            <br/>
+                <br/>
+                <br/>
+                <span> <b>
+                    Por último defina o tempo (minutos) de cada sessão de atendimento:
+                </b> </span>
+                <br/>
 
-            <Autocomplete
-                options={duracoes}
-                renderInput={(params) => <TextField {...params} label="Duração do Agendamento (formato em minutos)" />}
-                isOptionEqualToValue={(option, value) => option.value === value.value}
-                onChange={ handleDuracaoChange }
-            />
+                <Autocomplete
+                    options={duracoes}
+                    required
+                    renderInput={(params) => <TextField {...params} required label="Duração do Agendamento (formato em minutos)" />}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    onChange={ handleDuracaoChange }
+                />
 
-            <br/>
-            <br/>
+                <br/>
 
-            <ButtonOutlined
-                internal="SALVAR CONFIGURAÇÃO" 
-                type="submit"
-                variant="outlined"
-                onClick={handleConfiguracao}
-            />
-
+                <ButtonOutlined
+                    internal="SALVAR CONFIGURAÇÃO" 
+                    type="submit"
+                    variant="outlined"
+                    onClick={handleConfiguracao}
+                />
+            </Container>
         </Container>
+        <Footer />
+    </React.Fragment>
     );
 
 }
