@@ -13,7 +13,7 @@ import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
 import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
 import ListarAdvogado from './paginas/Listar/Advogado';
 import InformacoesAdvogado from './paginas/InformacoesAdvogado';
-import ConfiguracaoAgenda from './paginas/CasosDeUso/Agenda/Configuracao';
+import MinhaAgenda from './paginas/MinhaAgenda';
 
 function Routes() {
     return (
@@ -23,8 +23,6 @@ function Routes() {
                 <Route path="/advogado/cad" component={CadAdvogado}/>
                 <Route path="/cliente/cad" component={CadCliente}/>
                 <Route path="/divulgacao/cad" component={CadDivulgacao}/>
-                {/* <Route path="/usuario/edit" component={EditUsuario}/> */}
-                {/* <Route path="/usuario/listar" component={ListarUsuario}/> */}
                 <Route path="/login" component={Login}/>
                 <Route path="/home" component={Home}/>
                 <Route path="/redefinirsenha/email" component={RedefinirSenha_Email}/>
@@ -33,7 +31,9 @@ function Routes() {
                 <Route path="/avaliacao/advogado/:id" component={AvaliacaoAdvogado}/>
                 <Route path="/advogado/listar" component={ListarAdvogado}/>
                 <Route path="/advogado/:id" component={InformacoesAdvogado}/>
-                <Route path="/agenda/configuracao" component={ConfiguracaoAgenda}/>
+                <Route path="/minha-agenda" component={MinhaAgenda}/>
+                {/* Colocar o componte correto (Configuracao Agenda) */}
+                <Route path="/configuracao/agenda" component={Home}/> 
             </Switch>
         </BrowserRouter>
     )

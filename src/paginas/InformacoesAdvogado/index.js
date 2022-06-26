@@ -6,6 +6,9 @@ import { TitleJustissimo, TitlePage }  from '../../components/Utils/title';
 import { Rating } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Main/Header';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import logo from '../../user.svg';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -175,6 +178,11 @@ export default function InformacoesAdvogado() {
     }
 
     function handleClickAvaliarAdvogado() {
+        if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Cliente') {
+            alert('Você precisa estar conectado como cliente para acessar essa tela!');
+            return;
+        }
+
         history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
     }
 
@@ -206,12 +214,13 @@ export default function InformacoesAdvogado() {
                     <p>E-mail: {advogado.usuario?.email}</p>
                 </div>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item sx={3} md={9}>
                     {advogado.tel_celular != null 
                         ? (
                             <Button className={classes.submit}
                                 variant="contained"
                                 color="primary"
+                                startIcon={<WhatsAppIcon/>}
                                 onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, '_blank'); } }
                             >
                                 Entrar em contato
@@ -226,6 +235,7 @@ export default function InformacoesAdvogado() {
                         variant="contained"
                         color="primary"
                         type="submit"
+                        startIcon={<CalendarMonthIcon/>}
                         onClick={ handleAbrirModalAgendamento }
                     >
                         Agendar uma consulta
@@ -237,6 +247,7 @@ export default function InformacoesAdvogado() {
                         variant="contained"
                         color="primary"
                         type="submit"
+                        startIcon={<StarHalfIcon/>}
                         onClick={ () => handleClickAvaliarAdvogado() }
                     >
                         Avaliar advogado

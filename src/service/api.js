@@ -13,11 +13,12 @@ const api = axios.create ({
 api.interceptors.request.use(async config => {
     // Declaramos um token manualmente para teste.
     const token = window.sessionStorage.getItem('token');
-  
-    if (token) {
-      api.defaults.headers.authorization = `Bearer ${token}`;
+
+    config.headers = { 
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
     }
-  
+
     return config;
   });
 
