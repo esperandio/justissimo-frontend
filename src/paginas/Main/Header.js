@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import LogoutIcon from '@mui/icons-material/Logout';
-
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -25,18 +24,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const sections = [  
-  { title: 'Home', url: '/home' },
-  { title: 'Pesquisar Advogado', url: '/advogado/listar' },
-  { title: 'Cadastrar Advogado', url: '/advogado/cad' },
-  { title: 'Cadastrar Cliente', url: '/cliente/cad' },
-  { title: 'Cadastrar Divulgação', url: '/divulgacao/cad' },
-];
-
-
 export default function Header(props) {
   const classes = useStyles();
   const { title } = props;
+
+  const [sections, setSections] = useState([]);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('tipo_usuario') === 'Advogado') {
+      setSections([
+        { title: 'Home', url: '/home' }
+      ])
+    } else if (sessionStorage.getItem('tipo_usuario') === 'Cliente') {
+      setSections([
+        { title: 'Home', url: '/home' },
+        { title: 'Pesquisar Advogado', url: '/advogado/listar' },
+        { title: 'Cadastrar Divulgação', url: '/divulgacao/cad' }
+      ])
+    } else {
+      setSections([
+        { title: 'Home', url: '/home' },
+        { title: 'Pesquisar Advogado', url: '/advogado/listar' },
+        { title: 'Cadastrar Cliente', url: '/cliente/cad' }
+      ])
+    }
+  }, []);
 
   return (
     <React.Fragment>
@@ -51,13 +63,20 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-        <Button variant="outlined" size="small" href="/login" >
-        <LogoutIcon></LogoutIcon>
-          {sessionStorage.getItem('token') === null
-            ? "Entrar"
-            : "Sair"
-          }
-        </Button>
+        {sessionStorage.getItem('token') === null
+          ? <>
+            <Button variant="outlined" size="small" href="/login" >
+              <LogoutIcon></LogoutIcon>
+              Entrar
+            </Button>
+          </>
+          : <>
+            <Button variant="outlined" size="small" href="/login" onClick={() => sessionStorage.clear()} >
+              <LogoutIcon></LogoutIcon>
+              Sair
+            </Button>
+          </>
+        }
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         {sections.map((section) => (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import { TitleJustissimo }  from '../../components/Utils/title';
+import { TitleJustissimo, TitlePage }  from '../../components/Utils/title';
 import { Rating } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../Main/Header';
@@ -28,6 +28,7 @@ import { ptBR } from "date-fns/locale";
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 export default function InformacoesAdvogado() {
     const classes = useStyles();
     const params = useParams();
+    const history = useHistory();
 
     const [advogado, setAdvogado] = useState({});
     const [advogadoAreas, setAdvogadoAreas] = useState([]);
@@ -72,7 +74,7 @@ export default function InformacoesAdvogado() {
 
     function handleAbrirModalAgendamento() {
         if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Cliente') {
-            alert('Você precisa conectado como cliente para acessar essa tela!');
+            alert('Você precisa estar conectado como cliente para acessar essa tela!');
             return;
         }
 
@@ -172,6 +174,10 @@ export default function InformacoesAdvogado() {
         setExibirHorariosDisponiveis(false);
     }
 
+    function handleClickAvaliarAdvogado() {
+        history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
+    }
+
     return (
         <React.Fragment>
             <CssBaseline />
@@ -180,7 +186,7 @@ export default function InformacoesAdvogado() {
                 <div className={classes.paper}>
                     <TitleJustissimo/>
                     <img src={logo} className={classes.user} alt="logo" />
-                    <h1>{advogado.nome}</h1>
+                    <TitlePage internal={advogado.nome} />
                     <Rating 
                         id="nota"
                         name="nota" 
@@ -223,6 +229,17 @@ export default function InformacoesAdvogado() {
                         onClick={ handleAbrirModalAgendamento }
                     >
                         Agendar uma consulta
+                    </Button>
+
+                    {' '}
+
+                    <Button className={classes.submit}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        onClick={ () => handleClickAvaliarAdvogado() }
+                    >
+                        Avaliar advogado
                     </Button>
                 </Grid>
 
