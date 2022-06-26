@@ -62,7 +62,7 @@ export default function MinhaAgenda() {
   }
   function formatDate(date) {
     date = new Date(date);
-    console.log(date)
+
     return `${date.getUTCDate()}`.padStart(2, 0)
             + "-"
             + `${date.getUTCMonth() + 1}`.padStart(2, 0)
