@@ -43,7 +43,7 @@ export default function ConfiguracaoAgenda() {
     const [duracoes] = useState([
         '30', '45', '60', '75', '90',
         '105', '120', '135', '150', '165']);
-        
+
     const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'));
     
     async function handleConfiguracao(e) {
@@ -74,7 +74,7 @@ export default function ConfiguracaoAgenda() {
         try {
             
             // Verifica se todos os campos foram preenchidos
-            if (true) {
+            if (hora_inicio !== "" && hora_final !== "" && duracao !== 0) {
 
                 // Envia ao backend/api os dados inseridos na configuração da agenda
                 const configuracaoAgenda = await api.post('lawyers/config-schedule', dadosApi);
@@ -94,7 +94,12 @@ export default function ConfiguracaoAgenda() {
                 alert('Preencha todos os campos!')
             }
         } catch (error) {
-            alert("Inválido! " + error.message);
+            if (error.response.status === 400) {
+                alert("Cadastro Inválido! " + error.response.data.message); 
+            }
+            else {
+                alert("Cadastro Inválido! " + error.message);
+            } 
         }
     }
 
