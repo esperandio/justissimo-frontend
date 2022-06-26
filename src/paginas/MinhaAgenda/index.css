@@ -1,0 +1,34 @@
+.button {
+    display : flex;
+    flex-direction:row;
+    outline:none;
+}
+
+.nome {
+    justify-content: flex-start;
+}
+
+.causa {
+    justify-content: flex-end
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 2px;
+    background-color: rgb(214, 214, 214);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 3px solid rgb(136, 136, 136);
+    cursor: pointer;
+}
+
+.cards{
+    height: 500px;
+    width: 100%;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 2%;
+}
