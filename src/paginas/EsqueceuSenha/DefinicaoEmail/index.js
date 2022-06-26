@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router';
 import api from '../../../service/api';
 import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
+import Footer from '../../Main/Footer';
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -122,6 +123,7 @@ export default function RedefinirSenha_Email() {
 
                 </form>
             </div>
+            <Footer />
         </Container>
     );
 }

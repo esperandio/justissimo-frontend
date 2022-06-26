@@ -11,6 +11,7 @@ import ButtonOutlined from '../../../../components/Utils/buttom';
 import { useParams } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import Header from '../../../Main/Header';
+import Footer from '../../../Main/Footer';
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -192,6 +193,7 @@ export default function AvaliacaoAdvogado() {
                     </form>
                 </div>
             </Container>
+            <Footer />
         </Container>
     );
 }
