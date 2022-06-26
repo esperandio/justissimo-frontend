@@ -14,6 +14,7 @@ import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
 import ListarAdvogado from './paginas/Listar/Advogado';
 import InformacoesAdvogado from './paginas/InformacoesAdvogado';
 import MinhaAgenda from './paginas/MinhaAgenda';
+import ConfiguracaoAgenda from './paginas/CasosDeUso/Agenda/Configuracao';
 
 function Routes() {
     return (
@@ -32,8 +33,7 @@ function Routes() {
                 <Route path="/advogado/listar" component={ListarAdvogado}/>
                 <Route path="/advogado/:id" component={InformacoesAdvogado}/>
                 <Route path="/minha-agenda" component={MinhaAgenda}/>
-                {/* Colocar o componte correto (Configuracao Agenda) */}
-                <Route path="/configuracao/agenda" component={Home}/> 
+                <Route path="/configuracao/agenda" component={ConfiguracaoAgenda}/> 
             </Switch>
         </BrowserRouter>
     )
