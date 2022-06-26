@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Header from '../Main/Header';
 import Container from '@material-ui/core/Container';
-import { TitleJustissimo } from '../../components/Utils/title';
+import { TitleJustissimo, TitlePage } from '../../components/Utils/title';
 import { useState } from 'react';
 import api from '../../service/api';
 import { useEffect } from 'react';
@@ -55,6 +55,7 @@ export default function MinhaAgenda() {
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
   const [id_area_atuacao, setAreaAtuacao] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
 
   function formatTime(date) {
     return `${date.getUTCHours()}`.padStart(2, "0") + ':' + `${date.getUTCMinutes()}`.padStart(2, "0")
@@ -68,20 +69,24 @@ export default function MinhaAgenda() {
             + "-"
             + `${date.getUTCFullYear()}`;
   }
-  function handleAbrirModalAgendamento() {
+  
+    function handleAbrirModalAgendamento() {
     setOpen(true);
 }
 
-function handleChangeDataAgendamentoDe(newValue) {
+    function handleChangeDataAgendamentoDe(newValue) {
     setDataAgendamentoDe(newValue);
 }
-function handleChangeDataAgendamentoAte(newValue) {
+
+    function handleChangeDataAgendamentoAte(newValue) {
     setDataAgendamentoAte(newValue);
 }
-function handleClickFecharModalAgendamento() {
+    function handleClickFecharModalAgendamento() {
     setOpen(false);
 }
-
+    function handleConfiguracaoAgenda() {
+        setRedirectConfigAgenda({redirectConfigAgenda: true})
+}
   // Carrega inicialmente
   useEffect(() => {
     function validarSessao() {
@@ -160,16 +165,22 @@ function handleClickFecharModalAgendamento() {
     if (redirect) {
         return <Redirect to='../home' />;
     }
+
+    if (redirectConfigAgenda) {
+        return <Redirect to='configuracao/agenda' />;
+    }
   return (
-        <div>
-            <Header />
+    <React.Fragment>
+        <div style={{paddingLeft:"2%", paddingRight:"2%"}}>
+            <Header title="Minha Agenda" />
             <TitleJustissimo/>
-            <h2 style={{margin:"opx auto"}}>Minha Agenda</h2>
+            <TitlePage internal="Minha Agenda" />
+
             <Container className={classes.paper}>
                 <div className={classes.paper}>
                     
-                    <div id="opcaoAgenda" style={{display:"flex", justifyContent:"space-between", width:"95%", paddingLeft:"2%",marginBottom:"3%"}}>
-                        <Button variant="contained" startIcon={<ConfigIcon />}>
+                    <div id="opcaoAgenda" style={{display:"flex", justifyContent:"space-between", width:"95%", paddingLeft:"2%",marginBottom:"3%", marginTop:"5%"}}>
+                        <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
                             Configuração da Agenda
                         </Button>
                         <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleAbrirModalAgendamento }>
@@ -179,7 +190,7 @@ function handleClickFecharModalAgendamento() {
 
             <div className='cards'>
                 {agendas.map((agenda) => (
-                <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"45%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
+                <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
                     <CardContent>
                         <Typography gutterBottom variant="h6" component="div" >
                             <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : 'N/I'))}</span></b>
@@ -265,6 +276,7 @@ function handleClickFecharModalAgendamento() {
                 </DialogContent>
         </Dialog>
       </Container>   
-      </div>            
+      </div> 
+      </React.Fragment>          
   );
 }

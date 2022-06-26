@@ -33,7 +33,8 @@ export default function Header(props) {
   useEffect(() => {
     if (sessionStorage.getItem('tipo_usuario') === 'Advogado') {
       setSections([
-        { title: 'Home', url: '/home' }
+        { title: 'Home', url: '/home' },
+        { title: 'Minha Agenda', url: '/minha-agenda' }
       ])
     } else if (sessionStorage.getItem('tipo_usuario') === 'Cliente') {
       setSections([

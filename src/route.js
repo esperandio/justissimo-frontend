@@ -23,8 +23,6 @@ function Routes() {
                 <Route path="/advogado/cad" component={CadAdvogado}/>
                 <Route path="/cliente/cad" component={CadCliente}/>
                 <Route path="/divulgacao/cad" component={CadDivulgacao}/>
-                {/* <Route path="/usuario/edit" component={EditUsuario}/> */}
-                {/* <Route path="/usuario/listar" component={ListarUsuario}/> */}
                 <Route path="/login" component={Login}/>
                 <Route path="/home" component={Home}/>
                 <Route path="/redefinirsenha/email" component={RedefinirSenha_Email}/>
@@ -34,6 +32,8 @@ function Routes() {
                 <Route path="/advogado/listar" component={ListarAdvogado}/>
                 <Route path="/advogado/:id" component={InformacoesAdvogado}/>
                 <Route path="/minha-agenda" component={MinhaAgenda}/>
+                {/* Colocar o componte correto (Configuracao Agenda) */}
+                <Route path="/configuracao/agenda" component={Home}/> 
             </Switch>
         </BrowserRouter>
     )
