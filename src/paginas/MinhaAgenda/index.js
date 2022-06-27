@@ -57,6 +57,12 @@ export default function MinhaAgenda() {
   const [id_area_atuacao, setAreaAtuacao] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
+  const [dias] = useState(['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado']);
+  
+  function formatDia(date) {
+    const data = new Date(date);
+    return dias[data.getUTCDay()];
+  }
 
   function formatTime(date) {
     return `${date.getUTCHours()}`.padStart(2, "0") + ':' + `${date.getUTCMinutes()}`.padStart(2, "0")
@@ -203,7 +209,7 @@ export default function MinhaAgenda() {
                             </Typography>
 
                             <Typography gutterBottom variant="h8" component="div">
-                                Sexta-Feira
+                                {formatDia(agenda.data_agendamento)}
                             </Typography>
 
                             <Typography gutterBottom variant="h8" component="div">
