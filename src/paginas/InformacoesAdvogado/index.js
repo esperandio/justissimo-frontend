@@ -63,6 +63,7 @@ export default function InformacoesAdvogado() {
 
     const [horarios, setHorarios] = useState([]);
     const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
+    const [avaliacoes, setAvaliacoes] = useState([]);
 
     const [open, setOpen] = useState(false);
 
@@ -71,6 +72,7 @@ export default function InformacoesAdvogado() {
             const resultado = await api.get(`lawyers/${params.id}`);
             setAdvogado(resultado.data);
             setAdvogadoAreas(resultado.data.areas)
+            setAvaliacoes(resultado.data.avaliacoes)
         }
 
         buscarInformacoesAdvogado();
@@ -254,6 +256,28 @@ export default function InformacoesAdvogado() {
                         Avaliar advogado
                     </Button>
                 </Grid>
+
+                <Divider/>
+
+                {avaliacoes.length > 0 && (
+                    <div>
+                        <h2>Avaliações</h2>
+                        {avaliacoes.map((avaliacao)=>{
+                            return (
+                                <div key={avaliacao.id_avaliacao}>
+                                    <Rating 
+                                        readOnly
+                                        value={avaliacao.nota ?? 0}
+                                    />  
+                                    <div>{avaliacao.data_avaliacao}</div>
+                                    <div>{avaliacao.descricao}</div>
+
+                                    <br/>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
 
                 <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
                     <DialogTitle>Realizar agendamento</DialogTitle>
