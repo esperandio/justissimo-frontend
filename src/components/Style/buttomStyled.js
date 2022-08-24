@@ -1,25 +1,5 @@
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import styled_components, { css } from 'styled-components';
-
-const ButtonStyled = styled_components.button`
-display: inline-block;
-border-radius: 3px;
-padding: 0.7rem 0;
-width: 100%;
-text-align: center;
-font-weight: 700;
-background: transparent;
-color: #1976D2;
-border: 1px solid #1976D2;
-
-    /* The GitHub button is a primary button
-    * edit this to target it specifically! */
-    ${props => props.primary && css`
-    background: white;
-    color: black;
-    `}
-`
 
 const ButtonBootstrapCustom = styled(Button)({
     boxShadow: 'none',
