@@ -189,6 +189,16 @@ export default function InformacoesAdvogado() {
         history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
     }
 
+    function formatarDataAvaliacao(dt_avaliacao) {
+        const date = new Date(dt_avaliacao);
+
+        return `${date.getDate()}`.padStart(2, 0)
+            + "/"
+            + `${date.getUTCMonth() + 1}`.padStart(2, 0)
+            + "/"
+            + `${date.getUTCFullYear()}`;
+    }
+
     return (
         <React.Fragment>
             <CssBaseline />
@@ -266,7 +276,7 @@ export default function InformacoesAdvogado() {
                                         readOnly
                                         value={avaliacao.nota ?? 0}
                                     />  
-                                    <div>{avaliacao.data_avaliacao}</div>
+                                    <div>Avaliado em { formatarDataAvaliacao(avaliacao.data_avaliacao) }</div>
                                     <div>{avaliacao.descricao}</div>
 
                                     <br/>
