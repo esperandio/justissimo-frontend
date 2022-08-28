@@ -64,7 +64,7 @@ export default function ListarAdvogado() {
     }, []);
 
     function handleAutocompleteAreaChange(event, values) {
-        setAreaAtuacao(values.id);
+        setAreaAtuacao(values?.id);
     }
 
     function handleAutocompleteEstadoChange(event, values) {
