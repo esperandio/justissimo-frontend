@@ -63,6 +63,7 @@ export default function InformacoesAdvogado() {
 
     const [horarios, setHorarios] = useState([]);
     const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
+    const [avaliacoes, setAvaliacoes] = useState([]);
 
     const [open, setOpen] = useState(false);
 
@@ -71,6 +72,7 @@ export default function InformacoesAdvogado() {
             const resultado = await api.get(`lawyers/${params.id}`);
             setAdvogado(resultado.data);
             setAdvogadoAreas(resultado.data.areas)
+            setAvaliacoes(resultado.data.avaliacoes)
         }
 
         buscarInformacoesAdvogado();
@@ -187,6 +189,16 @@ export default function InformacoesAdvogado() {
         history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
     }
 
+    function formatarDataAvaliacao(dt_avaliacao) {
+        const date = new Date(dt_avaliacao);
+
+        return `${date.getDate()}`.padStart(2, 0)
+            + "/"
+            + `${date.getUTCMonth() + 1}`.padStart(2, 0)
+            + "/"
+            + `${date.getUTCFullYear()}`;
+    }
+
     return (
         <React.Fragment>
             <CssBaseline />
@@ -216,19 +228,16 @@ export default function InformacoesAdvogado() {
                 </div>
 
                 <Grid item sx={3} md={9}>
-                    {advogado.tel_celular != null 
-                        ? (
-                            <Button className={classes.submit}
-                                variant="contained"
-                                color="primary"
-                                startIcon={<WhatsAppIcon/>}
-                                onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, '_blank'); } }
-                            >
-                                Entrar em contato
-                            </Button>
-                        )
-                        : ""
-                    }
+                    {advogado.tel_celular != null && (
+                        <Button className={classes.submit}
+                            variant="contained"
+                            color="primary"
+                            startIcon={<WhatsAppIcon/>}
+                            onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, '_blank'); } }
+                        >
+                            Entrar em contato
+                        </Button>
+                    )}
 
                     {' '}
 
@@ -254,6 +263,28 @@ export default function InformacoesAdvogado() {
                         Avaliar advogado
                     </Button>
                 </Grid>
+
+                <Divider/>
+
+                {avaliacoes.length > 0 && (
+                    <div>
+                        <h2>Avaliações</h2>
+                        {avaliacoes.map((avaliacao)=>{
+                            return (
+                                <div key={avaliacao.id_avaliacao}>
+                                    <Rating 
+                                        readOnly
+                                        value={avaliacao.nota ?? 0}
+                                    />  
+                                    <div>Avaliado em { formatarDataAvaliacao(avaliacao.data_avaliacao) }</div>
+                                    <div>{avaliacao.descricao}</div>
+
+                                    <br/>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
 
                 <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
                     <DialogTitle>Realizar agendamento</DialogTitle>
@@ -308,56 +339,53 @@ export default function InformacoesAdvogado() {
                         <br/>
                         <br/>
 
-                        {exibirHorariosDisponiveis === true
-                            ? (
-                                <>
-                                    <DialogContentText>
-                                        2° Passo - Selecionar o horário do agendamento
-                                    </DialogContentText>
+                        {exibirHorariosDisponiveis === true && (
+                            <>
+                                <DialogContentText>
+                                    2° Passo - Selecionar o horário do agendamento
+                                </DialogContentText>
 
-                                    <FormControl>
-                                        <RadioGroup
-                                            row
-                                            aria-labelledby="demo-row-radio-buttons-group-label"
-                                            name="row-radio-buttons-group"
-                                        >
-                                            {horarios.map((x) => {
-                                                return <FormControlLabel 
-                                                    key={x} 
-                                                    value={x} 
-                                                    checked={x === horarioAgendamento}
-                                                    control={<Radio />} label={x} onChange={() => setHorarioAgendamento(x)} 
-                                                />
-                                            })}
-                                        </RadioGroup>
-                                    </FormControl>
+                                <FormControl>
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="row-radio-buttons-group"
+                                    >
+                                        {horarios.map((x) => {
+                                            return <FormControlLabel 
+                                                key={x} 
+                                                value={x} 
+                                                checked={x === horarioAgendamento}
+                                                control={<Radio />} label={x} onChange={() => setHorarioAgendamento(x)} 
+                                            />
+                                        })}
+                                    </RadioGroup>
+                                </FormControl>
 
-                                    <br />
-                                    <br />
+                                <br />
+                                <br />
 
-                                    <DialogContentText>
-                                        3° Passo - Adicione uma observação
-                                    </DialogContentText>
+                                <DialogContentText>
+                                    3° Passo - Adicione uma observação
+                                </DialogContentText>
 
-                                    <FormControl fullWidth className={classes.margin}>
-                                        <TextField
-                                            required
-                                            id="Nome"
-                                            label="Observação"
-                                            placeholder="Observação"
-                                            multiline
-                                            minRows={5}
-                                            variant="outlined"
-                                            value={observacao}
-                                            inputProps={{ maxLength: 200 }}
-                                            onChange={e => setObservacao(e.target.value)}
-                                            margin="normal"
-                                        />
-                                    </FormControl>
-                                </>
-                            )
-                            : ""
-                        }
+                                <FormControl fullWidth className={classes.margin}>
+                                    <TextField
+                                        required
+                                        id="Nome"
+                                        label="Observação"
+                                        placeholder="Observação"
+                                        multiline
+                                        minRows={5}
+                                        variant="outlined"
+                                        value={observacao}
+                                        inputProps={{ maxLength: 200 }}
+                                        onChange={e => setObservacao(e.target.value)}
+                                        margin="normal"
+                                    />
+                                </FormControl>
+                            </>
+                        )}
                     </DialogContent>
 
                     <DialogActions>
