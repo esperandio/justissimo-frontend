@@ -19,6 +19,8 @@ import InputCpfMask from '../../../components/Utils/mask/inputCpfMask';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputCepMask from '../../../components/Utils/mask/inputCepMask';
 import InputTelefone from '../../../components/Utils/mask/inputTelefoneMask';
+import api from '../../../service/api';
+import { Redirect } from 'react-router-dom';
 
 export default function CadastroAdvogado() {
     const [nome, setNome] = useState('');
@@ -35,15 +37,68 @@ export default function CadastroAdvogado() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [senhaConfirmacao, setSenhaConfirmacao] = useState('');
+    const [redirect, setState] = useState(false);
 
     const [tiposPessoa] = useState(['Física', 'Jurídica']);
     const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
     'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
 
-    function handleCadastro(e) {
+    async function handleCadastro(e) {
         e.preventDefault();
 
-        console.log("handleCadastro");
+        if (senha !== senhaConfirmacao) {
+            alert(`A senha e confirmação de senha não conferem!`);
+            return;
+        }
+
+        const dt_nascimento_formatado = `${dt_nascimento.getUTCFullYear()}` 
+            + "-"
+            + `${dt_nascimento.getUTCMonth() + 1}`.padStart(2, 0)
+            + "-"
+            + `${dt_nascimento.getDate()}`.padStart(2, 0);
+        
+        const dados = {
+            nome,
+            dt_nascimento: dt_nascimento_formatado,
+            cpf: cpf.replace(/\D/g, ""),
+            cnpj: cnpj.replace(/\D/g, ""),
+            cidade,
+            estado,
+            cep: cep.replace(/\D/g, ""),
+            senha,
+            email,
+            nr_cna,
+            uf_cna: estado_cna,
+            tel_celular: tel_celular.replace(/\D/g, ""),
+            areas: [1],
+            info: "Teste"
+        }
+
+        try {   
+            // Envia ao backend/api os dados inseridos no cadastro
+            const response = await api.post('lawyers', dados);
+
+            // Verifica o 'status code' recebido
+            switch ((response).status) {
+                case 201:
+                    alert("Cadastro realizado com sucesso!"); 
+                    setState({ redirect: true });
+                    break;
+                default:   
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                alert("Cadastro Inválido! " + error.response.data.message); 
+            }
+            else {
+                alert("Cadastro Inválido! " + error.message);
+            } 
+        }
+    }
+
+    // Se o 'login' for aceito, redireciona para a tela de home
+    if (redirect) {
+        return <Redirect to='../login' />;
     }
 
     return (
