@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Header from '../../Main/Header';
@@ -37,8 +37,10 @@ export default function CadastroAdvogado() {
     const [cep, setCEP] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
+    const [areas_atuacao, setAreasAtuacao] = useState([]);
     const [nr_cna, setNumeroCNA] = useState('');
     const [estado_cna, setEstadoCNA] = useState('');
+    const [info, setInfo] = useState('');
     const [tel_celular, setTelefoneCelular] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -47,9 +49,23 @@ export default function CadastroAdvogado() {
 
     const [activeStep, setActiveStep] = useState(0);
 
+    const [areas, setAreas] = useState([]);
     const [tiposPessoa] = useState(['Física', 'Jurídica']);
     const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
     'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
+
+    useEffect(() => {
+        async function buscarAreas() {
+            const resultado = await api.get('areas');
+            setAreas(resultado.data);
+        }
+
+        buscarAreas();
+    }, []);
+
+    function handleAutocompleteAreaChange(event, values) {
+        setAreasAtuacao(values);
+    }
 
     async function handleCadastro(e) {
         e.preventDefault();
@@ -78,8 +94,8 @@ export default function CadastroAdvogado() {
             nr_cna,
             uf_cna: estado_cna,
             tel_celular: tel_celular.replace(/\D/g, ""),
-            areas: [1],
-            info: "Teste"
+            areas: areas_atuacao.map(x => x.id),
+            info
         }
 
         try {   
@@ -156,7 +172,6 @@ export default function CadastroAdvogado() {
                                                 id="Nome"
                                                 label="Nome"
                                                 placeholder="Digite o nome completo"
-                                                multiline
                                                 variant="outlined"
                                                 value={nome}
                                                 onChange={e => setNome(e.target.value)}
@@ -186,7 +201,7 @@ export default function CadastroAdvogado() {
                                                 onChange={ (_, v) => { setTipoPessoa(v); setCPF(""); setCNPJ("") } }
                                                 clearIcon={ false }
                                                 value={ tipoPessoa }
-                                                renderInput={(params) => <TextField {...params}  variant="outlined" margin="normal" multiline label="Tipo de pessoa" />}
+                                                renderInput={(params) => <TextField {...params}  variant="outlined" margin="normal" label="Tipo de pessoa" />}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -219,7 +234,7 @@ export default function CadastroAdvogado() {
                                                 value={estado}
                                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                                 onChange={ (_, v) => { setEstado(v); } }
-                                                renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Estado" />}
+                                                renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Estado" />}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -231,7 +246,6 @@ export default function CadastroAdvogado() {
                                                 id="Cidade"
                                                 label="Cidade"
                                                 placeholder="Nome da Cidade"
-                                                multiline
                                                 variant="outlined"
                                                 value={cidade}
                                                 onChange={e => setCidade(e.target.value)}
@@ -257,6 +271,24 @@ export default function CadastroAdvogado() {
                             {activeStep == 1 && (
                                 <>
                                     <Grid item xs={12} sm={4}>
+                                        <FormControl fullWidth variant="outlined" margin="normal">
+                                        <Autocomplete
+                                            multiple
+                                            options={areas.map((x) => { 
+                                                return {
+                                                    label: x.titulo,
+                                                    id: x.id_area_atuacao
+                                                }
+                                            })}
+                                            onChange={ handleAutocompleteAreaChange }
+                                            value={areas_atuacao}
+                                            isOptionEqualToValue={(option, value) => option?.id === value?.id}
+                                            renderInput={(params) => <TextField {...params} required={areas_atuacao.length === 0} label="Área de atuação" />}
+                                        />
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={4}>
                                         <FormControl fullWidth>
                                             <TextField
                                                 required
@@ -278,10 +310,25 @@ export default function CadastroAdvogado() {
                                                 value={estado_cna}
                                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                                 onChange={ (_, v) => { setEstadoCNA(v); } }
-                                                renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Estado do CNA" />}
+                                                renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Estado do CNA" />}
                                             />
                                         </FormControl>
                                     </Grid>
+
+                                    <Grid item xs={12} sm={12}>
+                                        <FormControl fullWidth>
+                                            <TextField
+                                                required
+                                                multiline
+                                                label="Descrição do perfil"
+                                                variant="outlined"
+                                                value={info}
+                                                onChange={e => setInfo(e.target.value)}
+                                                margin="normal"
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    
                                 </>
                             )}
 
@@ -295,7 +342,6 @@ export default function CadastroAdvogado() {
                                                 id="email"
                                                 label="E-mail"
                                                 placeholder="meuemail@email.com"
-                                                multiline
                                                 variant="outlined"
                                                 value={email}
                                                 onChange={e => setEmail(e.target.value)}
