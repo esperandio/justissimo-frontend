@@ -195,8 +195,8 @@ export default function CadastroAdvogado() {
                                         <FormControl fullWidth>
                                             <InputLabel id="Tipo"></InputLabel>
                                             {tipoPessoa === "Física"
-                                                ? <InputCpfMask required onChange={e => setCPF(e.target.value)} />
-                                                : <InputCnpjMask required onChange={e => setCNPJ(e.target.value)} />
+                                                ? <InputCpfMask value={cpf} required onChange={e => setCPF(e.target.value)} />
+                                                : <InputCnpjMask value={cnpj} required onChange={e => setCNPJ(e.target.value)} />
                                             }
                                         </FormControl>
                                     </Grid>
@@ -216,6 +216,7 @@ export default function CadastroAdvogado() {
                                         <FormControl fullWidth>
                                             <Autocomplete
                                                 options={estados}
+                                                value={estado}
                                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                                 onChange={ (_, v) => { setEstado(v); } }
                                                 renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Estado" />}
@@ -243,6 +244,7 @@ export default function CadastroAdvogado() {
                                         <FormControl fullWidth>
                                             <InputLabel id="Telefone"></InputLabel>
                                             <InputTelefone
+                                                value={tel_celular}
                                                 onChange={e => setTelefoneCelular(e.target.value)}
                                                 required
                                             />
@@ -273,6 +275,7 @@ export default function CadastroAdvogado() {
                                         <FormControl fullWidth>
                                             <Autocomplete
                                                 options={estados}
+                                                value={estado_cna}
                                                 isOptionEqualToValue={(option, value) => option.value === value.value}
                                                 onChange={ (_, v) => { setEstadoCNA(v); } }
                                                 renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Estado do CNA" />}
