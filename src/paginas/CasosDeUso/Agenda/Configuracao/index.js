@@ -18,9 +18,6 @@ export default function ConfiguracaoAgenda() {
 
     // dias remover
     let dias_remover = [];
-    function setDiasRemover(diaRemoverDados) {
-        dias_remover.push(diaRemoverDados)
-    };
 
     const [redirect, setRedirect] = useState(false);
 
@@ -49,7 +46,7 @@ export default function ConfiguracaoAgenda() {
     const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'));
 
       // Carrega inicialmente
-  useEffect(() => {
+    useEffect(() => {
         function validarSessao() {
         if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Advogado') {
                 alert('Você precisa estar conectado como Advogado para acessar essa tela!');
@@ -87,6 +84,8 @@ export default function ConfiguracaoAgenda() {
                         duracao
                     });
                 }
+
+                return dia;
             });
         }
 

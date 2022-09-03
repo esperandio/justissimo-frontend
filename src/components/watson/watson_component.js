@@ -15,7 +15,7 @@ function App({ createWebChatInstance }) {
       },
     }
     createWebChatInstance(watsonAssistantChatOptions);
-  }, []);
+  }, [createWebChatInstance]);
 
   return (
     <div className="App">

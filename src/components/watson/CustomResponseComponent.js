@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { DatePicker, DatePickerInput} from 'carbon-components-react';
 import PropTypes from 'prop-types';
 
