@@ -5,7 +5,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import LogoutIcon from '@mui/icons-material/Logout';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import IconButton from '@mui/material/IconButton';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -29,6 +33,8 @@ export default function Header(props) {
   const { title } = props;
 
   const [sections, setSections] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem('tipo_usuario') === 'Advogado') {
@@ -52,6 +58,23 @@ export default function Header(props) {
     }
   }, []);
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    setRedirect(true);
+  }
+
+  if (redirect) {
+    return <Redirect to='../login' />;
+  }
+
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
@@ -67,16 +90,37 @@ export default function Header(props) {
         </Typography>
         {sessionStorage.getItem('token') === null
           ? <>
-            <Button variant="outlined" size="small" href="/login" >
-              <LogoutIcon></LogoutIcon>
-              Entrar
-            </Button>
+            <Button color="inherit" href="/login">Login</Button>
           </>
           : <>
-            <Button variant="outlined" size="small" href="/login" onClick={() => sessionStorage.clear()} >
-              <LogoutIcon></LogoutIcon>
-              Sair
-            </Button>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
           </>
         }
       </Toolbar>
