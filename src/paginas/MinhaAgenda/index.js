@@ -31,91 +31,96 @@ import { Redirect } from 'react-router-dom';
 import Footer from '../Main/Footer';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-      margin: '0px auto',
-      maxWidth: '80%',
-      fontFamily:'Inter',
-      alignItems: 'center'
-  },
-  user: {
-      width: '20vh',
-  },
-  submit: {
-      margin: theme.spacing(3, 0, 2),
-      backgroundColor:" ff0000",
-  }
+    paper: {
+        margin: '0px auto',
+        maxWidth: '80%',
+        fontFamily:'Inter',
+        alignItems: 'center'
+    },
+    user: {
+        width: '20vh',
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+        backgroundColor:" ff0000",
+    }
 }));
 
 export default function MinhaAgenda() {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  const [agendas, setAgendas] = useState([]);  
-  const [areas, setAreas] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
-  const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
-  const [id_area_atuacao, setAreaAtuacao] = useState("");
-  const [redirect, setRedirect] = useState(false);
-  const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
-  const [dias] = useState(['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado']);
-  
-  function formatDia(date) {
-    const data = new Date(date);
-    return dias[data.getUTCDay()];
-  }
+    const [agendas, setAgendas] = useState([]);  
+    const [areas, setAreas] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
+    const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
+    const [id_area_atuacao, setAreaAtuacao] = useState("");
+    const [redirect, setRedirect] = useState(false);
+    const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
+    const [dias] = useState(['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado']);
 
-  function formatTime(date) {
-    return `${date.getUTCHours()}`.padStart(2, "0") + ':' + `${date.getUTCMinutes()}`.padStart(2, "0")
-  }
-  function formatDate(date) {
-    date = new Date(date);
+    function formatDia(date) {
+        const data = new Date(date);
+        return dias[data.getUTCDay()];
+    }
 
-    return `${date.getUTCDate()}`.padStart(2, 0)
+    function formatTime(date) {
+        return `${date.getUTCHours()}`.padStart(2, "0") + ':' + `${date.getUTCMinutes()}`.padStart(2, "0")
+    }
+
+    function formatDate(date) {
+        date = new Date(date);
+
+        return `${date.getUTCDate()}`.padStart(2, 0)
             + "-"
             + `${date.getUTCMonth() + 1}`.padStart(2, 0)
             + "-"
             + `${date.getUTCFullYear()}`;
-  }
+    }
   
     function handleAbrirModalAgendamento() {
-    setOpen(true);
-}
+        setOpen(true);
+    }
 
     function handleChangeDataAgendamentoDe(newValue) {
-    setDataAgendamentoDe(newValue);
-}
+        setDataAgendamentoDe(newValue);
+    }
 
     function handleChangeDataAgendamentoAte(newValue) {
-    setDataAgendamentoAte(newValue);
-}
+        setDataAgendamentoAte(newValue);
+    }
+
     function handleClickFecharModalAgendamento() {
-    setOpen(false);
-}
+        setOpen(false);
+    }
+
     function handleConfiguracaoAgenda() {
         setRedirectConfigAgenda({redirectConfigAgenda: true})
-}
-  // Carrega inicialmente
-  useEffect(() => {
-    function validarSessao() {
-        if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Advogado') {
-            alert('Você precisa estar conectado como Advogado para acessar essa tela!');
-            setRedirect({ redirect: true });
+    }
+
+    // Carrega inicialmente
+    useEffect(() => {
+        function validarSessao() {
+            if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Advogado') {
+                alert('Você precisa estar conectado como Advogado para acessar essa tela!');
+                setRedirect({ redirect: true });
+            }
         }
-    }
 
-    async function buscarInformacoesAgendaAdvogado() {
-      const id = sessionStorage.getItem('id_advogado');
-      const resultado = await api.get(`schedulings/lawyer/${id}`);
-      setAgendas(resultado.data)
-    }
+        async function buscarInformacoesAgendaAdvogado() {
+            const id = sessionStorage.getItem('id_advogado');
+            const resultado = await api.get(`schedulings/lawyer/${id}`);
+            setAgendas(resultado.data)
+        }
 
-    async function buscarAreas() {
-        const resultado = await api.get('areas');
-        setAreas(resultado.data);
-    }
-    validarSessao();
-    buscarInformacoesAgendaAdvogado();
-    buscarAreas();
+        async function buscarAreas() {
+            const resultado = await api.get('areas');
+            setAreas(resultado.data);
+        }
+
+        validarSessao();
+        buscarInformacoesAgendaAdvogado();
+        buscarAreas();
     }, []);
 
     async function deleteAgenda(id_agenda) {
@@ -157,6 +162,7 @@ export default function MinhaAgenda() {
             + `${dataAgendamentoAte.getUTCMonth() + 1}`.padStart(2, 0)
             + "-"
             + `${dataAgendamentoAte.getDate()}`.padStart(2, 0);
+
         try {
             const resultado = await api.get(`schedulings/lawyer/${fk_advogado}?data_inicial=${dataAgendamentoDeFormatada}&data_final=${dataAgendamentoAteFormatada}&area=${id_area_atuacao}`);
             setAgendas(resultado.data)
@@ -180,62 +186,63 @@ export default function MinhaAgenda() {
     if (redirectConfigAgenda) {
         return <Redirect to='configuracao/agenda' />;
     }
-  return (
-    <React.Fragment>
-        <Container maxWidth="lg">
-            <Header title="Minha Agenda" />
-            <TitleJustissimo/>
-            <TitlePage internal="Minha Agenda" />
 
-            <div className={classes.paper}>
-                <div id="opcaoAgenda" style={{display:"flex", justifyContent:"space-between", width:"95%", paddingLeft:"2%",marginBottom:"3%", marginTop:"5%"}}>
-                    <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
-                        Configuração da Agenda
-                    </Button>
-                    <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleAbrirModalAgendamento }>
-                        Filtro
-                    </Button>
+    return (
+        <React.Fragment>
+            <Container maxWidth="lg">
+                <Header title="Minha Agenda" />
+                <TitleJustissimo/>
+                <TitlePage internal="Minha Agenda" />
+
+                <div className={classes.paper}>
+                    <div id="opcaoAgenda" style={{display:"flex", justifyContent:"space-between", width:"95%", paddingLeft:"2%",marginBottom:"3%", marginTop:"5%"}}>
+                        <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
+                            Configuração da Agenda
+                        </Button>
+                        <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleAbrirModalAgendamento }>
+                            Filtro
+                        </Button>
+                    </div>
+
+                    <div>
+                        {agendas.map((agenda) => (
+                        <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="div" >
+                                    <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</span></b>
+                                </Typography>
+                                <Typography gutterBottom variant="h7" component="div">
+                                    <b>{formatDate(agenda.data_agendamento)}</b>
+                                </Typography>
+
+                                <Typography gutterBottom variant="h8" component="div">
+                                    {formatDia(agenda.data_agendamento)}
+                                </Typography>
+
+                                <Typography gutterBottom variant="h8" component="div">
+                                    {formatTime(new Date(agenda.horario))}h
+                                </Typography>
+
+                                <Typography gutterBottom variant="h7" component="div">
+                                    Contato em {agenda.contato_cliente}
+                                </Typography>
+                            </CardContent>
+                        <CardActions>
+                                <Button className={classes.submit}
+                                    style={{ color: " #e31837", backgroundColor:"transparent", border:"none", boxShadow:"none", marginLeft:"80%"}}
+                                    variant="contained"
+                                    type="submit"
+                                    onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                                    <b> ENCERRAR</b>
+                                </Button>
+                        </CardActions>
+                        </Card>
+                    ))}
+                    </div>
                 </div>
 
-                <div>
-                    {agendas.map((agenda) => (
-                    <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="div" >
-                                <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</span></b>
-                            </Typography>
-                            <Typography gutterBottom variant="h7" component="div">
-                                <b>{formatDate(agenda.data_agendamento)}</b>
-                            </Typography>
-
-                            <Typography gutterBottom variant="h8" component="div">
-                                {formatDia(agenda.data_agendamento)}
-                            </Typography>
-
-                            <Typography gutterBottom variant="h8" component="div">
-                                {formatTime(new Date(agenda.horario))}h
-                            </Typography>
-
-                            <Typography gutterBottom variant="h7" component="div">
-                                Contato em {agenda.contato_cliente}
-                            </Typography>
-                        </CardContent>
-                    <CardActions>
-                            <Button className={classes.submit}
-                                style={{ color: " #e31837", backgroundColor:"transparent", border:"none", boxShadow:"none", marginLeft:"80%"}}
-                                variant="contained"
-                                type="submit"
-                                onClick={ () => deleteAgenda(agenda.id_agenda) }>
-                                <b> ENCERRAR</b>
-                            </Button>
-                    </CardActions>
-                    </Card>
-                ))}
-                </div>
-            </div>
-
-            <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
-                <DialogTitle>Filtrar Agendamentos</DialogTitle>
+                <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
+                    <DialogTitle>Filtrar Agendamentos</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             <FormControl fullWidth className={classes.margin}>
@@ -254,6 +261,7 @@ export default function MinhaAgenda() {
                                     />
                                 </LocalizationProvider>
                             </FormControl>
+
                             <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
                                 <InputLabel id="Area">Área de atuação</InputLabel>
                                 <Select
@@ -284,9 +292,9 @@ export default function MinhaAgenda() {
                             </Button>
                         </DialogContentText>
                     </DialogContent>
-            </Dialog>
-        </Container>
-        <Footer />
-      </React.Fragment>          
-  );
+                </Dialog>
+            </Container>
+            <Footer />
+        </React.Fragment>          
+    );
 }
