@@ -128,11 +128,7 @@ export default function MinhaAgenda() {
             return;
         }
 
-        const agendaDepois = agendas.filter((x) => {
-            if (x.id_agenda !== id_agenda) {
-                return x
-            }
-        });
+        const agendaDepois = agendas.filter((x) => x.id_agenda !== id_agenda);
 
         const id = sessionStorage.getItem('id_advogado');
 
