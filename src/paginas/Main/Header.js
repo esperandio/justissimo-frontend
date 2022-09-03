@@ -28,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+Header.propTypes = {
+  sections: PropTypes.array,
+  title: PropTypes.string,
+};
+
 export default function Header(props) {
   const classes = useStyles();
   const history = useHistory();
@@ -64,6 +69,10 @@ export default function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleEditarPerfil = () => {
+    history.push(`/editar-perfil`);
+  }
 
   const handleLogout = () => {
     sessionStorage.clear();
@@ -114,6 +123,7 @@ export default function Header(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                <MenuItem onClick={handleEditarPerfil}>Editar perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
           </>
@@ -136,8 +146,3 @@ export default function Header(props) {
     </React.Fragment>
   );
 }
-
-Header.propTypes = {
-  sections: PropTypes.array,
-  title: PropTypes.string,
-};

@@ -15,6 +15,7 @@ import ListarAdvogado from './paginas/Listar/Advogado';
 import InformacoesAdvogado from './paginas/InformacoesAdvogado';
 import MinhaAgenda from './paginas/MinhaAgenda';
 import ConfiguracaoAgenda from './paginas/CasosDeUso/Agenda/Configuracao';
+import EditarPerfil from './paginas/EditarPerfil';
 
 function Routes() {
     return (
@@ -34,6 +35,7 @@ function Routes() {
                 <Route path="/advogado/:id" component={InformacoesAdvogado}/>
                 <Route path="/minha-agenda" component={MinhaAgenda}/>
                 <Route path="/configuracao/agenda" component={ConfiguracaoAgenda}/> 
+                <Route path="/editar-perfil" component={EditarPerfil}/>
             </Switch>
         </BrowserRouter>
     )

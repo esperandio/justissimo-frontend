@@ -14,10 +14,7 @@ export default function Home() {
             <CssBaseline />
             <Container maxWidth="lg">
                 <Header title="Home" />
-
-                <div >
-                    <TitleJustissimo/>
-                </div>
+                <TitleJustissimo/>
 
                 <Typography variant="body1" gutterBottom align="justify">
                     Justíssimo trata-se de uma fundamental ferramenta para democratizar o conhecimento jurídico, e de forma gratuita. 
