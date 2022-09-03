@@ -163,7 +163,7 @@ export default function CadastroAdvogado() {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm container spacing={1}>
                             {/* 1ª etapa */}
-                            {activeStep == 0 && (
+                            {activeStep === 0 && (
                                 <>
                                     <Grid item xs={12} sm={6}>
                                         <FormControl fullWidth>
@@ -268,7 +268,7 @@ export default function CadastroAdvogado() {
                             )}
 
                             {/* 2ª etapa */}
-                            {activeStep == 1 && (
+                            {activeStep === 1 && (
                                 <>
                                     <Grid item xs={12} sm={4}>
                                         <FormControl fullWidth variant="outlined" margin="normal">
