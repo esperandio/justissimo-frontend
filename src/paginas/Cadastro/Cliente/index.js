@@ -162,7 +162,7 @@ export default function CadastroUsuario() {
                                         onChange={ (_, v) => { setTipoPessoa(v); setCPF(""); setCNPJ("") } }
                                         clearIcon={ false }
                                         value={ tipoPessoa }
-                                        renderInput={(params) => <TextField {...params}  variant="outlined" margin="normal" multiline label="Tipo de pessoa" />}
+                                        renderInput={(params) => <TextField {...params}  variant="outlined" margin="normal" label="Tipo de pessoa" />}
                                     />
                                 </FormControl>
                             </Grid>
@@ -194,7 +194,7 @@ export default function CadastroUsuario() {
                                         options={estados}
                                         isOptionEqualToValue={(option, value) => option.value === value.value}
                                         onChange={ (_, v) => { setEstado(v); } }
-                                        renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Estado" />}
+                                        renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Estado" />}
                                     />
                                 </FormControl>
                             </Grid>
