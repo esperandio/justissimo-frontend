@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
+  const history = useHistory();
   const { title } = props;
 
   const [sections, setSections] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem('tipo_usuario') === 'Advogado') {
@@ -67,11 +67,7 @@ export default function Header(props) {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    setRedirect(true);
-  }
-
-  if (redirect) {
-    return <Redirect to='../login' />;
+    history.push(`/login`);
   }
 
   return (
