@@ -24,6 +24,7 @@ function Routes() {
                 <Route path="/" exact={true} component={Home}/>
                 <Route path="/advogado/cad" component={CadAdvogado}/>
                 <Route path="/cliente/cad" component={CadCliente}/>
+                <Route path="/advogado/cad" component={CadAdvogado}/>
                 <Route path="/divulgacao/cad" component={CadDivulgacao}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/home" component={Home}/>

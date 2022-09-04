@@ -57,7 +57,8 @@ export default function Header(props) {
       setSections([
         { title: 'Home', url: '/home' },
         { title: 'Pesquisar Advogado', url: '/advogado/listar' },
-        { title: 'Cadastrar Cliente', url: '/cliente/cad' }
+        { title: 'Cadastrar Cliente', url: '/cliente/cad' },
+        { title: 'Cadastrar Advogado', url: '/advogado/cad' }
       ])
     }
   }, []);
