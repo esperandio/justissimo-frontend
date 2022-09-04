@@ -1,16 +1,16 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import Header from '../Main/Header';
-import { TitleJustissimo, TitlePage } from '../../components/Utils/title';
+import HeaderNovo from '../Main/HeaderNovo';
+import Footer from '../Main/Footer';
 
 export default function EditarPerfil() {
     return (
         <React.Fragment>
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Editar perfil" />
-                <TitleJustissimo />
-                <TitlePage internal="Editar perfil" />
+                Teste
             </Container>
+            <Footer />
         </React.Fragment>
     )
 }
