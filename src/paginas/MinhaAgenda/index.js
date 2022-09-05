@@ -9,9 +9,9 @@ import ConfigIcon from '@mui/icons-material/Settings';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Header from '../Main/Header';
+import HeaderNovo from '../Main/HeaderNovo';
 import Container from '@material-ui/core/Container';
-import { TitleJustissimo, TitlePage } from '../../components/Utils/title';
+import { TitlePage } from '../../components/Utils/title';
 import { useState } from 'react';
 import api from '../../service/api';
 import { useEffect } from 'react';
@@ -29,6 +29,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Redirect } from 'react-router-dom';
 import Footer from '../Main/Footer';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -185,9 +186,9 @@ export default function MinhaAgenda() {
 
     return (
         <React.Fragment>
+            <CssBaseline />
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Minha Agenda" />
-                <TitleJustissimo/>
                 <TitlePage internal="Minha Agenda" />
 
                 <div className={classes.paper}>
