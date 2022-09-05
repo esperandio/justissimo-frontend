@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router';
 import api from '../../../../service/api';
-import { TitleJustissimo, TitlePage } from '../../../../components/Utils/title';
+import { TitlePage } from '../../../../components/Utils/title';
 import TextArea from '../../../../components/Utils/input';
 import { Rating } from '@mui/material';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import { useParams } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import Header from '../../../Main/Header';
+import HeaderNovo from '../../../Main/HeaderNovo';
 import Footer from '../../../Main/Footer';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -124,76 +124,76 @@ export default function AvaliacaoAdvogado() {
     }
 
     return (
-        // Form
-        <Container maxWidth="lg">
-            <Header title="Avaliar Advogado" />
-            <TitleJustissimo/>
-            <TitlePage internal="Avaliar Advogado" />
+        <>
+            <CssBaseline />
+            <HeaderNovo />
+            <Container maxWidth="lg">
+                <TitlePage internal="Avaliar Advogado" />
 
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <form className={classes.form} /*onSubmit={handleLogin}*/>
+                <Container component="main" maxWidth="xs">
+                    <div className={classes.paper}>
+                        <form className={classes.form} /*onSubmit={handleLogin}*/>
 
-                        {/* Input Rating */}
-                        <div className={classes.paper}>
-                            <Rating 
+                            {/* Input Rating */}
+                            <div className={classes.paper}>
+                                <Rating 
+                                    style={{
+                                        color: '#FFCB45'
+                                    }}
+                                    id="nota"
+                                    name="nota" 
+                                    defaultValue={3} 
+                                    precision={0.5}
+                                    size='large'
+                                    required 
+                                    autoFocus
+                                    value={nota}
+                                    onChange={e => convertDados(e.target.value)}
+                                    />
+                            </div>
+
+                            <div 
                                 style={{
-                                    color: '#FFCB45'
+                                    "color": '#3B485E'
                                 }}
-                                id="nota"
-                                name="nota" 
-                                defaultValue={3} 
-                                precision={0.5}
-                                size='large'
-                                required 
+                            >
+
+                                <br/><br/>
+                                <span>
+                                    <b>
+                                        Deixe um comentário
+                                    </b>
+                                </span> <br/>
+
+                                <br/>
+                            </div>
+
+                            {/* Input TextArea 'Descrição' */}
+                            <TextArea
+                                id="descricao"
+                                name="descricao"
+                                autoComplete="descricao"
                                 autoFocus
-                                value={nota}
-                                onChange={e => convertDados(e.target.value)}
-                                />
-                        </div>
+                                margin="normal"
+                                variant="outlined"
+                                placeholder="Aqui vai uma descrição da sua avaliação"
+                                value={descricao}
+                                onChange={e => setDescricao(e.target.value)}
+                            />
 
-                        <div 
-                            style={{
-                                "color": '#3B485E'
-                            }}
-                        >
+                            <ButtonOutlined 
+                                className={classes.submit}
+                                internal="AVALIAR" 
+                                type="submit"
+                                variant="outlined"
+                                onClick={handleAvaliacaoAdvogado}
+                            />
 
-                            <br/><br/>
-                            <span>
-                                <b>
-                                    Deixe um comentário
-                                </b>
-                            </span> <br/>
-
-                            <br/>
-                        </div>
-
-                        {/* Input TextArea 'Descrição' */}
-                        <TextArea
-                            id="descricao"
-                            name="descricao"
-                            autoComplete="descricao"
-                            autoFocus
-                            margin="normal"
-                            variant="outlined"
-                            placeholder="Aqui vai uma descrição da sua avaliação"
-                            value={descricao}
-                            onChange={e => setDescricao(e.target.value)}
-                        />
-
-                        <ButtonOutlined 
-                            className={classes.submit}
-                            internal="AVALIAR" 
-                            type="submit"
-                            variant="outlined"
-                            onClick={handleAvaliacaoAdvogado}
-                        />
-
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                </Container>
             </Container>
             <Footer />
-        </Container>
+        </>
     );
 }
