@@ -9,10 +9,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
 import InputLabel from '@material-ui/core/InputLabel';
-import Header from '../../Main/Header';
+import HeaderNovo from '../../Main/HeaderNovo';
 import Footer from '../../Main/Footer';
 import { Redirect } from 'react-router-dom';
-import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
+import { TitlePage } from '../../../components/Utils/title';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -117,9 +117,8 @@ export default function CadastroUsuario() {
     return (
         <React.Fragment>
             <CssBaseline />
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Cadastrar Cliente" />
-                <TitleJustissimo/>
                 <TitlePage internal="Cadastro de cliente" />
 
                 <form onSubmit={handleCadastro}>
