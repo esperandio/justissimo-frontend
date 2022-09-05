@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, TextField } from '@material-ui/core';
 import { Autocomplete } from '@mui/material';
-import { TitleJustissimo, TitlePage } from '../../../../components/Utils/title';
+import { TitlePage } from '../../../../components/Utils/title';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import api from '../../../../service/api';
-import Header from '../../../Main/Header';
+import HeaderNovo from '../../../Main/HeaderNovo';
 import Footer from '../../../Main/Footer';
 import { Redirect } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 export default function ConfiguracaoAgenda() {
     
@@ -147,12 +148,12 @@ export default function ConfiguracaoAgenda() {
     }
     return (
         <React.Fragment>
-        <Container component="main" maxWidth="lg">
-            <Header title="Configuração da Agenda" />
-            <TitleJustissimo/>
+        <CssBaseline />
+        <HeaderNovo />
+        <Container maxWidth="lg">
             <TitlePage internal="Configuração da Agenda" />
 
-            <Container component="conteudo" maxWidth="sm">
+            <Container maxWidth="sm">
                 <br/>
                 <br/>
 
