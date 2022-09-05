@@ -9,7 +9,7 @@ import ConfigIcon from '@mui/icons-material/Settings';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import HeaderNovo from '../Main/HeaderNovo';
+import Header from '../Main/Header';
 import Container from '@material-ui/core/Container';
 import { TitlePage } from '../../components/Utils/title';
 import { useState } from 'react';
@@ -187,7 +187,7 @@ export default function MinhaAgenda() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 <TitlePage internal="Minha Agenda" />
 

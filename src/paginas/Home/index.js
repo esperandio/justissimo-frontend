@@ -1,7 +1,7 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import HeaderNovo from '../Main/HeaderNovo';
+import Header from '../Main/Header';
 import { TitleJustissimo }  from '../../components/Utils/title';
 import Footer from '../Main/Footer';
 import Typography from '@mui/material/Typography';
@@ -12,7 +12,7 @@ export default function Home() {
         <React.Fragment>
             <WatsonComponent/>
             <CssBaseline />
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 <TitleJustissimo/>
 

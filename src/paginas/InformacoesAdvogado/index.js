@@ -32,7 +32,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router-dom';
 import Footer from '../Main/Footer';
-import HeaderNovo from '../Main/HeaderNovo';
+import Header from '../Main/Header';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -202,7 +202,7 @@ export default function InformacoesAdvogado() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 <br />
                 <br />

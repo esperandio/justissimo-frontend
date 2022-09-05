@@ -4,7 +4,7 @@ import { Autocomplete } from '@mui/material';
 import { TitlePage } from '../../../../components/Utils/title';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import api from '../../../../service/api';
-import HeaderNovo from '../../../Main/HeaderNovo';
+import Header from '../../../Main/Header';
 import Footer from '../../../Main/Footer';
 import { Redirect } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -149,7 +149,7 @@ export default function ConfiguracaoAgenda() {
     return (
         <React.Fragment>
         <CssBaseline />
-        <HeaderNovo />
+        <Header />
         <Container maxWidth="lg">
             <TitlePage internal="Configuração da Agenda" />
 

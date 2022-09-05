@@ -9,7 +9,7 @@ import { Rating } from '@mui/material';
 import ButtonOutlined from '../../../../components/Utils/buttom';
 import { useParams } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import HeaderNovo from '../../../Main/HeaderNovo';
+import Header from '../../../Main/Header';
 import Footer from '../../../Main/Footer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -126,7 +126,7 @@ export default function AvaliacaoAdvogado() {
     return (
         <>
             <CssBaseline />
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 <TitlePage internal="Avaliar Advogado" />
 

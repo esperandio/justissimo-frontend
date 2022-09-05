@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import SaveIcon from '@material-ui/icons/Save';
 import InputLabel from '@material-ui/core/InputLabel';
-import HeaderNovo from '../../Main/HeaderNovo';
+import Header from '../../Main/Header';
 import Footer from '../../Main/Footer';
 import { Redirect } from 'react-router-dom';
 import { TitlePage } from '../../../components/Utils/title';
@@ -117,7 +117,7 @@ export default function CadastroUsuario() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 <TitlePage internal="Cadastro de cliente" />
 

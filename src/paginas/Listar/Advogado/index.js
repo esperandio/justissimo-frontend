@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import HeaderNovo from '../../Main/HeaderNovo';
+import Header from '../../Main/Header';
 import Footer from '../../Main/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import { TitlePage } from '../../../components/Utils/title';
@@ -102,7 +102,7 @@ export default function ListarAdvogado() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 <TitlePage internal="Busque advogados" />
 

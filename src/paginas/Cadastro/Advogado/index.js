@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
-import HeaderNovo from '../../Main/HeaderNovo';
+import Header from '../../Main/Header';
 import Footer from '../../Main/Footer';
 import { TitlePage } from '../../../components/Utils/title';
 import Grid from '@material-ui/core/Grid';
@@ -141,7 +141,7 @@ export default function CadastroAdvogado() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 <TitlePage internal="Cadastro de advogado" />
 

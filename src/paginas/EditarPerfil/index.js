@@ -1,12 +1,12 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import HeaderNovo from '../Main/HeaderNovo';
+import Header from '../Main/Header';
 import Footer from '../Main/Footer';
 
 export default function EditarPerfil() {
     return (
         <React.Fragment>
-            <HeaderNovo />
+            <Header />
             <Container maxWidth="lg">
                 Teste
             </Container>
