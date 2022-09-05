@@ -33,6 +33,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router-dom';
 import Footer from '../Main/Footer';
+import HeaderNovo from '../Main/HeaderNovo';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -202,10 +203,11 @@ export default function InformacoesAdvogado() {
     return (
         <React.Fragment>
             <CssBaseline />
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Informações do advogado" />
+                <br />
+                <br />
                 <div className={classes.paper}>
-                    <TitleJustissimo/>
                     <img src={logo} className={classes.user} alt="logo" />
                     <TitlePage internal={advogado.nome} />
                     <Rating 
