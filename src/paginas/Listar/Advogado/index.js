@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import Header from '../../Main/Header';
+import HeaderNovo from '../../Main/HeaderNovo';
 import Footer from '../../Main/Footer';
 import { makeStyles } from '@material-ui/core/styles';
-import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
+import { TitlePage } from '../../../components/Utils/title';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
@@ -102,9 +102,8 @@ export default function ListarAdvogado() {
     return (
         <React.Fragment>
             <CssBaseline />
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Pesquisar Advogado" />
-                <TitleJustissimo/>
                 <TitlePage internal="Busque advogados" />
 
                 <div className={classes.paper}>
@@ -224,8 +223,8 @@ export default function ListarAdvogado() {
                         </Grid>
                     </Grid>
                 </div>
-                <Footer />
             </Container>
+            <Footer />
         </React.Fragment>
     );
 }
