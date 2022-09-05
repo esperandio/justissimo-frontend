@@ -289,8 +289,8 @@ export default function CadastroUsuario() {
                     </Grid>
 
                 </form>
-                <Footer />
             </Container>
+            <Footer />
         </React.Fragment>
     );
 }

@@ -1,19 +1,19 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import Header from '../Main/Header';
+import HeaderNovo from '../Main/HeaderNovo';
 import { TitleJustissimo }  from '../../components/Utils/title';
 import Footer from '../Main/Footer';
 import Typography from '@mui/material/Typography';
-import App from '../../components/watson/watson_component';
+import WatsonComponent from '../../components/watson/watson_component';
 
 export default function Home() {
     return (
         <React.Fragment>
-            <App/>
+            <WatsonComponent/>
             <CssBaseline />
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Home" />
                 <TitleJustissimo/>
 
                 <Typography variant="body1" gutterBottom align="justify">
