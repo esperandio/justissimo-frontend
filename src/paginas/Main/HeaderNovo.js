@@ -85,7 +85,7 @@ const HeaderNovo = () => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <AppBar position="static">
+      <AppBar position="sticky" >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <BalanceIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
