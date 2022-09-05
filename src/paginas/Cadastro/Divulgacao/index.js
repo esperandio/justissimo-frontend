@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import Header from '../../Main/Header';
+import HeaderNovo from '../../Main/HeaderNovo';
 import Footer from '../../Main/Footer';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import api from '../../../service/api';
 import { Redirect } from 'react-router-dom';
-import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
+import { TitlePage } from '../../../components/Utils/title';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -99,9 +99,8 @@ export default function CadastroDivulgacao() {
     return (
         <React.Fragment>
             <CssBaseline />
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Cadastrar divulgação" />
-                <TitleJustissimo/>
                 <TitlePage internal="Divulgue sua causa" />
 
                 <form>
@@ -177,8 +176,8 @@ export default function CadastroDivulgacao() {
                         </Grid>
                     </Grid>
                 </form>
-                <Footer />
             </Container>
+            <Footer />
         </React.Fragment>
     );
 }
