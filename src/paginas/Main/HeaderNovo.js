@@ -30,11 +30,11 @@ const HeaderNovo = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const [pages, setPages] = useState(['Home', 'Pesquisar Advogado', 'Cadastrar Cliente']);
+  const [pages, setPages] = useState([]);
   const [settings] = useState(['Editar perfil', 'Logout']);
 
   useEffect(() => {
-    let pages = ['Home', 'Pesquisar Advogado', 'Cadastrar Cliente'];
+    let pages = ['Home', 'Pesquisar Advogado', 'Cadastrar Cliente', 'Cadastrar Advogado'];
 
     if (sessionStorage.getItem('tipo_usuario') === 'Advogado') {
       pages = ['Home', 'Minha Agenda'];
@@ -72,6 +72,8 @@ const HeaderNovo = () => {
         return '/divulgacao/cad';
       case 'Cadastrar Cliente':
         return '/cliente/cad';
+      case 'Cadastrar Advogado':
+        return '/advogado/cad';
       default:
         return '/home';
     }
@@ -145,6 +147,7 @@ const HeaderNovo = () => {
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
+                  color="inherit"
                   key={page}
                   onClick={() => handleClickPageMenuItem(page)}
                   sx={{ my: 2, color: 'white', display: 'block' }}
