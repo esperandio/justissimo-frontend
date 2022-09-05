@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import Header from '../../Main/Header';
+import HeaderNovo from '../../Main/HeaderNovo';
 import Footer from '../../Main/Footer';
-import { TitleJustissimo, TitlePage } from '../../../components/Utils/title';
+import { TitlePage } from '../../../components/Utils/title';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
@@ -140,10 +139,8 @@ export default function CadastroAdvogado() {
 
     return (
         <React.Fragment>
-            <CssBaseline />
+            <HeaderNovo />
             <Container maxWidth="lg">
-                <Header title="Cadastrar Advogado" />
-                <TitleJustissimo />
                 <TitlePage internal="Cadastro de advogado" />
 
                 <Stepper activeStep={activeStep}>
@@ -430,9 +427,8 @@ export default function CadastroAdvogado() {
                         }
                     </Box>
                 </form>
-                <Footer />
-
             </Container>
+            <Footer />
         </React.Fragment>
     );
 }
