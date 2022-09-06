@@ -83,6 +83,28 @@ const Header = () => {
     history.push(getPageUrl(page));
   }
 
+  const handleClickSettingsMenuItem = (setting) => {
+    switch (setting) {
+      case 'Editar perfil':
+        handleEditarPerfil();
+        break;
+      case 'Logout':
+        handleLogout();
+        break;
+      default:
+        handleCloseUserMenu();
+    }
+  }
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    history.push('/login');
+  }
+
+  const handleEditarPerfil = () => {
+    history.push('/editar-perfil');
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <AppBar position="sticky" >
@@ -205,7 +227,7 @@ const Header = () => {
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting) => (
-                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <MenuItem key={setting} onClick={() => handleClickSettingsMenuItem(setting)}>
                         <Typography textAlign="center">{setting}</Typography>
                       </MenuItem>
                     ))}
