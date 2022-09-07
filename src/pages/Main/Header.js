@@ -119,10 +119,11 @@ const Header = () => {
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
+                fontFamily: 'Inter',
+                fontWeight: 900,
+                background: '-webkit-linear-gradient(45deg, #B28C09, #E2D04A)', 
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
                 textDecoration: 'none',
               }}
             >
@@ -176,10 +177,11 @@ const Header = () => {
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
+                fontFamily: 'Inter',
+                fontWeight: 900,
+                background: '-webkit-linear-gradient(45deg, #B28C09, #E2D04A)', 
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
                 textDecoration: 'none',
               }}
             >
