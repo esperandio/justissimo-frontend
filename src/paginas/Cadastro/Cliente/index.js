@@ -148,7 +148,7 @@ export default function CadastroUsuario() {
                                             label="Data de nascimento"
                                             value={dt_nascimento}
                                             onChange={newValue => setNascimento(newValue)}
-                                            renderInput={(params) => <TextField {...params} variant="outlined" margin="normal" />}
+                                            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" />}
                                         />
                                     </LocalizationProvider>
                                 </FormControl>
