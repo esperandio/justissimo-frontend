@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Header from '../Main/Header';
 import Footer from '../Main/Footer';
@@ -21,6 +21,7 @@ import InputCpfMask from '../../components/Utils/mask/inputCpfMask';
 import InputCnpjMask from '../../components/Utils/mask/inputCnpjMask';
 import InputCepMask from '../../components/Utils/mask/inputCepMask';
 import Autocomplete from '@mui/material/Autocomplete';
+import { UserService } from '../../services'
 
 export default function EditarPerfil() {
   const [nome, setNome] = useState('');
@@ -36,10 +37,31 @@ export default function EditarPerfil() {
   const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
   'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
 
+    useEffect(() => {
+      const user_id = 1;
+      const profile = UserService.getProfile(user_id);
+
+      setNome(profile.nome);
+      setEmail(profile.usuario.email);
+      setNascimento(profile.dt_nascimento);
+      setCPF(profile.nr_cpf);
+      setCNPJ(profile.nr_cnpj);
+      setCEP(profile.endereco.nr_cep);
+      setEstado(profile.endereco.estado);
+      setCidade(profile.endereco.cidade);
+      setImagemPreview(profile.usuario.url_foto_perfil);
+    }, []);
+
+
   const onImageChange = (event) => {
     const file = event.target.files[0];
     console.log(file);
     setImagemPreview(URL.createObjectURL(file));
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('handleSubmit');
   }
 
   return (
@@ -49,7 +71,7 @@ export default function EditarPerfil() {
       <Container maxWidth="lg">
         <TitlePage internal="Editar perfil" />
 
-        <form onSubmit={() => { console.log('Submit'); }}>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm container spacing={1}>
               {/* Imagem */}
@@ -88,8 +110,8 @@ export default function EditarPerfil() {
                 </Stack>
               </Grid>
 
-              {/* Home */}
-              <Grid item xs={12} sm={6}>
+              {/* Nome */}
+              <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
                   <TextField
                     required
@@ -106,7 +128,7 @@ export default function EditarPerfil() {
               </Grid>
 
               {/* Data de nascimento */}
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
                   <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
                     <DatePicker
@@ -120,20 +142,24 @@ export default function EditarPerfil() {
               </Grid>
 
               {/* CPF */}
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="Tipo"></InputLabel>
-                  <InputCpfMask value={cpf} required onChange={e => setCPF(e.target.value)} />
-                </FormControl>
-              </Grid>
+              {cpf !== '' && (
+                <Grid item xs={12} sm={4}>
+                  <FormControl fullWidth>
+                    <InputLabel id="Tipo"></InputLabel>
+                    <InputCpfMask value={cpf} required onChange={e => setCPF(e.target.value)} />
+                  </FormControl>
+                </Grid>
+              )}
 
               {/* CNPJ */}
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="Tipo"></InputLabel>
-                  <InputCnpjMask value={cnpj} required onChange={e => setCNPJ(e.target.value)} />
-                </FormControl>
-              </Grid>
+              {cnpj !== '' && (
+                <Grid item xs={12} sm={4}>
+                  <FormControl fullWidth>
+                    <InputLabel id="Tipo"></InputLabel>
+                    <InputCnpjMask value={cnpj} required onChange={e => setCNPJ(e.target.value)} />
+                  </FormControl>
+                </Grid>
+              )}
 
               {/* CEP */}
               <Grid item xs={12} sm={4}>
