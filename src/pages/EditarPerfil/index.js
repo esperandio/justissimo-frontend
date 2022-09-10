@@ -27,6 +27,7 @@ export default function EditarPerfil() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [dt_nascimento, setNascimento] = useState(null);
+  const [isTipoPessoaFisica, setIsTipoPessoaFisica] = useState(true);
   const [cpf, setCPF] = useState('');
   const [cnpj, setCNPJ] = useState('');
   const [cep, setCEP] = useState('');
@@ -40,6 +41,10 @@ export default function EditarPerfil() {
     useEffect(() => {
       const user_id = 1;
       const profile = UserService.getProfile(user_id);
+
+      if (profile.nr_cnpj !== '') {
+        setIsTipoPessoaFisica(false)
+      }
 
       setNome(profile.nome);
       setEmail(profile.usuario.email);
@@ -141,25 +146,14 @@ export default function EditarPerfil() {
                 </FormControl>
               </Grid>
 
-              {/* CPF */}
-              {cpf !== '' && (
-                <Grid item xs={12} sm={4}>
-                  <FormControl fullWidth>
-                    <InputLabel id="Tipo"></InputLabel>
-                    <InputCpfMask value={cpf} required onChange={e => setCPF(e.target.value)} />
-                  </FormControl>
-                </Grid>
-              )}
-
-              {/* CNPJ */}
-              {cnpj !== '' && (
-                <Grid item xs={12} sm={4}>
-                  <FormControl fullWidth>
-                    <InputLabel id="Tipo"></InputLabel>
-                    <InputCnpjMask value={cnpj} required onChange={e => setCNPJ(e.target.value)} />
-                  </FormControl>
-                </Grid>
-              )}
+              <Grid item xs={12} sm={4}>
+                <FormControl fullWidth>
+                  {isTipoPessoaFisica === true
+                    ? <InputCpfMask value={cpf} required onChange={e => setCPF(e.target.value)} />
+                    : <InputCnpjMask value={cnpj} required onChange={e => setCNPJ(e.target.value)} />
+                  }
+                </FormControl>
+              </Grid>
 
               {/* CEP */}
               <Grid item xs={12} sm={4}>
