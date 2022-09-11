@@ -53,10 +53,14 @@ export default function Login() {
                 const login_token = (login).data.token;
                 // Pega o tipo do usuario
                 const tipo_usuario = (login).data.tipo_usuario;
+                const id_usuario = login.data.id_usuario;
+                const url_foto_perfil = login.data.url_foto_perfil;
                 
                 // Seta o token na sessionStorage
                 sessionStorage.setItem('token', login_token);
                 sessionStorage.setItem('tipo_usuario', tipo_usuario);
+                sessionStorage.setItem('id_usuario', id_usuario);
+                sessionStorage.setItem('url_foto_perfil', url_foto_perfil);
                 
                 // Pega o id e seta na sessionStorage, de acordo o tipo do usuario
                 if (tipo_usuario === 'Cliente') {
