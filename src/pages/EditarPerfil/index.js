@@ -39,22 +39,26 @@ export default function EditarPerfil() {
   'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
 
     useEffect(() => {
-      const user_id = 1;
-      const profile = UserService.getProfile(user_id);
+      async function buscarInformacoesPerfil() {
+        const user_id = sessionStorage.getItem('id_usuario');
+        const profile = (await UserService.getProfile(user_id)).data;
 
-      if (profile.nr_cnpj !== '') {
-        setIsTipoPessoaFisica(false)
+        if (profile.nr_cnpj !== '') {
+          setIsTipoPessoaFisica(false)
+        }
+  
+        setNome(profile.nome);
+        setEmail(profile.usuario.email);
+        setNascimento(profile.dt_nascimento);
+        setCPF(profile.nr_cpf);
+        setCNPJ(profile.nr_cnpj);
+        setCEP(profile.endereco.nr_cep);
+        setEstado(profile.endereco.estado);
+        setCidade(profile.endereco.cidade);
+        setImagemPreview(profile.usuario.url_foto_perfil);
       }
 
-      setNome(profile.nome);
-      setEmail(profile.usuario.email);
-      setNascimento(profile.dt_nascimento);
-      setCPF(profile.nr_cpf);
-      setCNPJ(profile.nr_cnpj);
-      setCEP(profile.endereco.nr_cep);
-      setEstado(profile.endereco.estado);
-      setCidade(profile.endereco.cidade);
-      setImagemPreview(profile.usuario.url_foto_perfil);
+      buscarInformacoesPerfil();
     }, []);
 
 
