@@ -26,7 +26,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function EditarPerfil() {
-  const [open, setOpen] = useState(true);
+  const [backdropOpen, setBackdropOpen] = useState(true);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [dt_nascimento, setNascimento] = useState(null);
@@ -41,10 +41,6 @@ export default function EditarPerfil() {
   const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
   'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   useEffect(() => {
     async function buscarInformacoesPerfil() {
       const user_id = sessionStorage.getItem('id_usuario');
@@ -54,6 +50,7 @@ export default function EditarPerfil() {
         setIsTipoPessoaFisica(false)
       }
 
+      setImagemPreview(profile.usuario.url_foto_perfil);
       setNome(profile.nome);
       setEmail(profile.usuario.email);
       setNascimento(profile.dt_nascimento);
@@ -62,9 +59,8 @@ export default function EditarPerfil() {
       setCEP(profile.endereco.nr_cep);
       setEstado(profile.endereco.estado);
       setCidade(profile.endereco.cidade);
-      setImagemPreview(profile.usuario.url_foto_perfil);
 
-      handleClose();
+      setBackdropOpen(false);
     }
 
     buscarInformacoesPerfil();
@@ -85,7 +81,7 @@ export default function EditarPerfil() {
       <CssBaseline />
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
+        open={backdropOpen}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
@@ -104,7 +100,7 @@ export default function EditarPerfil() {
                   spacing={1}
                 >
                   <img 
-                    src={imagemPreview == null ? UserDefaultIcon : imagemPreview} 
+                    src={imagemPreview == null && backdropOpen === false ? UserDefaultIcon : imagemPreview} 
                     alt="preview" 
                     width={'180px'}
                   />
