@@ -21,9 +21,12 @@ import InputCpfMask from '../../components/Utils/mask/inputCpfMask';
 import InputCnpjMask from '../../components/Utils/mask/inputCnpjMask';
 import InputCepMask from '../../components/Utils/mask/inputCepMask';
 import Autocomplete from '@mui/material/Autocomplete';
-import { UserService } from '../../services'
+import { UserService } from '../../services';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function EditarPerfil() {
+  const [open, setOpen] = useState(true);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [dt_nascimento, setNascimento] = useState(null);
@@ -38,33 +41,37 @@ export default function EditarPerfil() {
   const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
   'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
 
-    useEffect(() => {
-      async function buscarInformacoesPerfil() {
-        const user_id = sessionStorage.getItem('id_usuario');
-        const profile = (await UserService.getProfile(user_id)).data;
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-        if (profile.nr_cnpj !== '') {
-          setIsTipoPessoaFisica(false)
-        }
-  
-        setNome(profile.nome);
-        setEmail(profile.usuario.email);
-        setNascimento(profile.dt_nascimento);
-        setCPF(profile.nr_cpf);
-        setCNPJ(profile.nr_cnpj);
-        setCEP(profile.endereco.nr_cep);
-        setEstado(profile.endereco.estado);
-        setCidade(profile.endereco.cidade);
-        setImagemPreview(profile.usuario.url_foto_perfil);
+  useEffect(() => {
+    async function buscarInformacoesPerfil() {
+      const user_id = sessionStorage.getItem('id_usuario');
+      const profile = (await UserService.getProfile(user_id)).data;
+
+      if (profile.nr_cnpj !== '') {
+        setIsTipoPessoaFisica(false)
       }
 
-      buscarInformacoesPerfil();
-    }, []);
+      setNome(profile.nome);
+      setEmail(profile.usuario.email);
+      setNascimento(profile.dt_nascimento);
+      setCPF(profile.nr_cpf);
+      setCNPJ(profile.nr_cnpj);
+      setCEP(profile.endereco.nr_cep);
+      setEstado(profile.endereco.estado);
+      setCidade(profile.endereco.cidade);
+      setImagemPreview(profile.usuario.url_foto_perfil);
 
+      handleClose();
+    }
+
+    buscarInformacoesPerfil();
+  }, []);
 
   const onImageChange = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     setImagemPreview(URL.createObjectURL(file));
   }
 
@@ -76,6 +83,12 @@ export default function EditarPerfil() {
   return (
     <>
       <CssBaseline />
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Editar perfil" />
