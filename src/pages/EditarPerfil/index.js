@@ -37,6 +37,7 @@ export default function EditarPerfil() {
   const [estado, setEstado] = useState('');
   const [cidade, setCidade] = useState('');
   const [imagemPreview, setImagemPreview] = useState(null);
+  const [imagemPreviewUrl, setImagemPreviewUrl] = useState('');
 
   const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
   'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
@@ -50,10 +51,10 @@ export default function EditarPerfil() {
         setIsTipoPessoaFisica(false)
       }
 
-      setImagemPreview(profile.usuario.url_foto_perfil);
+      setImagemPreviewUrl(profile.usuario.url_foto_perfil);
       setNome(profile.nome);
       setEmail(profile.usuario.email);
-      setNascimento(profile.dt_nascimento);
+      setNascimento(new Date(profile.dt_nascimento));
       setCPF(profile.nr_cpf);
       setCNPJ(profile.nr_cnpj);
       setCEP(profile.endereco.nr_cep);
@@ -68,12 +69,51 @@ export default function EditarPerfil() {
 
   const onImageChange = (event) => {
     const file = event.target.files[0];
-    setImagemPreview(URL.createObjectURL(file));
+
+    setImagemPreview(file);
+    setImagemPreviewUrl(URL.createObjectURL(file));
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('handleSubmit');
+
+    let retorno = '';
+
+    setBackdropOpen(true);
+
+    try {   
+      const user_id = sessionStorage.getItem('id_usuario');
+
+      const dt_nascimento_formatado = `${dt_nascimento.getUTCFullYear()}` 
+        + "-"
+        + `${dt_nascimento.getUTCMonth() + 1}`.padStart(2, 0)
+        + "-"
+        + `${dt_nascimento.getDate()}`.padStart(2, 0);
+
+      const user = {
+        email: email,
+        nome: nome,
+        dt_nascimento: dt_nascimento_formatado,
+        cpf: cpf,
+        cnpj: cnpj,
+        cidade: cidade,
+        estado: estado,
+        cep: cep,
+        file: imagemPreview
+      }
+
+      await UserService.updateProfile(user_id, user);
+      retorno = 'Perfil atualizado com sucesso!';
+    } catch (error) {
+      if (error.response.status === 400) {
+        retorno = 'Erro ao atualizar o perfil! ' + error.response.data.message;
+      } else {
+        retorno = 'Erro ao atualizar o perfil! ' + error.message;
+      } 
+    }
+
+    setBackdropOpen(false);
+    alert(retorno);
   }
 
   return (
@@ -100,7 +140,10 @@ export default function EditarPerfil() {
                   spacing={1}
                 >
                   <img 
-                    src={imagemPreview == null && backdropOpen === false ? UserDefaultIcon : imagemPreview} 
+                    src={(imagemPreviewUrl == null || imagemPreviewUrl === '' ) && backdropOpen === false 
+                      ? UserDefaultIcon 
+                      : imagemPreviewUrl
+                    } 
                     alt="preview" 
                     width={'180px'}
                   />
