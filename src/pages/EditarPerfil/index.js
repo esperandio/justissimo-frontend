@@ -94,11 +94,11 @@ export default function EditarPerfil() {
         email: email,
         nome: nome,
         dt_nascimento: dt_nascimento_formatado,
-        cpf: cpf,
-        cnpj: cnpj,
+        cpf: cpf.replace(/\D/g, ""),
+        cnpj: cnpj.replace(/\D/g, ""),
         cidade: cidade,
         estado: estado,
-        cep: cep,
+        cep: cep.replace(/\D/g, ""),
         file: imagemPreview
       }
 
