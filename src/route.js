@@ -1,20 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import CadAdvogado from './paginas/Cadastro/Advogado'
-import CadCliente from './paginas/Cadastro/Cliente'
-import CadDivulgacao from './paginas/Cadastro/Divulgacao'
-//import EditUsuario from './paginas/Usuario/EditUsuario'
-//import ListarUsuario from './paginas/Usuario/ListarUsuario'
-import Login from './paginas/Login';
-import Home from './paginas/Home';
-import RedefinirSenha_Email from './paginas/EsqueceuSenha/DefinicaoEmail';
-import RedefinirSenha_Codigo from './paginas/EsqueceuSenha/CodigoEnviado';
-import RedefinirSenha_NovaSenha from './paginas/EsqueceuSenha/NovaSenha';
-import AvaliacaoAdvogado from './paginas/CasosDeUso/Avaliacao/Advogado';
-import ListarAdvogado from './paginas/Listar/Advogado';
-import InformacoesAdvogado from './paginas/InformacoesAdvogado';
-import MinhaAgenda from './paginas/MinhaAgenda';
-import ConfiguracaoAgenda from './paginas/CasosDeUso/Agenda/Configuracao';
+import CadAdvogado from './pages/Cadastro/Advogado'
+import CadCliente from './pages/Cadastro/Cliente'
+import CadDivulgacao from './pages/Cadastro/Divulgacao'
+import Login from './pages/Login';
+import Home from './pages/Home';
+import RedefinirSenha_Email from './pages/EsqueceuSenha/DefinicaoEmail';
+import RedefinirSenha_Codigo from './pages/EsqueceuSenha/CodigoEnviado';
+import RedefinirSenha_NovaSenha from './pages/EsqueceuSenha/NovaSenha';
+import AvaliacaoAdvogado from './pages/CasosDeUso/Avaliacao/Advogado';
+import ListarAdvogado from './pages/Listar/Advogado';
+import InformacoesAdvogado from './pages/InformacoesAdvogado';
+import MinhaAgenda from './pages/MinhaAgenda';
+import ConfiguracaoAgenda from './pages/CasosDeUso/Agenda/Configuracao';
+import EditarPerfil from './pages/EditarPerfil';
 
 function Routes() {
     return (
@@ -35,6 +34,7 @@ function Routes() {
                 <Route path="/advogado/:id" component={InformacoesAdvogado}/>
                 <Route path="/minha-agenda" component={MinhaAgenda}/>
                 <Route path="/configuracao/agenda" component={ConfiguracaoAgenda}/> 
+                <Route path="/editar-perfil" component={EditarPerfil}/>
             </Switch>
         </BrowserRouter>
     )
