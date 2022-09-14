@@ -106,9 +106,9 @@ export default function EditarPerfil() {
       retorno = 'Perfil atualizado com sucesso!';
     } catch (error) {
       if (error.response.status === 400) {
-        retorno = 'Erro ao atualizar o perfil! ' + error.response.data.message;
+        retorno = 'Erro ao atualizar o perfil! \n\n' + error.response.data.message;
       } else {
-        retorno = 'Erro ao atualizar o perfil! ' + error.message;
+        retorno = 'Erro ao atualizar o perfil! \n' + error.message;
       } 
     }
 
