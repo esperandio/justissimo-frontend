@@ -106,123 +106,120 @@ export default function ListarAdvogado() {
             <Container maxWidth="lg">
                 <TitlePage internal="Busque advogados" />
 
-                <div className={classes.paper}>
-
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm container spacing={1}>
-                            <Grid item xs={12} sm={12}>
-                                <FormControl fullWidth className={classes.margin}>
-                                    <TextField
-                                        id="Pesquisa"
-                                        label="Nome do advogado"
-                                        placeholder="Nome do advogado"
-                                        variant="outlined"
-                                        margin="normal"
-                                        value={nome}
-                                        onChange={e => setNome(e.target.value)}
-                                    />
-                                </FormControl>
-                            </Grid>
-
-                            <Grid item xs={12} sm={12}>
-                                <FormControlLabel
-                                    control={<Switch checked={usarFiltroAvancado} color="primary" onChange={() => {
-                                        setUsarFiltroAvancado((prev) => !prev);
-                                    }} />}
-                                    label="Filtros avançados"
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm container spacing={1}>
+                        <Grid item xs={12} sm={12}>
+                            <FormControl fullWidth>
+                                <TextField
+                                    id="Pesquisa"
+                                    label="Nome do advogado"
+                                    placeholder="Nome do advogado"
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={nome}
+                                    onChange={e => setNome(e.target.value)}
                                 />
-                                <Collapse in={usarFiltroAvancado}>
-                                    <Grid item xs={12} sm container spacing={1}>
-                                        <Grid item xs={12} sm={4}>
-                                            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
-                                            <Autocomplete
-                                                options={areas.map((x) => { 
-                                                    return {
-                                                        label: x.titulo,
-                                                        id: x.id_area_atuacao
-                                                    }
-                                                })}
-                                                renderInput={(params) => <TextField {...params} label="Área de atuação" />}
-                                                isOptionEqualToValue={(option, value) => option.value === value.value}
-                                                onChange={ handleAutocompleteAreaChange }
-                                            />
-                                            </FormControl>
-                                        </Grid>
+                            </FormControl>
+                        </Grid>
 
-                                        <Grid item xs={12} sm={4}>
-                                            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
-                                            <Autocomplete
-                                                options={estados}
-                                                renderInput={(params) => <TextField {...params} label="Estado" />}
-                                                isOptionEqualToValue={(option, value) => option.value === value.value}
-                                                onChange={ handleAutocompleteEstadoChange }
-                                            />
-                                            </FormControl>
-                                        </Grid>
-
-                                        <Grid item xs={12} sm={4}>
-                                            <FormControl fullWidth className={classes.margin}>
-                                                <TextField
-                                                    id="Cidade"
-                                                    label="Cidade"
-                                                    placeholder="Cidade"
-                                                    variant="outlined"
-                                                    margin="normal"
-                                                    value={cidade}
-                                                    onChange={e => setCidade(e.target.value)}
-                                                />
-                                            </FormControl>
-                                        </Grid>
+                        <Grid item xs={12} sm={12}>
+                            <FormControlLabel
+                                control={<Switch checked={usarFiltroAvancado} color="primary" onChange={() => {
+                                    setUsarFiltroAvancado((prev) => !prev);
+                                }} />}
+                                label="Filtros avançados"
+                            />
+                            <Collapse in={usarFiltroAvancado}>
+                                <Grid item xs={12} sm container spacing={1}>
+                                    <Grid item xs={12} sm={4}>
+                                        <FormControl fullWidth variant="outlined" margin="normal">
+                                        <Autocomplete
+                                            options={areas.map((x) => { 
+                                                return {
+                                                    label: x.titulo,
+                                                    id: x.id_area_atuacao
+                                                }
+                                            })}
+                                            renderInput={(params) => <TextField {...params} label="Área de atuação" />}
+                                            isOptionEqualToValue={(option, value) => option.value === value.value}
+                                            onChange={ handleAutocompleteAreaChange }
+                                        />
+                                        </FormControl>
                                     </Grid>
-                                </Collapse>
-                            </Grid>
 
-                            <Grid item xs={12} sm={12}>
-                                <Button className={classes.submit}
-                                    variant="contained"
-                                    color="primary"
-                                    type="submit"
-                                    startIcon={<FilterAltIcon />}
-                                    onClick={ handleSubmit }
-                                >
-                                    Filtrar
-                                </Button>
-                            </Grid>
+                                    <Grid item xs={12} sm={4}>
+                                        <FormControl fullWidth variant="outlined" margin="normal">
+                                        <Autocomplete
+                                            options={estados}
+                                            renderInput={(params) => <TextField {...params} label="Estado" />}
+                                            isOptionEqualToValue={(option, value) => option.value === value.value}
+                                            onChange={ handleAutocompleteEstadoChange }
+                                        />
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={4}>
+                                        <FormControl fullWidth>
+                                            <TextField
+                                                id="Cidade"
+                                                label="Cidade"
+                                                placeholder="Cidade"
+                                                variant="outlined"
+                                                margin="normal"
+                                                value={cidade}
+                                                onChange={e => setCidade(e.target.value)}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                            </Collapse>
+                        </Grid>
+
+                        <Grid item xs={12} sm={12}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                startIcon={<FilterAltIcon />}
+                                onClick={ handleSubmit }
+                            >
+                                Filtrar
+                            </Button>
                         </Grid>
                     </Grid>
+                </Grid>
 
-                    {advogados.length === 0 ? <h3>Nenhum advogado encontrado</h3> : ""}
+                {advogados.length === 0 ? <h3>Nenhum advogado encontrado</h3> : ""}
 
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm container spacing={1}>
-                        {advogados.map((advogado)=>{
-                            return  <Grid key={advogado.id_advogado} item xs={12} sm={4} className={classes.submit}>
-                                        <div className={classes.paper}>
-                                            <img src={logo} className={classes.user} alt="logo" />
-                                            <h2>{advogado.nome}</h2>
-                                            <Rating 
-                                                id="nota"
-                                                name="nota" 
-                                                size='large'
-                                                autoFocus
-                                                readOnly
-                                                value={advogado.nota}
-                                            />
-                                            <p>{advogado._count?.avaliacoes} avaliações</p>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm container spacing={1}>
+                    {advogados.map((advogado)=>{
+                        return  <Grid key={advogado.id_advogado} item xs={12} sm={4} className={classes.submit}>
+                                    <div className={classes.paper}>
+                                        <img src={logo} className={classes.user} alt="logo" />
+                                        <h2>{advogado.nome}</h2>
+                                        <Rating 
+                                            id="nota"
+                                            name="nota" 
+                                            size='large'
+                                            autoFocus
+                                            readOnly
+                                            value={advogado.nota}
+                                        />
+                                        <p>{advogado._count?.avaliacoes} avaliações</p>
 
-                                            <Button className={classes.submit}
-                                                variant="contained"
-                                                type="submit"
-                                                onClick={ () => handleExibirAdvogado(advogado.id_advogado) }
-                                            >
-                                                Visualizar
-                                            </Button>
-                                        </div>
-                                    </Grid>
-                        })}
-                        </Grid>
+                                        <Button className={classes.submit}
+                                            variant="contained"
+                                            type="submit"
+                                            onClick={ () => handleExibirAdvogado(advogado.id_advogado) }
+                                        >
+                                            Visualizar
+                                        </Button>
+                                    </div>
+                                </Grid>
+                    })}
                     </Grid>
-                </div>
+                </Grid>
             </Container>
             <Footer />
         </React.Fragment>
