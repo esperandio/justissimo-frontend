@@ -210,7 +210,7 @@ export default function ListarAdvogado() {
 
                       <p>{advogado._count?.avaliacoes} avaliações</p>
 
-                      <Button className={classes.submit}
+                      <Button
                         variant="contained"
                         type="submit"
                         onClick={ () => handleExibirAdvogado(advogado.id_advogado) }
