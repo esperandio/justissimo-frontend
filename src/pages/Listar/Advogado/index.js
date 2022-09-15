@@ -23,6 +23,7 @@ import Stack from '@mui/material/Stack';
 const useStyles = makeStyles((theme) => ({
   user: {
     width: '20vh',
+    minWidth: '20vh',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -196,8 +197,22 @@ export default function ListarAdvogado() {
                       justifyContent="center"
                       alignItems="center"
                       spacing={1}
+
                     >
-                      <img src={logo} className={classes.user} alt="logo" />
+                      <Stack
+                        justifyContent="center"
+                        spacing={2}
+                        sx={{ height: '20vh', minHeight: '20vh' }}
+                      >
+                        <img 
+                          src={advogado.usuario.url_foto_perfil == null
+                            ? logo
+                            : advogado.usuario.url_foto_perfil
+                          } 
+                          className={classes.user} 
+                          alt="logo" 
+                        />
+                      </Stack>
                       <h2>{advogado.nome}</h2>
                       <Rating 
                         id="nota"
