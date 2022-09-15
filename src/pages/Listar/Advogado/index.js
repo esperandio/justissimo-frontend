@@ -18,13 +18,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
   user: {
     width: '20vh',
   },
@@ -196,7 +192,11 @@ export default function ListarAdvogado() {
             {advogados.map((advogado)=>{
                 return (
                   <Grid key={advogado.id_advogado} item xs={12} sm={4} className={classes.submit}>
-                    <div className={classes.paper}>
+                    <Stack
+                      justifyContent="center"
+                      alignItems="center"
+                      spacing={1}
+                    >
                       <img src={logo} className={classes.user} alt="logo" />
                       <h2>{advogado.nome}</h2>
                       <Rating 
@@ -217,7 +217,7 @@ export default function ListarAdvogado() {
                       >
                         Visualizar
                       </Button>
-                    </div>
+                    </Stack>
                   </Grid>
                 )
             })}
