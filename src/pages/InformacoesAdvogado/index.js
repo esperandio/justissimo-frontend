@@ -34,6 +34,8 @@ import { useHistory } from 'react-router-dom';
 import Footer from '../Main/Footer';
 import Header from '../Main/Header';
 import Stack from '@mui/material/Stack';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +57,7 @@ export default function InformacoesAdvogado() {
     const params = useParams();
     const history = useHistory();
 
+    const [backdropOpen, setBackdropOpen] = useState(true);
     const [advogado, setAdvogado] = useState({});
     const [advogadoAreas, setAdvogadoAreas] = useState([]);
     const [dataAgendamento, setDataAgendamento] = useState(new Date());
@@ -74,6 +77,8 @@ export default function InformacoesAdvogado() {
             setAdvogado(resultado.data);
             setAdvogadoAreas(resultado.data.areas)
             setAvaliacoes(resultado.data.avaliacoes)
+
+            setBackdropOpen(false)
         }
 
         buscarInformacoesAdvogado();
@@ -203,6 +208,12 @@ export default function InformacoesAdvogado() {
     return (
         <React.Fragment>
             <CssBaseline />
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={backdropOpen}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Header />
             <Container maxWidth="lg">
                 <br />
@@ -214,7 +225,7 @@ export default function InformacoesAdvogado() {
                         sx={{ height: '20vh', minHeight: '20vh' }}
                     >
                         <img 
-                            src={advogado?.usuario?.url_foto_perfil == null
+                            src={advogado?.usuario?.url_foto_perfil == null && backdropOpen === false
                                 ? UserDefaultIcon
                                 : advogado?.usuario?.url_foto_perfil
                             } 
