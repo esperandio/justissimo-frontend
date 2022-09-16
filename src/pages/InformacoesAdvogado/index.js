@@ -33,6 +33,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router-dom';
 import Footer from '../Main/Footer';
 import Header from '../Main/Header';
+import Stack from '@mui/material/Stack';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -207,7 +208,21 @@ export default function InformacoesAdvogado() {
                 <br />
                 <br />
                 <div className={classes.paper}>
-                    <img src={UserDefaultIcon} className={classes.user} alt="profile" />
+                    <Stack
+                        justifyContent="center"
+                        spacing={2}
+                        sx={{ height: '20vh', minHeight: '20vh' }}
+                    >
+                        <img 
+                            src={advogado?.usuario?.url_foto_perfil == null
+                                ? UserDefaultIcon
+                                : advogado?.usuario?.url_foto_perfil
+                            } 
+                            className={classes.user} 
+                            alt="profile" 
+                        />
+                    </Stack>
+
                     <TitlePage internal={advogado.nome} />
                     <Rating 
                         id="nota"
