@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import logo from '../../../user.svg';
+import UserDefaultIcon from '../../../user.svg';
 import api from '../../../services/api';
 import { Rating } from '@mui/material';
 import Collapse from '@material-ui/core/Collapse';
@@ -206,11 +206,11 @@ export default function ListarAdvogado() {
                       >
                         <img 
                           src={advogado.usuario.url_foto_perfil == null
-                            ? logo
+                            ? UserDefaultIcon
                             : advogado.usuario.url_foto_perfil
                           } 
                           className={classes.user} 
-                          alt="logo" 
+                          alt="profile" 
                         />
                       </Stack>
                       <h2>{advogado.nome}</h2>
