@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import logo from '../../user.svg';
+import UserDefaultIcon from '../../user.svg';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -207,7 +207,7 @@ export default function InformacoesAdvogado() {
                 <br />
                 <br />
                 <div className={classes.paper}>
-                    <img src={logo} className={classes.user} alt="logo" />
+                    <img src={UserDefaultIcon} className={classes.user} alt="profile" />
                     <TitlePage internal={advogado.nome} />
                     <Rating 
                         id="nota"
