@@ -1,5 +1,4 @@
-import * as React from 'react';
-import'./index.css';
+import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Card from '@mui/material/Card';
@@ -12,9 +11,7 @@ import Typography from '@mui/material/Typography';
 import Header from '../Main/Header';
 import Container from '@material-ui/core/Container';
 import { TitlePage } from '../../components/Utils/title';
-import { useState } from 'react';
 import api from '../../services/api';
-import { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
