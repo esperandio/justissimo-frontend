@@ -27,6 +27,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Redirect } from 'react-router-dom';
 import Footer from '../Main/Footer';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Stack from '@mui/material/Stack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -189,14 +190,19 @@ export default function MinhaAgenda() {
         <TitlePage internal="Minha Agenda" />
 
         <div className={classes.paper}>
-          <div id="opcaoAgenda" style={{display:"flex", justifyContent:"space-between", width:"95%", paddingLeft:"2%",marginBottom:"3%", marginTop:"5%"}}>
+          <Stack
+            direction={{ xs: "column", md: "row" }} 
+            spacing={2}
+          >
             <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
               Configuração da Agenda
             </Button>
             <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleAbrirModalAgendamento }>
               Filtro
             </Button>
-          </div>
+          </Stack>
+
+          <br />
 
           <div>
             {agendas.map((agenda) => (
