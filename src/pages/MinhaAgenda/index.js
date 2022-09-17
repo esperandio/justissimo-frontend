@@ -227,15 +227,19 @@ export default function MinhaAgenda() {
                 </Typography>
               </CardContent>
 
-              <CardActions>
-                <Button className={classes.submit}
-                  style={{ color: " #e31837", backgroundColor:"transparent", border:"none", boxShadow:"none", marginLeft:"80%"}}
-                  variant="contained"
-                  type="submit"
-                  onClick={ () => deleteAgenda(agenda.id_agenda) }>
-                  <b>ENCERRAR</b>
-                </Button>
-              </CardActions>
+              <Stack
+                direction="row"
+                justifyContent="flex-end"
+              >
+                <CardActions>
+                  <Button
+                    type="submit"
+                    color="error"
+                    onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                    <b>ENCERRAR</b>
+                  </Button>
+                </CardActions>
+              </Stack>
             </Card>
           ))}
         </div>
