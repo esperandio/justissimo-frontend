@@ -47,7 +47,7 @@ export default function MinhaAgenda() {
 
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
   const [id_area_atuacao, setAreaAtuacao] = useState("");
@@ -79,7 +79,7 @@ export default function MinhaAgenda() {
   }
 
   function handleAbrirModalAgendamento() {
-    setOpen(true);
+    setOpenDialogFiltrarAgendamentos(true);
   }
 
   function handleChangeDataAgendamentoDe(newValue) {
@@ -91,7 +91,7 @@ export default function MinhaAgenda() {
   }
 
   function handleClickFecharModalAgendamento() {
-    setOpen(false);
+    setOpenDialogFiltrarAgendamentos(false);
   }
 
   function handleConfiguracaoAgenda() {
@@ -162,7 +162,7 @@ export default function MinhaAgenda() {
     try {
       const resultado = await api.get(`schedulings/lawyer/${fk_advogado}?data_inicial=${dataAgendamentoDeFormatada}&data_final=${dataAgendamentoAteFormatada}&area=${id_area_atuacao}`);
       setAgendas(resultado.data)
-      setOpen(false);
+      setOpenDialogFiltrarAgendamentos(false);
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -258,7 +258,7 @@ export default function MinhaAgenda() {
           ))}
         </div>
 
-        <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
+        <Dialog open={isOpenDialogFiltrarAgendamentos} onClose={handleClickFecharModalAgendamento}>
           <DialogTitle>Filtrar Agendamentos</DialogTitle>
           <DialogContent>
             <DialogContentText>
