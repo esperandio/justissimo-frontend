@@ -48,6 +48,7 @@ export default function MinhaAgenda() {
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
+  const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
   const [id_area_atuacao, setAreaAtuacao] = useState("");
@@ -75,7 +76,7 @@ export default function MinhaAgenda() {
   }
 
   function handleClickAgendamentoManual() {
-    console.log("handleClickAgendamentoManual");
+    setOpenDialogAgendamentoManual(true);
   }
 
   function handleAbrirModalAgendamento() {
@@ -90,7 +91,11 @@ export default function MinhaAgenda() {
     setDataAgendamentoAte(newValue);
   }
 
-  function handleClickFecharModalAgendamento() {
+  function handleCloseDialogAgendamentoManual() {
+    setOpenDialogAgendamentoManual(false);
+  }
+
+  function handleCloseDialogFiltrarAgendamentos() {
     setOpenDialogFiltrarAgendamentos(false);
   }
 
@@ -98,7 +103,6 @@ export default function MinhaAgenda() {
     setRedirectConfigAgenda({redirectConfigAgenda: true})
   }
 
-  // Carrega inicialmente
   useEffect(() => {
     function validarSessao() {
       if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Advogado') {
@@ -258,60 +262,69 @@ export default function MinhaAgenda() {
           ))}
         </div>
 
-        <Dialog open={isOpenDialogFiltrarAgendamentos} onClose={handleClickFecharModalAgendamento}>
-          <DialogTitle>Filtrar Agendamentos</DialogTitle>
+        <Dialog open={isOpenDialogAgendamentoManual} onClose={ handleCloseDialogAgendamentoManual }>
+          <DialogTitle>Criar agendamento manual</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <FormControl fullWidth className={classes.margin}>
-                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                  <DatePicker
-                    label="De:"
-                    value={dataAgendamentoDe}
-                    onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  <DatePicker
-                    label="Até:"
-                    value={dataAgendamentoAte}
-                    onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-              </FormControl>
-
-              <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
-                <InputLabel id="Area">Área de atuação</InputLabel>
-                <Select
-                  required
-                  labelId="Área de atuação"
-                  id="AreaSelect"
-                  multiline
-                  variant="outlined"
-                  value={id_area_atuacao}
-                  onChange={e => setAreaAtuacao(e.target.value)}
-                  label="Tipo de Usuario"
-                >
-                  {areas.map((area)=>{
-                    return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
-                  })}
-                </Select>
-              </FormControl>
-
-              <br />
-              <br />
-
-              <Button 
-                variant="contained"
-                color="primary"
-                onClick={handleClickBuscarHorarios}
-              >
-                Filtrar
-              </Button>
+              Teste
             </DialogContentText>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={isOpenDialogFiltrarAgendamentos} onClose={ handleCloseDialogFiltrarAgendamentos }>
+          <DialogTitle>Filtrar Agendamentos</DialogTitle>
+          <DialogContent>
+            <br />
+
+            <FormControl fullWidth className={classes.margin}>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                <DatePicker
+                  label="De:"
+                  value={dataAgendamentoDe}
+                  onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <DatePicker
+                  label="Até:"
+                  value={dataAgendamentoAte}
+                  onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </FormControl>
+
+            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+              <InputLabel id="Area">Área de atuação</InputLabel>
+              <Select
+                required
+                labelId="Área de atuação"
+                id="AreaSelect"
+                multiline
+                variant="outlined"
+                value={id_area_atuacao}
+                onChange={e => setAreaAtuacao(e.target.value)}
+                label="Tipo de Usuario"
+              >
+                {areas.map((area)=>{
+                  return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
+
+            <br />
+            <br />
+
+            <Button 
+              variant="contained"
+              color="primary"
+              onClick={handleClickBuscarHorarios}
+            >
+              Filtrar
+            </Button>
           </DialogContent>
         </Dialog>
       </Container>
       <Footer />
-    </>          
+    </>
   );
 }
