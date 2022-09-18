@@ -196,18 +196,9 @@ export default function MinhaAgenda() {
         observacao
       });
 
-      setOpenDialogAgendamentoManual(false);
-
       alert("Agendamento confirmado!!!");
 
-      setNome("");
-      setEmail("");
-      setDataAgendamento(new Date());
-      setAreaAtuacao("");
-      setHorarioAgendamento("");
-      setObservacao("");
-
-      setExibirHorariosDisponiveis(false);
+      handleClickFecharDialogAgendamentoManual();
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
