@@ -145,12 +145,69 @@ export default function MinhaAgenda() {
       + `${dataAgendamento.getDate()}`.padStart(2, 0);
 
     try {
-      const id = sessionStorage.getItem('id_advogado');
+      const id = parseInt(sessionStorage.getItem('id_advogado'));
       const horarios = await api.get(`hour-schedulings/${id}?data_para_agendamento=${dataAgendamentoFormatada}`);
 
       setHorarios(horarios.data?.horarios_disponiveis ?? []);
 
       setExibirHorariosDisponiveis(true);
+    } catch (error) {
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        return ;
+      }
+
+      alert(mensagem_retorno_api);
+    }
+  }
+
+  function handleClickFecharDialogAgendamentoManual() {
+    setOpenDialogAgendamentoManual(false);
+
+    setNome("");
+    setEmail("");
+    setDataAgendamento(new Date());
+    setAreaAtuacao("");
+    setHorarioAgendamento("");
+    setObservacao("");
+
+    setExibirHorariosDisponiveis(false);
+  }
+
+  async function handleClickConfirmarDialogAgendamentoManual() {
+    try {
+      const id = parseInt(sessionStorage.getItem('id_advogado'));
+      const fk_advogado_area = id_area_atuacao;
+      const data_agendamento = `${dataAgendamento.getUTCFullYear()}` 
+        + "-"
+        + `${dataAgendamento.getUTCMonth() + 1}`.padStart(2, 0)
+        + "-"
+        + `${dataAgendamento.getDate()}`.padStart(2, 0);
+      const horario = horarioAgendamento; 
+
+      await LawyerService.createScheduling(id, {
+        fk_advogado_area,
+        nome_cliente: nome,
+        email_cliente: email,
+        data_agendamento,
+        horario,
+        observacao
+      });
+
+      setOpenDialogAgendamentoManual(false);
+
+      alert("Agendamento confirmado!!!");
+
+      setNome("");
+      setEmail("");
+      setDataAgendamento(new Date());
+      setAreaAtuacao("");
+      setHorarioAgendamento("");
+      setObservacao("");
+
+      setExibirHorariosDisponiveis(false);
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -195,13 +252,13 @@ export default function MinhaAgenda() {
     }
 
     async function buscarInformacoesAgendaAdvogado() {
-      const id = sessionStorage.getItem('id_advogado');
+      const id = parseInt(sessionStorage.getItem('id_advogado'));
       const resultado = await api.get(`schedulings/lawyer/${id}`);
       setAgendas(resultado.data)
     }
 
     async function buscarAreas() {
-      const id = sessionStorage.getItem('id_advogado');
+      const id = parseInt(sessionStorage.getItem('id_advogado'));
       const resultado = await LawyerService.getLawyer(id);
 
       setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
@@ -219,7 +276,7 @@ export default function MinhaAgenda() {
 
     const agendaDepois = agendas.filter((x) => x.id_agenda !== id_agenda);
 
-    const id = sessionStorage.getItem('id_advogado');
+    const id = parseInt(sessionStorage.getItem('id_advogado'));
 
     await api.delete(`scheduling`, {
       data: {
@@ -452,8 +509,8 @@ export default function MinhaAgenda() {
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={ () => {} }>Cancelar</Button>
-            <Button onClick={ () => {} } disabled={horarioAgendamento === "" || observacao === ""}>Confirmar</Button>
+            <Button onClick={ handleClickFecharDialogAgendamentoManual }>Cancelar</Button>
+            <Button onClick={ handleClickConfirmarDialogAgendamentoManual } disabled={horarioAgendamento === "" || observacao === ""}>Confirmar</Button>
           </DialogActions>
         </Dialog>
 
