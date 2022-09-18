@@ -19,6 +19,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ptBR } from "date-fns/locale";
 import ConfigIcon from '@mui/icons-material/Settings';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Redirect } from 'react-router-dom';
 import Header from '../Main/Header';
 import Footer from '../Main/Footer';
@@ -71,6 +72,10 @@ export default function MinhaAgenda() {
       + `${date.getUTCMonth() + 1}`.padStart(2, 0)
       + "-"
       + `${date.getUTCFullYear()}`;
+  }
+
+  function handleClickAgendamentoManual() {
+    console.log("handleClickAgendamentoManual");
   }
 
   function handleAbrirModalAgendamento() {
@@ -190,6 +195,9 @@ export default function MinhaAgenda() {
             direction={{ xs: "column", md: "row" }} 
             spacing={2}
           >
+            <Button variant="contained" startIcon={<CalendarMonthIcon />} onClick={ handleClickAgendamentoManual }>
+              Agendamento manual
+            </Button>
             <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
               Configuração da Agenda
             </Button>
