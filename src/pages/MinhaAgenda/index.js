@@ -10,7 +10,11 @@ import {
   Dialog, 
   DialogContent,
   DialogTitle,
-  DialogContentText
+  DialogContentText,
+  DialogActions,
+  RadioGroup,
+  FormControlLabel,
+  Radio
 } from '@mui/material';
 import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl, Grid } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
@@ -62,6 +66,8 @@ export default function MinhaAgenda() {
   const [dataAgendamento, setDataAgendamento] = useState(new Date());
   const [horarios, setHorarios] = useState([]);
   const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
+  const [horarioAgendamento, setHorarioAgendamento] = useState("");
+  const [observacao, setObservacao] = useState("");
 
   function formatDia(date) {
     const data = new Date(date);
@@ -113,6 +119,38 @@ export default function MinhaAgenda() {
       const resultado = await api.get(`schedulings/lawyer/${fk_advogado}?data_inicial=${dataAgendamentoDeFormatada}&data_final=${dataAgendamentoAteFormatada}&area=${id_area_atuacao}`);
       setAgendas(resultado.data)
       setOpenDialogFiltrarAgendamentos(false);
+    } catch (error) {
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        return ;
+      }
+
+      alert(mensagem_retorno_api);
+    }
+  }
+
+  async function handleClickBuscarHorarios() {
+    if (id_area_atuacao === "") {
+      return;
+    }
+
+    setExibirHorariosDisponiveis(false);
+
+    const dataAgendamentoFormatada = `${dataAgendamento.getUTCFullYear()}` 
+      + "-"
+      + `${dataAgendamento.getUTCMonth() + 1}`.padStart(2, 0)
+      + "-"
+      + `${dataAgendamento.getDate()}`.padStart(2, 0);
+
+    try {
+      const id = sessionStorage.getItem('id_advogado');
+      const horarios = await api.get(`hour-schedulings/${id}?data_para_agendamento=${dataAgendamentoFormatada}`);
+
+      setHorarios(horarios.data?.horarios_disponiveis ?? []);
+
+      setExibirHorariosDisponiveis(true);
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -349,7 +387,74 @@ export default function MinhaAgenda() {
                 })}
               </Select>
             </FormControl>
+
+            <br />
+            <br />
+
+            <Button 
+              variant="contained"
+              color="primary"
+              onClick={ handleClickBuscarHorarios }
+            >
+              Buscar horários
+            </Button>
+
+            <br/>
+            <br/>
+
+            {exibirHorariosDisponiveis === true && (
+              <>
+                <DialogContentText>
+                  3° Passo - Selecionar o horário do agendamento
+                </DialogContentText>
+
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                  >
+                    {horarios.map((x) => {
+                      return <FormControlLabel 
+                        key={x} 
+                        value={x} 
+                        checked={x === horarioAgendamento}
+                        control={<Radio />} label={x} onChange={() => setHorarioAgendamento(x)} 
+                      />
+                    })}
+                  </RadioGroup>
+                </FormControl>
+
+                <br />
+                <br />
+
+                <DialogContentText>
+                  4° Passo - Adicione uma observação
+                </DialogContentText>
+
+                <FormControl fullWidth className={classes.margin}>
+                  <TextField
+                    required
+                    id="Nome"
+                    label="Observação"
+                    placeholder="Observação"
+                    multiline
+                    minRows={4}
+                    variant="outlined"
+                    value={observacao}
+                    inputProps={{ maxLength: 200 }}
+                    onChange={e => setObservacao(e.target.value)}
+                    margin="normal"
+                  />
+                </FormControl>
+              </>
+            )}
           </DialogContent>
+
+          <DialogActions>
+            <Button onClick={ () => {} }>Cancelar</Button>
+            <Button onClick={ () => {} } disabled={horarioAgendamento === "" || observacao === ""}>Confirmar</Button>
+          </DialogActions>
         </Dialog>
 
         {/* Filtros de agenda */}
