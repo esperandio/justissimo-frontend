@@ -1,33 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import TextField from '@mui/material/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import { useState, useEffect } from 'react';
+import { 
+  TextField, 
+  Card, 
+  CardActions, 
+  CardContent, 
+  Button, 
+  Typography, 
+  Stack, 
+  Dialog, 
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from '@mui/material';
+import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ptBR } from "date-fns/locale";
 import ConfigIcon from '@mui/icons-material/Settings';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Redirect } from 'react-router-dom';
 import Header from '../Main/Header';
-import Container from '@material-ui/core/Container';
+import Footer from '../Main/Footer';
 import { TitlePage } from '../../components/Utils/title';
 import api from '../../services/api';
-import { makeStyles } from '@material-ui/core/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { ptBR } from "date-fns/locale";
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { Redirect } from 'react-router-dom';
-import Footer from '../Main/Footer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Stack from '@mui/material/Stack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
