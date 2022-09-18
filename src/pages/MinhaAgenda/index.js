@@ -60,8 +60,8 @@ export default function MinhaAgenda() {
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado']);
 
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
   const [id_area_atuacao, setAreaAtuacao] = useState("");
   const [dataAgendamento, setDataAgendamento] = useState(new Date());
   const [horarios, setHorarios] = useState([]);
@@ -328,7 +328,7 @@ export default function MinhaAgenda() {
                         <b>{agenda.cliente.nome}</b>
                       </Typography>
                       <Typography variant="h6" component="div">
-                        <b>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</b>
+                        <b>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ""))}</b>
                       </Typography>
                     </Stack>
 
