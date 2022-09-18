@@ -90,6 +90,41 @@ export default function MinhaAgenda() {
     setOpenDialogFiltrarAgendamentos(true);
   }
 
+  function handleClickConfiguracaoAgenda() {
+    setRedirectConfigAgenda({redirectConfigAgenda: true})
+  }
+
+  async function handleClickBuscarAgenda() {
+    const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'));
+
+    const dataAgendamentoDeFormatada = `${dataAgendamentoDe.getUTCFullYear()}` 
+      + "-"
+      + `${dataAgendamentoDe.getUTCMonth() + 1}`.padStart(2, 0)
+      + "-"
+      + `${dataAgendamentoDe.getDate()}`.padStart(2, 0);
+
+    const dataAgendamentoAteFormatada = `${dataAgendamentoAte.getUTCFullYear()}` 
+      + "-"
+      + `${dataAgendamentoAte.getUTCMonth() + 1}`.padStart(2, 0)
+      + "-"
+      + `${dataAgendamentoAte.getDate()}`.padStart(2, 0);
+
+    try {
+      const resultado = await api.get(`schedulings/lawyer/${fk_advogado}?data_inicial=${dataAgendamentoDeFormatada}&data_final=${dataAgendamentoAteFormatada}&area=${id_area_atuacao}`);
+      setAgendas(resultado.data)
+      setOpenDialogFiltrarAgendamentos(false);
+    } catch (error) {
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        return ;
+      }
+
+      alert(mensagem_retorno_api);
+    }
+  }
+
   function handleChangeDataAgendamentoDe(newValue) {
     setDataAgendamentoDe(newValue);
   }
@@ -98,23 +133,19 @@ export default function MinhaAgenda() {
     setDataAgendamentoAte(newValue);
   }
 
+  function handleChangeDataAgendamento(newValue) {
+    setDataAgendamento(newValue);
+
+    setHorarios([]);
+    setExibirHorariosDisponiveis(false);
+  }
+
   function handleCloseDialogAgendamentoManual() {
     setOpenDialogAgendamentoManual(false);
   }
 
   function handleCloseDialogFiltrarAgendamentos() {
     setOpenDialogFiltrarAgendamentos(false);
-  }
-
-  function handleClickConfiguracaoAgenda() {
-    setRedirectConfigAgenda({redirectConfigAgenda: true})
-  }
-
-  function handleChangeDataAgendamento(newValue) {
-    setDataAgendamento(newValue);
-
-    setHorarios([]);
-    setExibirHorariosDisponiveis(false);
   }
 
   useEffect(() => {
@@ -162,37 +193,6 @@ export default function MinhaAgenda() {
     setAgendas(agendaDepois);
 
     alert("excluido com sucesso")
-  }
-
-  async function handleClickBuscarHorarios() {
-    const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'));
-
-    const dataAgendamentoDeFormatada = `${dataAgendamentoDe.getUTCFullYear()}` 
-      + "-"
-      + `${dataAgendamentoDe.getUTCMonth() + 1}`.padStart(2, 0)
-      + "-"
-      + `${dataAgendamentoDe.getDate()}`.padStart(2, 0);
-
-    const dataAgendamentoAteFormatada = `${dataAgendamentoAte.getUTCFullYear()}` 
-      + "-"
-      + `${dataAgendamentoAte.getUTCMonth() + 1}`.padStart(2, 0)
-      + "-"
-      + `${dataAgendamentoAte.getDate()}`.padStart(2, 0);
-
-    try {
-      const resultado = await api.get(`schedulings/lawyer/${fk_advogado}?data_inicial=${dataAgendamentoDeFormatada}&data_final=${dataAgendamentoAteFormatada}&area=${id_area_atuacao}`);
-      setAgendas(resultado.data)
-      setOpenDialogFiltrarAgendamentos(false);
-    } catch (error) {
-      const mensagem_retorno_api = error?.response?.data?.message;
-
-      if (mensagem_retorno_api == null) {
-        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
-        return ;
-      }
-
-      alert(mensagem_retorno_api);
-    }
   }
 
   if (redirect) {
@@ -278,6 +278,7 @@ export default function MinhaAgenda() {
           ))}
         </div>
 
+        {/* Agendamento manual */}
         <Dialog open={isOpenDialogAgendamentoManual} onClose={ handleCloseDialogAgendamentoManual }>
           <DialogTitle>Criar agendamento manual</DialogTitle>
           <DialogContent>
@@ -347,6 +348,7 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
 
+        {/* Filtros de agenda */}
         <Dialog open={isOpenDialogFiltrarAgendamentos} onClose={ handleCloseDialogFiltrarAgendamentos }>
           <DialogTitle>Filtrar Agendamentos</DialogTitle>
           <DialogContent>
@@ -393,7 +395,7 @@ export default function MinhaAgenda() {
             <Button 
               variant="contained"
               color="primary"
-              onClick={handleClickBuscarHorarios}
+              onClick={handleClickBuscarAgenda}
             >
               Filtrar
             </Button>
