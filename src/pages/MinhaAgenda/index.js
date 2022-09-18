@@ -207,9 +207,19 @@ export default function MinhaAgenda() {
           {agendas.map((agenda) => (
             <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
               <CardContent>
-                <Typography gutterBottom variant="h6" component="div" >
-                  <b>{agenda.cliente.nome} <span style={{paddingLeft:"40%"}}>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</span></b>
-                </Typography>
+                <Stack
+                  direction={{ xs: "column", md: "row" }} 
+                  justifyContent="space-between"
+                  spacing={2}
+                >
+                  <Typography variant="h6" component="div">
+                    <b>{agenda.cliente.nome}</b>
+                  </Typography>
+                  <Typography variant="h6" component="div">
+                    <b>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</b>
+                  </Typography>
+                </Stack>
+
                 <Typography gutterBottom variant="h7" component="div">
                   <b>{formatDate(agenda.data_agendamento)}</b>
                 </Typography>
