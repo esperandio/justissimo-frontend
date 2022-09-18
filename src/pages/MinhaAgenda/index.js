@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogContentText
 } from '@mui/material';
-import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl } from '@material-ui/core/';
+import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl, Grid } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -229,52 +229,56 @@ export default function MinhaAgenda() {
           <br />
 
           {agendas.map((agenda) => (
-            <Card key={agenda.id_agenda} id="myTable" xs={{ maxWidth: 800 }} style={{marginBottom: "10%", fontFamily:"Inter", height:"50%", padding:"2%", boxShadow:"1px 5px 10px #888888"}}>
-              <CardContent>
-                <Stack
-                  direction={{ xs: "column", md: "row" }} 
-                  justifyContent="space-between"
-                  spacing={2}
-                >
-                  <Typography variant="h6" component="div">
-                    <b>{agenda.cliente.nome}</b>
-                  </Typography>
-                  <Typography variant="h6" component="div">
-                    <b>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</b>
-                  </Typography>
-                </Stack>
+            <Grid key={agenda.id_agenda} container spacing={5}>
+              <Grid item xs={12}>
+                <Card>
+                  <CardContent>
+                    <Stack
+                      direction={{ xs: "column", md: "row" }} 
+                      justifyContent="space-between"
+                      spacing={2}
+                    >
+                      <Typography variant="h6" component="div">
+                        <b>{agenda.cliente.nome}</b>
+                      </Typography>
+                      <Typography variant="h6" component="div">
+                        <b>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ''))}</b>
+                      </Typography>
+                    </Stack>
 
-                <Typography gutterBottom variant="h7" component="div">
-                  <b>{formatDate(agenda.data_agendamento)}</b>
-                </Typography>
+                    <Typography gutterBottom variant="h7" component="div">
+                      <b>{formatDate(agenda.data_agendamento)}</b>
+                    </Typography>
 
-                <Typography gutterBottom variant="h8" component="div">
-                  {formatDia(agenda.data_agendamento)}
-                </Typography>
+                    <Typography gutterBottom variant="h8" component="div">
+                      {formatDia(agenda.data_agendamento)}
+                    </Typography>
 
-                <Typography gutterBottom variant="h8" component="div">
-                  {formatTime(new Date(agenda.horario))}h
-                </Typography>
+                    <Typography gutterBottom variant="h8" component="div">
+                      {formatTime(new Date(agenda.horario))}h
+                    </Typography>
 
-                <Typography gutterBottom variant="h7" component="div">
-                  Contato em {agenda.contato_cliente}
-                </Typography>
-              </CardContent>
+                    <Typography gutterBottom variant="h7" component="div">
+                      Contato em {agenda.contato_cliente}
+                    </Typography>
+                  </CardContent>
 
-              <Stack
-                direction="row"
-                justifyContent="flex-end"
-              >
-                <CardActions>
-                  <Button
-                    type="submit"
-                    color="error"
-                    onClick={ () => deleteAgenda(agenda.id_agenda) }>
-                    <b>ENCERRAR</b>
-                  </Button>
-                </CardActions>
-              </Stack>
-            </Card>
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-end"
+                  >
+                    <CardActions>
+                      <Button
+                        type="submit"
+                        color="error"
+                        onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                        <b>ENCERRAR</b>
+                      </Button>
+                    </CardActions>
+                  </Stack>
+                </Card>
+              </Grid>
+            </Grid>
           ))}
         </div>
 
