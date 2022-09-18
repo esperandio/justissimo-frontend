@@ -9,8 +9,8 @@ import {
   Stack, 
   Dialog, 
   DialogContent,
-  DialogContentText,
-  DialogTitle
+  DialogTitle,
+  DialogContentText
 } from '@mui/material';
 import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,6 +25,7 @@ import Header from '../Main/Header';
 import Footer from '../Main/Footer';
 import { TitlePage } from '../../components/Utils/title';
 import api from '../../services/api';
+import { LawyerService } from '../../services';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,10 +52,16 @@ export default function MinhaAgenda() {
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
-  const [id_area_atuacao, setAreaAtuacao] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado']);
+
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [id_area_atuacao, setAreaAtuacao] = useState("");
+  const [dataAgendamento, setDataAgendamento] = useState(new Date());
+  const [horarios, setHorarios] = useState([]);
+  const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
 
   function formatDia(date) {
     const data = new Date(date);
@@ -79,7 +86,7 @@ export default function MinhaAgenda() {
     setOpenDialogAgendamentoManual(true);
   }
 
-  function handleAbrirModalAgendamento() {
+  function handleClickFiltroAgendamento() {
     setOpenDialogFiltrarAgendamentos(true);
   }
 
@@ -99,8 +106,15 @@ export default function MinhaAgenda() {
     setOpenDialogFiltrarAgendamentos(false);
   }
 
-  function handleConfiguracaoAgenda() {
+  function handleClickConfiguracaoAgenda() {
     setRedirectConfigAgenda({redirectConfigAgenda: true})
+  }
+
+  function handleChangeDataAgendamento(newValue) {
+    setDataAgendamento(newValue);
+
+    setHorarios([]);
+    setExibirHorariosDisponiveis(false);
   }
 
   useEffect(() => {
@@ -118,8 +132,10 @@ export default function MinhaAgenda() {
     }
 
     async function buscarAreas() {
-      const resultado = await api.get('areas');
-      setAreas(resultado.data);
+      const id = sessionStorage.getItem('id_advogado');
+      const resultado = await LawyerService.getLawyer(id);
+
+      setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
     }
 
     validarSessao();
@@ -202,10 +218,10 @@ export default function MinhaAgenda() {
             <Button variant="contained" startIcon={<CalendarMonthIcon />} onClick={ handleClickAgendamentoManual }>
               Agendamento manual
             </Button>
-            <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleConfiguracaoAgenda }>
+            <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleClickConfiguracaoAgenda }>
               Configuração da Agenda
             </Button>
-            <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleAbrirModalAgendamento }>
+            <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
               Filtro
             </Button>
           </Stack>
@@ -266,8 +282,68 @@ export default function MinhaAgenda() {
           <DialogTitle>Criar agendamento manual</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Teste
+              1° Passo - Informar dados do cliente
             </DialogContentText>
+
+            {/* Nome */}
+            <FormControl fullWidth>
+              <TextField
+                required
+                id="Nome"
+                label="Nome"
+                placeholder="Digite o nome completo"
+                variant="outlined"
+                margin="normal"
+                value={nome}
+                onChange={e => setNome(e.target.value)}
+              />
+            </FormControl>
+
+            {/* E-mail */}
+            <FormControl fullWidth>
+              <TextField
+                required
+                id="email"
+                label="E-mail"
+                placeholder="meuemail@email.com"
+                variant="outlined"
+                margin="normal"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </FormControl>
+
+            <DialogContentText>
+              2° Passo - Selecionar a data do agendamento e área de atuação
+            </DialogContentText>
+
+            {/* Data do agendamento */}
+            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                <DatePicker
+                  label="Data do agendamento"
+                  value={dataAgendamento}
+                  onChange={(newValue) => { handleChangeDataAgendamento(newValue) }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </FormControl>
+
+            {/* Área de atuação */}
+            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+              <InputLabel id="Area">Área de atuação</InputLabel>
+              <Select
+                required
+                variant="outlined"
+                label="Tipo de Usuario"
+                value={id_area_atuacao}
+                onChange={e => setAreaAtuacao(e.target.value)}
+              >
+                {areas.map((area)=>{
+                  return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
+                })}
+              </Select>
+            </FormControl>
           </DialogContent>
         </Dialog>
 
