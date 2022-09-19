@@ -15,7 +15,7 @@ function App({ createWebChatInstance }) {
       },
     }
     createWebChatInstance(watsonAssistantChatOptions);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="App">
