@@ -325,10 +325,10 @@ export default function MinhaAgenda() {
                       spacing={2}
                     >
                       <Typography variant="h6" component="div">
-                        <b>{agenda.cliente.nome}</b>
+                        <b>{agenda.nome_cliente}</b>
                       </Typography>
                       <Typography variant="h6" component="div">
-                        <b>Causa: { areas.map((area) => (agenda.fk_advogado_area === area.id_area_atuacao ? area.titulo : ""))}</b>
+                        <b>Causa: {agenda.area_atuacao}</b>
                       </Typography>
                     </Stack>
 
