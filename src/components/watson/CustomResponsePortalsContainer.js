@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import CustomResponseComponent from './CustomResponseComponent';
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+import CustomResponseComponent from "./CustomResponseComponent";
 
 /**
  * We need to use a component here because the "customResponseHandler" is registered only once on the chat instance
@@ -26,11 +26,11 @@ function CustomResponsePortalsContainer({ instance }) {
       setCustomResponseEvents(eventsArray => eventsArray.concat(event));
     }
     
-    instance.on({ type: 'customResponse', handler: customResponseHandler });
+    instance.on({ type: "customResponse", handler: customResponseHandler });
 
     // Remove the custom response handler.
     return () => {
-      instance.off({ type: 'customResponse', handler: customResponseHandler });
+      instance.off({ type: "customResponse", handler: customResponseHandler });
     };
   }, [instance]);
 

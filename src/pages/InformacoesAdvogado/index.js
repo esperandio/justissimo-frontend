@@ -1,51 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import { TitlePage }  from '../../components/Utils/title';
-import { Rating } from '@mui/material';
-import { makeStyles } from '@material-ui/core/styles';
-import StarHalfIcon from '@mui/icons-material/StarHalf';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import UserDefaultIcon from '../../user.svg';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import api from '../../services/api';
-import TextField from '@mui/material/TextField';    
-import FormControl from '@material-ui/core/FormControl';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import { TitlePage }  from "../../components/Utils/title";
+import { Rating } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
+import StarHalfIcon from "@mui/icons-material/StarHalf";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import UserDefaultIcon from "../../user.svg";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import api from "../../services/api";
+import TextField from "@mui/material/TextField";    
+import FormControl from "@material-ui/core/FormControl";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ptBR } from "date-fns/locale";
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { useHistory } from 'react-router-dom';
-import Footer from '../Main/Footer';
-import Header from '../Main/Header';
-import Stack from '@mui/material/Stack';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import { useHistory } from "react-router-dom";
+import Footer from "../Main/Footer";
+import Header from "../Main/Header";
+import Stack from "@mui/material/Stack";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   user: {
-    width: '20vh',
+    width: "20vh",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -85,8 +85,8 @@ export default function InformacoesAdvogado() {
   }, [params.id]);
 
   function handleAbrirModalAgendamento() {
-    if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Cliente') {
-      alert('Você precisa estar conectado como cliente para acessar essa tela!');
+    if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Cliente") {
+      alert("Você precisa estar conectado como cliente para acessar essa tela!");
       return;
     }
 
@@ -106,7 +106,7 @@ export default function InformacoesAdvogado() {
   async function handleClickConfirmarAgendamento() {
     try {
       const fk_advogado = advogado?.id_advogado;
-      const fk_cliente = parseInt(sessionStorage.getItem('id_cliente'));
+      const fk_cliente = parseInt(sessionStorage.getItem("id_cliente"));
       const fk_advogado_area = id_area_atuacao;
       const data_agendamento = `${dataAgendamento.getUTCFullYear()}` 
         + "-"
@@ -124,7 +124,7 @@ export default function InformacoesAdvogado() {
         observacao
       }
 
-      await api.post(`clients/scheduling`, dados);
+      await api.post("clients/scheduling", dados);
 
       setOpen(false);
 
@@ -140,7 +140,7 @@ export default function InformacoesAdvogado() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
@@ -171,7 +171,7 @@ export default function InformacoesAdvogado() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
@@ -187,8 +187,8 @@ export default function InformacoesAdvogado() {
   }
 
   function handleClickAvaliarAdvogado() {
-    if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Cliente') {
-      alert('Você precisa estar conectado como cliente para acessar essa tela!');
+    if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Cliente") {
+      alert("Você precisa estar conectado como cliente para acessar essa tela!");
       return;
     }
 
@@ -209,7 +209,7 @@ export default function InformacoesAdvogado() {
     <>
       <CssBaseline />
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}
       >
         <CircularProgress color="inherit" />
@@ -222,7 +222,7 @@ export default function InformacoesAdvogado() {
           <Stack
             justifyContent="center"
             spacing={2}
-            sx={{ height: '20vh', minHeight: '20vh' }}
+            sx={{ height: "20vh", minHeight: "20vh" }}
           >
             <img 
               src={advogado?.usuario?.url_foto_perfil == null && backdropOpen === false
@@ -239,7 +239,7 @@ export default function InformacoesAdvogado() {
             id="nota"
             name="nota" 
             size='large'
-            autoFocus
+            
             readOnly
             value={advogado.nota ?? 0}
           />
@@ -260,13 +260,13 @@ export default function InformacoesAdvogado() {
               variant="contained"
               color="primary"
               startIcon={<WhatsAppIcon/>}
-              onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, '_blank'); } }
+              onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, "_blank"); } }
             >
               Entrar em contato
             </Button>
           )}
 
-          {' '}
+          {" "}
 
           <Button className={classes.submit}
             variant="contained"
@@ -278,7 +278,7 @@ export default function InformacoesAdvogado() {
             Agendar uma consulta
           </Button>
 
-          {' '}
+          {" "}
 
           <Button className={classes.submit}
             variant="contained"

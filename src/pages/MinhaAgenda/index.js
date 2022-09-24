@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { 
   TextField, 
   Card, 
@@ -15,31 +15,31 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio
-} from '@mui/material';
-import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl, Grid } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+} from "@mui/material";
+import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl, Grid } from "@material-ui/core/";
+import { makeStyles } from "@material-ui/core/styles";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
-import ConfigIcon from '@mui/icons-material/Settings';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { Redirect } from 'react-router-dom';
-import Header from '../Main/Header';
-import Footer from '../Main/Footer';
-import { TitlePage } from '../../components/Utils/title';
-import api from '../../services/api';
-import { LawyerService } from '../../services';
+import ConfigIcon from "@mui/icons-material/Settings";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { Redirect } from "react-router-dom";
+import Header from "../Main/Header";
+import Footer from "../Main/Footer";
+import { TitlePage } from "../../components/Utils/title";
+import api from "../../services/api";
+import { LawyerService } from "../../services";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    margin: '0px auto',
-    maxWidth: '80%',
-    fontFamily:'Inter',
-    alignItems: 'center'
+    margin: "0px auto",
+    maxWidth: "80%",
+    fontFamily:"Inter",
+    alignItems: "center"
   },
   user: {
-    width: '20vh',
+    width: "20vh",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -58,7 +58,7 @@ export default function MinhaAgenda() {
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
   const [redirect, setRedirect] = useState(false);
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
-  const [dias] = useState(['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado']);
+  const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -75,7 +75,7 @@ export default function MinhaAgenda() {
   }
 
   function formatTime(date) {
-    return `${date.getUTCHours()}`.padStart(2, "0") + ':' + `${date.getUTCMinutes()}`.padStart(2, "0")
+    return `${date.getUTCHours()}`.padStart(2, "0") + ":" + `${date.getUTCMinutes()}`.padStart(2, "0")
   }
 
   function formatDate(date) {
@@ -101,7 +101,7 @@ export default function MinhaAgenda() {
   }
 
   async function handleClickBuscarAgenda() {
-    const fk_advogado = parseInt(sessionStorage.getItem('id_advogado'));
+    const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
 
     const dataAgendamentoDeFormatada = `${dataAgendamentoDe.getUTCFullYear()}` 
       + "-"
@@ -123,7 +123,7 @@ export default function MinhaAgenda() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
@@ -145,7 +145,7 @@ export default function MinhaAgenda() {
       + `${dataAgendamento.getDate()}`.padStart(2, 0);
 
     try {
-      const id = parseInt(sessionStorage.getItem('id_advogado'));
+      const id = parseInt(sessionStorage.getItem("id_advogado"));
       const horarios = await api.get(`hour-schedulings/${id}?data_para_agendamento=${dataAgendamentoFormatada}`);
 
       setHorarios(horarios.data?.horarios_disponiveis ?? []);
@@ -155,7 +155,7 @@ export default function MinhaAgenda() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
@@ -178,7 +178,7 @@ export default function MinhaAgenda() {
 
   async function handleClickConfirmarDialogAgendamentoManual() {
     try {
-      const id = parseInt(sessionStorage.getItem('id_advogado'));
+      const id = parseInt(sessionStorage.getItem("id_advogado"));
       const fk_advogado_area = id_area_atuacao;
       const data_agendamento = `${dataAgendamento.getUTCFullYear()}` 
         + "-"
@@ -203,7 +203,7 @@ export default function MinhaAgenda() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
@@ -236,20 +236,20 @@ export default function MinhaAgenda() {
 
   useEffect(() => {
     function validarSessao() {
-      if (sessionStorage.getItem('token') === null || sessionStorage.getItem('tipo_usuario') !== 'Advogado') {
-        alert('Você precisa estar conectado como Advogado para acessar essa tela!');
+      if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Advogado") {
+        alert("Você precisa estar conectado como Advogado para acessar essa tela!");
         setRedirect({ redirect: true });
       }
     }
 
     async function buscarInformacoesAgendaAdvogado() {
-      const id = parseInt(sessionStorage.getItem('id_advogado'));
+      const id = parseInt(sessionStorage.getItem("id_advogado"));
       const resultado = await api.get(`schedulings/lawyer/${id}`);
       setAgendas(resultado.data)
     }
 
     async function buscarAreas() {
-      const id = parseInt(sessionStorage.getItem('id_advogado'));
+      const id = parseInt(sessionStorage.getItem("id_advogado"));
       const resultado = await LawyerService.getLawyer(id);
 
       setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
@@ -267,9 +267,9 @@ export default function MinhaAgenda() {
 
     const agendaDepois = agendas.filter((x) => x.id_agenda !== id_agenda);
 
-    const id = parseInt(sessionStorage.getItem('id_advogado'));
+    const id = parseInt(sessionStorage.getItem("id_advogado"));
 
-    await api.delete(`scheduling`, {
+    await api.delete("scheduling", {
       data: {
         id_advogado: parseInt(id),
         id_agenda: parseInt(id_agenda)

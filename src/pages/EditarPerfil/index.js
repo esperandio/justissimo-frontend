@@ -1,53 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import Container from '@material-ui/core/Container';
-import Header from '../Main/Header';
-import Footer from '../Main/Footer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { TitlePage } from '../../components/Utils/title';
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@mui/material/TextField';
-import Button from '@material-ui/core/Button';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import SaveIcon from '@material-ui/icons/Save';
-import UserDefaultIcon from '../../user.svg';
-import Stack from '@mui/material/Stack';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import React, { useState, useEffect } from "react";
+import Container from "@material-ui/core/Container";
+import Header from "../Main/Header";
+import Footer from "../Main/Footer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { TitlePage } from "../../components/Utils/title";
+import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@mui/material/TextField";
+import Button from "@material-ui/core/Button";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import SaveIcon from "@material-ui/icons/Save";
+import UserDefaultIcon from "../../user.svg";
+import Stack from "@mui/material/Stack";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputCpfMask from '../../components/Utils/mask/inputCpfMask';
-import InputCnpjMask from '../../components/Utils/mask/inputCnpjMask';
-import InputCepMask from '../../components/Utils/mask/inputCepMask';
-import Autocomplete from '@mui/material/Autocomplete';
-import { UserService } from '../../services';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputCpfMask from "../../components/Utils/mask/inputCpfMask";
+import InputCnpjMask from "../../components/Utils/mask/inputCnpjMask";
+import InputCepMask from "../../components/Utils/mask/inputCepMask";
+import Autocomplete from "@mui/material/Autocomplete";
+import { UserService } from "../../services";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function EditarPerfil() {
   const [backdropOpen, setBackdropOpen] = useState(true);
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
   const [dt_nascimento, setNascimento] = useState(null);
   const [isTipoPessoaFisica, setIsTipoPessoaFisica] = useState(true);
-  const [cpf, setCPF] = useState('');
-  const [cnpj, setCNPJ] = useState('');
-  const [cep, setCEP] = useState('');
-  const [estado, setEstado] = useState('');
-  const [cidade, setCidade] = useState('');
+  const [cpf, setCPF] = useState("");
+  const [cnpj, setCNPJ] = useState("");
+  const [cep, setCEP] = useState("");
+  const [estado, setEstado] = useState("");
+  const [cidade, setCidade] = useState("");
   const [imagemPreview, setImagemPreview] = useState(null);
-  const [imagemPreviewUrl, setImagemPreviewUrl] = useState('');
+  const [imagemPreviewUrl, setImagemPreviewUrl] = useState("");
 
-  const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
-  'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
+  const [estados] = useState(["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
+    "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"]);
 
   useEffect(() => {
     async function buscarInformacoesPerfil() {
-      const user_id = sessionStorage.getItem('id_usuario');
+      const user_id = sessionStorage.getItem("id_usuario");
       const profile = (await UserService.getProfile(user_id)).data;
 
-      if (profile.nr_cnpj !== '') {
+      if (profile.nr_cnpj !== "") {
         setIsTipoPessoaFisica(false)
       }
 
@@ -77,12 +77,12 @@ export default function EditarPerfil() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let retorno = '';
+    let retorno = "";
 
     setBackdropOpen(true);
 
     try {   
-      const user_id = sessionStorage.getItem('id_usuario');
+      const user_id = sessionStorage.getItem("id_usuario");
 
       const dt_nascimento_formatado = `${dt_nascimento.getUTCFullYear()}` 
         + "-"
@@ -103,12 +103,12 @@ export default function EditarPerfil() {
       }
 
       await UserService.updateProfile(user_id, user);
-      retorno = 'Perfil atualizado com sucesso!';
+      retorno = "Perfil atualizado com sucesso!";
     } catch (error) {
       if (error.response.status === 400) {
-        retorno = 'Erro ao atualizar o perfil! \n\n' + error.response.data.message;
+        retorno = "Erro ao atualizar o perfil! \n\n" + error.response.data.message;
       } else {
-        retorno = 'Erro ao atualizar o perfil! \n' + error.message;
+        retorno = "Erro ao atualizar o perfil! \n" + error.message;
       } 
     }
 
@@ -120,7 +120,7 @@ export default function EditarPerfil() {
     <>
       <CssBaseline />
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}
       >
         <CircularProgress color="inherit" />
@@ -140,18 +140,18 @@ export default function EditarPerfil() {
                   spacing={1}
                 >
                   <img 
-                    src={(imagemPreviewUrl == null || imagemPreviewUrl === '' ) && backdropOpen === false 
+                    src={(imagemPreviewUrl == null || imagemPreviewUrl === "" ) && backdropOpen === false 
                       ? UserDefaultIcon 
                       : imagemPreviewUrl
                     } 
                     alt="preview" 
-                    width={'180px'}
+                    width={"180px"}
                   />
 
                   <FormControl>
                     <input
                       accept="image/*"
-                      style={{ display: 'none' }}
+                      style={{ display: "none" }}
                       id="raised-button-file"
                       multiple
                       type="file"

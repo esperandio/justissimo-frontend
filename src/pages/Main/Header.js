@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import BalanceIcon from '@mui/icons-material/Balance';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import BalanceIcon from "@mui/icons-material/Balance";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 
 const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-      primary: {
-        main: '#1976d2',
-      },
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#1976d2",
     },
+  },
 });
 
 const Header = () => {
@@ -31,15 +31,15 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const [pages, setPages] = useState([]);
-  const [settings] = useState(['Editar perfil', 'Logout']);
+  const [settings] = useState(["Editar perfil", "Logout"]);
 
   useEffect(() => {
-    let pages = ['Home', 'Pesquisar Advogado', 'Cadastrar Cliente', 'Cadastrar Advogado'];
+    let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado"];
 
-    if (sessionStorage.getItem('tipo_usuario') === 'Advogado') {
-      pages = ['Home', 'Minha Agenda'];
-    } else if (sessionStorage.getItem('tipo_usuario') === 'Cliente') {
-      pages = ['Home', 'Pesquisar Advogado', 'Cadastrar Divulgação'];
+    if (sessionStorage.getItem("tipo_usuario") === "Advogado") {
+      pages = ["Home", "Minha Agenda"];
+    } else if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
+      pages = ["Home", "Pesquisar Advogado", "Cadastrar Divulgação"];
     }
 
     setPages(pages);
@@ -62,20 +62,20 @@ const Header = () => {
 
   const getPageUrl = (page) => {
     switch (page) {
-      case 'Home':
-        return '/home';
-      case 'Minha Agenda':
-        return '/minha-agenda';
-      case 'Pesquisar Advogado':
-        return '/advogado/listar';
-      case 'Cadastrar Divulgação':
-        return '/divulgacao/cad';
-      case 'Cadastrar Cliente':
-        return '/cliente/cad';
-      case 'Cadastrar Advogado':
-        return '/advogado/cad';
-      default:
-        return '/home';
+    case "Home":
+      return "/home";
+    case "Minha Agenda":
+      return "/minha-agenda";
+    case "Pesquisar Advogado":
+      return "/advogado/listar";
+    case "Cadastrar Divulgação":
+      return "/divulgacao/cad";
+    case "Cadastrar Cliente":
+      return "/cliente/cad";
+    case "Cadastrar Advogado":
+      return "/advogado/cad";
+    default:
+      return "/home";
     }
   }
 
@@ -85,24 +85,24 @@ const Header = () => {
 
   const handleClickSettingsMenuItem = (setting) => {
     switch (setting) {
-      case 'Editar perfil':
-        handleEditarPerfil();
-        break;
-      case 'Logout':
-        handleLogout();
-        break;
-      default:
-        handleCloseUserMenu();
+    case "Editar perfil":
+      handleEditarPerfil();
+      break;
+    case "Logout":
+      handleLogout();
+      break;
+    default:
+      handleCloseUserMenu();
     }
   }
 
   const handleLogout = () => {
     sessionStorage.clear();
-    history.push('/login');
+    history.push("/login");
   }
 
   const handleEditarPerfil = () => {
-    history.push('/editar-perfil');
+    history.push("/editar-perfil");
   }
 
   return (
@@ -110,7 +110,7 @@ const Header = () => {
       <AppBar position="sticky" >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <BalanceIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <BalanceIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -118,19 +118,19 @@ const Header = () => {
               href="/"
               sx={{
                 mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'Inter',
+                display: { xs: "none", md: "flex" },
+                fontFamily: "Inter",
                 fontWeight: 900,
-                background: '-webkit-linear-gradient(45deg, #B28C09, #E2D04A)', 
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textDecoration: 'none',
+                background: "-webkit-linear-gradient(45deg, #B28C09, #E2D04A)", 
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                textDecoration: "none",
               }}
             >
               JUSTÍSSIMO
             </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -145,18 +145,18 @@ const Header = () => {
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
+                  vertical: "top",
+                  horizontal: "left",
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: 'block', md: 'none' },
+                  display: { xs: "block", md: "none" },
                 }}
               >
                 {pages.map((page) => (
@@ -167,7 +167,7 @@ const Header = () => {
               </Menu>
             </Box>
 
-            <BalanceIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <BalanceIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -175,26 +175,26 @@ const Header = () => {
               href=""
               sx={{
                 mr: 2,
-                display: { xs: 'flex', md: 'none' },
+                display: { xs: "flex", md: "none" },
                 flexGrow: 1,
-                fontFamily: 'Inter',
+                fontFamily: "Inter",
                 fontWeight: 900,
-                background: '-webkit-linear-gradient(45deg, #B28C09, #E2D04A)', 
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textDecoration: 'none',
+                background: "-webkit-linear-gradient(45deg, #B28C09, #E2D04A)", 
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                textDecoration: "none",
               }}
             >
               JUSTÍSSIMO
             </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button
                   color="inherit"
                   key={page}
                   onClick={() => handleClickPageMenuItem(page)}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, color: "white", display: "block" }}
                 >
                   {page}
                 </Button>
@@ -202,7 +202,7 @@ const Header = () => {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              {sessionStorage.getItem('token') === null
+              {sessionStorage.getItem("token") === null
                 ? <>
                   <Button color="inherit" href="/login">Login</Button>
                 </>
@@ -213,17 +213,17 @@ const Header = () => {
                     </IconButton>
                   </Tooltip>
                   <Menu
-                    sx={{ mt: '45px' }}
+                    sx={{ mt: "45px" }}
                     id="menu-appbar"
                     anchorEl={anchorElUser}
                     anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
+                      vertical: "top",
+                      horizontal: "right",
                     }}
                     keepMounted
                     transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
+                      vertical: "top",
+                      horizontal: "right",
                     }}
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}

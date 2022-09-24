@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { withWebChat } from '@ibm-watson/assistant-web-chat-react';
-import CustomResponsePortalsContainer from './CustomResponsePortalsContainer';
+import React, { useEffect, useState } from "react";
+import { withWebChat } from "@ibm-watson/assistant-web-chat-react";
+import CustomResponsePortalsContainer from "./CustomResponsePortalsContainer";
 
 function App({ createWebChatInstance }) {
   const [instance, setInstance] = useState(null);
@@ -15,7 +15,7 @@ function App({ createWebChatInstance }) {
       },
     }
     createWebChatInstance(watsonAssistantChatOptions);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="App">

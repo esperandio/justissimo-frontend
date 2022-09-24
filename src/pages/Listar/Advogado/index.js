@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Header from '../../Main/Header';
-import Footer from '../../Main/Footer';
-import { makeStyles } from '@material-ui/core/styles';
-import { TitlePage } from '../../../components/Utils/title';
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import UserDefaultIcon from '../../../user.svg';
-import api from '../../../services/api';
-import { Rating } from '@mui/material';
-import Collapse from '@material-ui/core/Collapse';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import Header from "../../Main/Header";
+import Footer from "../../Main/Footer";
+import { makeStyles } from "@material-ui/core/styles";
+import { TitlePage } from "../../../components/Utils/title";
+import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import UserDefaultIcon from "../../../user.svg";
+import api from "../../../services/api";
+import { Rating } from "@mui/material";
+import Collapse from "@material-ui/core/Collapse";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 
 const useStyles = makeStyles((theme) => ({
   user: {
-    width: '20vh',
-    minWidth: '20vh',
+    width: "20vh",
+    minWidth: "20vh",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -42,17 +42,17 @@ export default function ListarAdvogado() {
   const [cidade, setCidade] = useState("");
 
   const [areas, setAreas] = useState([]);
-  const [estados] = useState(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA',
-  'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']);
+  const [estados] = useState(["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
+    "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"]);
 
   useEffect(() => {
     async function buscarAdvogados() {
-      const resultado = await api.get(`lawyers`);
+      const resultado = await api.get("lawyers");
       setAdvogados(resultado.data);
     }
 
     async function buscarAreas() {
-      const resultado = await api.get('areas');
+      const resultado = await api.get("areas");
       setAreas(resultado.data);
     }
 
@@ -84,7 +84,7 @@ export default function ListarAdvogado() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert(`🤨 Algo deu errado! Tente novamente mais tarde`);
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
@@ -120,16 +120,16 @@ export default function ListarAdvogado() {
             </Grid>
 
             <Grid item xs={12} sm={12}>
-                <FormControlLabel
-                  control={<Switch checked={usarFiltroAvancado} color="primary" onChange={() => {
-                    setUsarFiltroAvancado((prev) => !prev);
-                  }} />}
-                  label="Filtros avançados"
-                />
-                <Collapse in={usarFiltroAvancado}>
-                  <Grid item xs={12} sm container spacing={1}>
-                    <Grid item xs={12} sm={4}>
-                      <FormControl fullWidth variant="outlined" margin="normal">
+              <FormControlLabel
+                control={<Switch checked={usarFiltroAvancado} color="primary" onChange={() => {
+                  setUsarFiltroAvancado((prev) => !prev);
+                }} />}
+                label="Filtros avançados"
+              />
+              <Collapse in={usarFiltroAvancado}>
+                <Grid item xs={12} sm container spacing={1}>
+                  <Grid item xs={12} sm={4}>
+                    <FormControl fullWidth variant="outlined" margin="normal">
                       <Autocomplete
                         options={areas.map((x) => { 
                           return {
@@ -141,35 +141,35 @@ export default function ListarAdvogado() {
                         isOptionEqualToValue={(option, value) => option.value === value.value}
                         onChange={ handleAutocompleteAreaChange }
                       />
-                      </FormControl>
-                    </Grid>
+                    </FormControl>
+                  </Grid>
 
-                    <Grid item xs={12} sm={4}>
-                      <FormControl fullWidth variant="outlined" margin="normal">
+                  <Grid item xs={12} sm={4}>
+                    <FormControl fullWidth variant="outlined" margin="normal">
                       <Autocomplete
                         options={estados}
                         renderInput={(params) => <TextField {...params} label="Estado" />}
                         isOptionEqualToValue={(option, value) => option.value === value.value}
                         onChange={ handleAutocompleteEstadoChange }
                       />
-                      </FormControl>
-                    </Grid>
-
-                    <Grid item xs={12} sm={4}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="Cidade"
-                          label="Cidade"
-                          placeholder="Cidade"
-                          variant="outlined"
-                          margin="normal"
-                          value={cidade}
-                          onChange={e => setCidade(e.target.value)}
-                        />
-                      </FormControl>
-                    </Grid>
+                    </FormControl>
                   </Grid>
-                </Collapse>
+
+                  <Grid item xs={12} sm={4}>
+                    <FormControl fullWidth>
+                      <TextField
+                        id="Cidade"
+                        label="Cidade"
+                        placeholder="Cidade"
+                        variant="outlined"
+                        margin="normal"
+                        value={cidade}
+                        onChange={e => setCidade(e.target.value)}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </Collapse>
             </Grid>
 
             <Grid item xs={12} sm={12}>
@@ -191,50 +191,50 @@ export default function ListarAdvogado() {
         <Grid container spacing={2}>
           <Grid item xs={12} sm container spacing={1}>
             {advogados.map((advogado)=>{
-                return (
-                  <Grid key={advogado.id_advogado} item xs={12} sm={4} className={classes.submit}>
+              return (
+                <Grid key={advogado.id_advogado} item xs={12} sm={4} className={classes.submit}>
+                  <Stack
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={1}
+
+                  >
                     <Stack
                       justifyContent="center"
-                      alignItems="center"
-                      spacing={1}
-
+                      spacing={2}
+                      sx={{ height: "20vh", minHeight: "20vh" }}
                     >
-                      <Stack
-                        justifyContent="center"
-                        spacing={2}
-                        sx={{ height: '20vh', minHeight: '20vh' }}
-                      >
-                        <img 
-                          src={advogado.usuario.url_foto_perfil == null
-                            ? UserDefaultIcon
-                            : advogado.usuario.url_foto_perfil
-                          } 
-                          className={classes.user} 
-                          alt="profile" 
-                        />
-                      </Stack>
-                      <h2>{advogado.nome}</h2>
-                      <Rating 
-                        id="nota"
-                        name="nota" 
-                        size='large'
-                        autoFocus
-                        readOnly
-                        value={advogado.nota}
+                      <img 
+                        src={advogado.usuario.url_foto_perfil == null
+                          ? UserDefaultIcon
+                          : advogado.usuario.url_foto_perfil
+                        } 
+                        className={classes.user} 
+                        alt="profile" 
                       />
-
-                      <p>{advogado._count?.avaliacoes} avaliações</p>
-
-                      <Button
-                        variant="contained"
-                        type="submit"
-                        onClick={ () => handleExibirAdvogado(advogado.id_advogado) }
-                      >
-                        Visualizar
-                      </Button>
                     </Stack>
-                  </Grid>
-                )
+                    <h2>{advogado.nome}</h2>
+                    <Rating 
+                      id="nota"
+                      name="nota" 
+                      size='large'
+                      
+                      readOnly
+                      value={advogado.nota}
+                    />
+
+                    <p>{advogado._count?.avaliacoes} avaliações</p>
+
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      onClick={ () => handleExibirAdvogado(advogado.id_advogado) }
+                    >
+                        Visualizar
+                    </Button>
+                  </Stack>
+                </Grid>
+              )
             })}
           </Grid>
         </Grid>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const TitleJustissimoStyled = styled.h1`
     font-family: 'Inter', sans-serif;
