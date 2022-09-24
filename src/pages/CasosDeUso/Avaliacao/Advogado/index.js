@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Redirect } from "react-router";
 import api from "../../../../services/api";
 import { TitlePage } from "../../../../components/Utils/title";
 import TextArea from "../../../../components/Utils/input";
@@ -12,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import Header from "../../../Main/Header";
 import Footer from "../../../Main/Footer";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { ValidarAutenticacaoCliente } from "../../../../components/ValidarAutenticacao";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -38,14 +38,6 @@ export default function AvaliacaoAdvogado() {
     
   // Carrega inicialmente
   useEffect(() => {
-    // Validação de permissão para acessar a tela de avaliação.
-    if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") === "Advogado") {
-      alert("Você precisa estar conectado como cliente para acessar essa tela!");
-      setStatePermission({ redirectPermission: true });
-
-      return;
-    }
-
     setIdAdvogado(params.id);
   }, [params.id]);
 
@@ -53,7 +45,6 @@ export default function AvaliacaoAdvogado() {
 
   const [nota, setNota] = useState(0.0);
   const [descricao, setDescricao] = useState("");
-  const [redirectPermission, setStatePermission] = useState(false);
 
   /**
      * Converte os dados para o formato Number (formato correto que deverá chegar na API (backend))
@@ -119,12 +110,9 @@ export default function AvaliacaoAdvogado() {
     }
   }
 
-  if (redirectPermission) {
-    return <Redirect to='../../home'/>;
-  }
-
   return (
     <>
+      <ValidarAutenticacaoCliente />
       <CssBaseline />
       <Header />
       <Container maxWidth="lg">
