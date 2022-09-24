@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
 import { CssBaseline, Container, Grid } from "@material-ui/core/";
@@ -15,6 +16,8 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { ClientService } from "../../services";
 
 export default function MinhaAgenda() {
+  const history = useHistory();
+  
   const [agendas, setAgendas] = useState([]); 
   
   useEffect(() => {
@@ -48,6 +51,10 @@ export default function MinhaAgenda() {
 
   function formatTime(date) {
     return `${date.getUTCHours()}`.padStart(2, "0") + ":" + `${date.getUTCMinutes()}`.padStart(2, "0")
+  }
+
+  function handleClickVisualizarPerfilAdvogado(id_advogado) {
+    history.push(`/advogado/${id_advogado}`);
   }
 
   return (
@@ -105,9 +112,9 @@ export default function MinhaAgenda() {
                   <CardActions>
                     <Button
                       type="submit"
-                      color="error"
-                      onClick={ () => {} }>
-                      <b>ENCERRAR</b>
+                      color="primary"
+                      onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }>
+                      <b>Visualizar perfil</b>
                     </Button>
                   </CardActions>
                 </Stack>
