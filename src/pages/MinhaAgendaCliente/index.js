@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
 import { CssBaseline, Container, Grid } from "@material-ui/core/";
@@ -12,39 +12,22 @@ import {
   Typography, 
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { ClientService } from "../../services";
 
 export default function MinhaAgenda() {
-  const [agendas] = useState([
-    {
-      "id_agenda": 7,
-      "fk_advogado": 1,
-      "fk_cliente": 4,
-      "fk_advogado_area": 1,
-      "data_agendamento": "2022-09-28T00:00:00.000Z",
-      "duracao": 40,
-      "horario": "0001-01-01T13:30:00.000Z",
-      "observacao": "Reunião para verificar situação trabalhista",
-      "contato_cliente": "davidjesus357@gmail.com",
-      "nome_cliente": "Teste cliente",
-      "area_atuacao": "Trabalhista",
-      "data_criacao_agendamento": "2022-09-18T04:01:37.358Z",
-      "encerrado": false,
-      "advogado": {
-        "nome": "david 7",
-        "nr_cna": "321",
-        "nr_cnpj": "",
-        "nr_cpf": "11111111111",
-        "tel_celular": "479999999",
-        "endereco": {
-          "logradouro": null,
-          "numero": null,
-          "nr_cep": "89526315",
-          "cidade": "Bumenau",
-          "estado": "SC"
-        }
-      }
+  const [agendas, setAgendas] = useState([]); 
+  
+  useEffect(() => {
+    async function buscarInformacoesAgendaAdvogado() {
+      const id = parseInt(sessionStorage.getItem("id_cliente"));
+
+      const resultado = await ClientService.getAllSchedulings(id);
+
+      setAgendas(resultado.data);
     }
-  ]);  
+
+    buscarInformacoesAgendaAdvogado();
+  }, []);
 
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
@@ -95,7 +78,7 @@ export default function MinhaAgenda() {
                     spacing={2}
                   >
                     <Typography variant="h6" component="div">
-                      <b>{agenda.nome_cliente}</b>
+                      <b>{agenda.advogado.nome}</b>
                     </Typography>
                     <Typography variant="h6" component="div">
                       <b>Causa: {agenda.area_atuacao}</b>
@@ -112,10 +95,6 @@ export default function MinhaAgenda() {
 
                   <Typography gutterBottom variant="h8" component="div">
                     {formatTime(new Date(agenda.horario))}h
-                  </Typography>
-
-                  <Typography gutterBottom variant="h7" component="div">
-                    Contato em {agenda.contato_cliente}
                   </Typography>
                 </CardContent>
 
