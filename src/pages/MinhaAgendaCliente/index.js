@@ -21,6 +21,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { ClientService } from "../../services";
+import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
 
 export default function MinhaAgenda() {
   const history = useHistory();
@@ -121,6 +122,7 @@ export default function MinhaAgenda() {
 
   return (
     <>
+      <ValidarAutenticacaoCliente />
       <CssBaseline />
       <Header />
       <Container maxWidth="lg">
