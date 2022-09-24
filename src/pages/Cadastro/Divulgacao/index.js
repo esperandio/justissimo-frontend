@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "../../Main/Header";
@@ -13,8 +14,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import api from "../../../services/api";
-import { Redirect } from "react-router-dom";
 import { TitlePage } from "../../../components/Utils/title";
+import { ValidarAutenticacaoCliente } from "../../../components/ValidarAutenticacao"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,26 +45,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CadastroDivulgacao() {
   const classes = useStyles();
+  const history = useHistory();
+
   const [titulo, setTitulo] = useState("");
   const [id_area_atuacao, setAreaAtuacao] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [redirect, setRedirect] = useState(false);
 
   const [areas, setAreas] = useState([]);
 
   useEffect(() => {
-    function validarSessao() {
-      if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") === "Advogado") {
-        alert("Você precisa estar conectado como cliente para acessar essa tela!");
-        setRedirect({ redirect: true });
-      }
-    }
     async function buscarAreas() {
       const resultado = await api.get("areas");
       setAreas(resultado.data);
     }
-        
-    validarSessao();
+
     buscarAreas();
   },[])
 
@@ -79,7 +74,7 @@ export default function CadastroDivulgacao() {
 
       alert("Divulgacação cadastrada com sucesso!");
 
-      setRedirect({ redirect: true });
+      history.push("/home");
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -92,12 +87,9 @@ export default function CadastroDivulgacao() {
     }
   }
 
-  if (redirect) {
-    return <Redirect to='../home' />;
-  }
-
   return (
     <>
+      <ValidarAutenticacaoCliente />
       <CssBaseline />
       <Header />
       <Container maxWidth="lg">
@@ -113,7 +105,6 @@ export default function CadastroDivulgacao() {
                     id="Nome"
                     label="Digite o título da sua causa"
                     placeholder="Título da causa"
-                    multiline
                     variant="outlined"
                     value={titulo}
                     onChange={e => setTitulo(e.target.value)}
@@ -129,7 +120,6 @@ export default function CadastroDivulgacao() {
                     required
                     labelId="Área de atuação"
                     id="AreaSelect"
-                    multiline
                     variant="outlined"
                     value={id_area_atuacao}
                     onChange={e => setAreaAtuacao(e.target.value)}

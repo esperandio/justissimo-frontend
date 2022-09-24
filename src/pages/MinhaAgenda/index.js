@@ -30,6 +30,7 @@ import Footer from "../Main/Footer";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
 import { LawyerService } from "../../services";
+import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticacao";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,7 +57,6 @@ export default function MinhaAgenda() {
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
-  const [redirect, setRedirect] = useState(false);
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
@@ -235,13 +235,6 @@ export default function MinhaAgenda() {
   }
 
   useEffect(() => {
-    function validarSessao() {
-      if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Advogado") {
-        alert("Você precisa estar conectado como Advogado para acessar essa tela!");
-        setRedirect({ redirect: true });
-      }
-    }
-
     async function buscarInformacoesAgendaAdvogado() {
       const id = parseInt(sessionStorage.getItem("id_advogado"));
       const resultado = await api.get(`schedulings/lawyer/${id}`);
@@ -255,7 +248,6 @@ export default function MinhaAgenda() {
       setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
     }
 
-    validarSessao();
     buscarInformacoesAgendaAdvogado();
     buscarAreas();
   }, []);
@@ -281,16 +273,13 @@ export default function MinhaAgenda() {
     alert("excluido com sucesso")
   }
 
-  if (redirect) {
-    return <Redirect to='../home' />;
-  }
-
   if (redirectConfigAgenda) {
     return <Redirect to='configuracao/agenda' />;
   }
 
   return (
     <>
+      <ValidarAutenticacaoAdvogado />
       <CssBaseline />
       <Header />
       <Container maxWidth="lg">
