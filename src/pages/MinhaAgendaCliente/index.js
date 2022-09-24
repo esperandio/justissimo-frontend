@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
-import { CssBaseline, Container, Grid } from "@material-ui/core/";
+import { CssBaseline, Container, Grid, FormControl } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
 import { 
   Button, 
@@ -11,7 +11,14 @@ import {
   CardContent, 
   CardActions, 
   Typography, 
+  Dialog, 
+  DialogTitle,
+  DialogContent,
+  TextField, 
 } from "@mui/material";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { ptBR } from "date-fns/locale";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { ClientService } from "../../services";
 
@@ -19,6 +26,10 @@ export default function MinhaAgenda() {
   const history = useHistory();
   
   const [agendas, setAgendas] = useState([]); 
+  const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
+
+  const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
+  const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
   
   useEffect(() => {
     async function buscarInformacoesAgendaAdvogado() {
@@ -57,6 +68,57 @@ export default function MinhaAgenda() {
     history.push(`/advogado/${id_advogado}`);
   }
 
+  function handleClickFiltroAgendamento() {
+    setOpenDialogFiltrarAgendamentos(true);
+  }
+
+  async function handleClickBuscarAgenda() {
+    const fk_advogado = parseInt(sessionStorage.getItem("id_cliente"));
+
+    const dataAgendamentoDeFormatada = `${dataAgendamentoDe.getUTCFullYear()}` 
+      + "-"
+      + `${dataAgendamentoDe.getUTCMonth() + 1}`.padStart(2, 0)
+      + "-"
+      + `${dataAgendamentoDe.getDate()}`.padStart(2, 0);
+
+    const dataAgendamentoAteFormatada = `${dataAgendamentoAte.getUTCFullYear()}` 
+      + "-"
+      + `${dataAgendamentoAte.getUTCMonth() + 1}`.padStart(2, 0)
+      + "-"
+      + `${dataAgendamentoAte.getDate()}`.padStart(2, 0);
+
+    try {
+      const resultado = await ClientService.getAllSchedulings(
+        fk_advogado, 
+        dataAgendamentoDeFormatada, 
+        dataAgendamentoAteFormatada
+      );
+      setAgendas(resultado.data)
+      setOpenDialogFiltrarAgendamentos(false);
+    } catch (error) {
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        return ;
+      }
+
+      alert(mensagem_retorno_api);
+    }
+  }
+
+  function handleCloseDialogFiltrarAgendamentos() {
+    setOpenDialogFiltrarAgendamentos(false);
+  }
+
+  function handleChangeDataAgendamentoDe(newValue) {
+    setDataAgendamentoDe(newValue);
+  }
+
+  function handleChangeDataAgendamentoAte(newValue) {
+    setDataAgendamentoAte(newValue);
+  }
+
   return (
     <>
       <CssBaseline />
@@ -67,7 +129,7 @@ export default function MinhaAgenda() {
           direction={{ xs: "column", sm: "row" }} 
           spacing={2}
         >
-          <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ () => {} }>
+          <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
             Filtro
           </Button>
         </Stack>
@@ -122,6 +184,56 @@ export default function MinhaAgenda() {
             </Grid>
           </Grid>
         ))}
+
+        {/* Filtros de agenda */}
+        <Dialog open={isOpenDialogFiltrarAgendamentos} onClose={ handleCloseDialogFiltrarAgendamentos }>
+          <DialogTitle>Filtrar Agendamentos</DialogTitle>
+          <DialogContent>
+            <br />
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                      <DatePicker
+                        label="De:"
+                        value={dataAgendamentoDe}
+                        onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                      <DatePicker
+                        label="Até:"
+                        value={dataAgendamentoAte}
+                        onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <FormControl>
+                    <Button 
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      onClick={ handleClickBuscarAgenda }
+                    >
+                      Filtrar
+                    </Button>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Grid>
+          </DialogContent>
+        </Dialog>
       </Container>
       <Footer />
     </>
