@@ -1,19 +1,20 @@
-import { TitleJustissimoStyled, TitlePageStyled } from '../Style/titleStyled';
+import React from "react";
+import { TitleJustissimoStyled, TitlePageStyled } from "../Style/titleStyled";
 
 function TitleJustissimo() {
-    return(
-        <TitleJustissimoStyled>
+  return(
+    <TitleJustissimoStyled>
             JUSTÍSSIMO
-        </TitleJustissimoStyled>
-    );
+    </TitleJustissimoStyled>
+  );
 }
 
 function TitlePage(props) {
-    return(
-        <TitlePageStyled>
-            {props.internal}
-        </TitlePageStyled>
-    )
+  return(
+    <TitlePageStyled>
+      {props.internal}
+    </TitlePageStyled>
+  )
 }
 
 

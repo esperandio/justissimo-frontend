@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { DatePicker, DatePickerInput} from 'carbon-components-react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import { DatePicker, DatePickerInput} from "carbon-components-react";
+import PropTypes from "prop-types";
 
 /**
  * Your custom response component can also make use of the message object if you have set "user_defined" variables.  
  */
-function CustomResponseComponent({ message }) {
+function CustomResponseComponent() {
   const [datePickerElement, setDatePickerElement] = useState(null);
 
   return (
@@ -17,7 +17,7 @@ function CustomResponseComponent({ message }) {
         </DatePicker>
       )}
       {/* This is where the date picker popup will appear. */}
-      <div ref={setDatePickerElement} style={{ position: 'relative' }} />
+      <div ref={setDatePickerElement} style={{ position: "relative" }} />
     </>
   )
 }
