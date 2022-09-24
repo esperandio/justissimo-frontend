@@ -12,6 +12,7 @@ import AvaliacaoAdvogado from "./pages/CasosDeUso/Avaliacao/Advogado";
 import ListarAdvogado from "./pages/Listar/Advogado";
 import InformacoesAdvogado from "./pages/InformacoesAdvogado";
 import MinhaAgendaAdvogado from "./pages/MinhaAgendaAdvogado";
+import MinhaAgendaCliente from "./pages/MinhaAgendaCliente";
 import ConfiguracaoAgenda from "./pages/CasosDeUso/Agenda/Configuracao";
 import EditarPerfil from "./pages/EditarPerfil";
 
@@ -25,6 +26,7 @@ function Routes() {
         <Route path="/advogado/minha-agenda" component={MinhaAgendaAdvogado}/>
         <Route path="/advogado/:id" component={InformacoesAdvogado}/>
         <Route path="/cliente/cad" component={CadCliente}/>
+        <Route path="/cliente/minha-agenda" component={MinhaAgendaCliente}/>
         <Route path="/divulgacao/cad" component={CadDivulgacao}/>
         <Route path="/login" component={Login}/>
         <Route path="/home" component={Home}/>
