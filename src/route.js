@@ -11,7 +11,7 @@ import RedefinirSenha_NovaSenha from "./pages/EsqueceuSenha/NovaSenha";
 import AvaliacaoAdvogado from "./pages/CasosDeUso/Avaliacao/Advogado";
 import ListarAdvogado from "./pages/Listar/Advogado";
 import InformacoesAdvogado from "./pages/InformacoesAdvogado";
-import MinhaAgenda from "./pages/MinhaAgenda";
+import MinhaAgendaAdvogado from "./pages/MinhaAgendaAdvogado";
 import ConfiguracaoAgenda from "./pages/CasosDeUso/Agenda/Configuracao";
 import EditarPerfil from "./pages/EditarPerfil";
 
@@ -32,7 +32,7 @@ function Routes() {
         <Route path="/avaliacao/advogado/:id" component={AvaliacaoAdvogado}/>
         <Route path="/advogado/listar" component={ListarAdvogado}/>
         <Route path="/advogado/:id" component={InformacoesAdvogado}/>
-        <Route path="/minha-agenda" component={MinhaAgenda}/>
+        <Route path="/minha-agenda" component={MinhaAgendaAdvogado}/>
         <Route path="/configuracao/agenda" component={ConfiguracaoAgenda}/> 
         <Route path="/editar-perfil" component={EditarPerfil}/>
       </Switch>
