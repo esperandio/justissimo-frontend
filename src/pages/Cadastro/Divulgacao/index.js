@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "../../Main/Header";
@@ -44,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CadastroDivulgacao() {
   const classes = useStyles();
+  const history = useHistory();
+
   const [titulo, setTitulo] = useState("");
   const [id_area_atuacao, setAreaAtuacao] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -79,7 +82,7 @@ export default function CadastroDivulgacao() {
 
       alert("Divulgacação cadastrada com sucesso!");
 
-      setRedirect({ redirect: true });
+      history.push("/home");
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
