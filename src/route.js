@@ -21,8 +21,10 @@ function Routes() {
       <Switch>
         <Route path="/" exact={true} component={Home}/>
         <Route path="/advogado/cad" component={CadAdvogado}/>
+        <Route path="/advogado/listar" component={ListarAdvogado}/>
+        <Route path="/advogado/minha-agenda" component={MinhaAgendaAdvogado}/>
+        <Route path="/advogado/:id" component={InformacoesAdvogado}/>
         <Route path="/cliente/cad" component={CadCliente}/>
-        <Route path="/advogado/cad" component={CadAdvogado}/>
         <Route path="/divulgacao/cad" component={CadDivulgacao}/>
         <Route path="/login" component={Login}/>
         <Route path="/home" component={Home}/>
@@ -30,9 +32,6 @@ function Routes() {
         <Route path="/redefinirsenha/codigo" component={RedefinirSenha_Codigo}/>
         <Route path="/redefinirsenha/novasenha" component={RedefinirSenha_NovaSenha}/>
         <Route path="/avaliacao/advogado/:id" component={AvaliacaoAdvogado}/>
-        <Route path="/advogado/listar" component={ListarAdvogado}/>
-        <Route path="/advogado/:id" component={InformacoesAdvogado}/>
-        <Route path="/minha-agenda" component={MinhaAgendaAdvogado}/>
         <Route path="/configuracao/agenda" component={ConfiguracaoAgenda}/> 
         <Route path="/editar-perfil" component={EditarPerfil}/>
       </Switch>

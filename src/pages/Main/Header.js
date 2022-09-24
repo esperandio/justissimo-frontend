@@ -65,7 +65,7 @@ const Header = () => {
     case "Home":
       return "/home";
     case "Minha Agenda":
-      return "/minha-agenda";
+      return "/advogado/minha-agenda";
     case "Pesquisar Advogado":
       return "/advogado/listar";
     case "Cadastrar Divulgação":
