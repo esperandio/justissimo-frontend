@@ -3,14 +3,12 @@ import api from "../../../services/api";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import SaveIcon from "@material-ui/icons/Save";
 import InputLabel from "@material-ui/core/InputLabel";
 import Header from "../../Main/Header";
-import Footer from "../../Main/Footer";
 import { Redirect } from "react-router-dom";
 import { TitlePage } from "../../../components/Utils/title";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -116,7 +114,6 @@ export default function CadastroUsuario() {
     
   return (
     <>
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Cadastro de cliente" />
@@ -290,7 +287,6 @@ export default function CadastroUsuario() {
 
         </form>
       </Container>
-      <Footer />
     </>
   );
 }

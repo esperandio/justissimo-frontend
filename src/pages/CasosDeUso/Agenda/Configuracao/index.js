@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, TextField } from "@material-ui/core";
 import { Autocomplete } from "@mui/material";
 import { TitlePage } from "../../../../components/Utils/title";
 import ButtonOutlined from "../../../../components/Utils/buttom";
 import api from "../../../../services/api";
 import Header from "../../../Main/Header";
-import Footer from "../../../Main/Footer";
-import { Redirect } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { ValidarAutenticacaoAdvogado } from "../../../../components/ValidarAutenticacao"
 
 export default function ConfiguracaoAgenda() {
     
@@ -19,8 +17,6 @@ export default function ConfiguracaoAgenda() {
 
   // dias remover
   let dias_remover = [];
-
-  const [redirect, setRedirect] = useState(false);
 
   const [hora_inicio, setHorarioInicio] = useState("");
   const [hora_final, setHorarioFinal] = useState("");
@@ -45,17 +41,6 @@ export default function ConfiguracaoAgenda() {
     "105", "120", "135", "150", "165"]);
 
   const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
-
-  // Carrega inicialmente
-  useEffect(() => {
-    function validarSessao() {
-      if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Advogado") {
-        alert("Você precisa estar conectado como Advogado para acessar essa tela!");
-        setRedirect({ redirect: true });
-      }
-    }
-    validarSessao();
-  }, []);
 
   async function handleConfiguracao(e) {
         
@@ -143,12 +128,9 @@ export default function ConfiguracaoAgenda() {
     setDuracao(parseInt(values));
   }
 
-  if (redirect) {
-    return <Redirect to='../home' />;
-  }
   return (
     <>
-      <CssBaseline />
+      <ValidarAutenticacaoAdvogado />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Configuração da Agenda" />
@@ -166,14 +148,14 @@ export default function ConfiguracaoAgenda() {
             options={dias}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             onChange={ (_, v) => { setDiaInicio(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="De:" />}
+            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="De:" />}
           />
 
           <Autocomplete
             options={dias}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             onChange={ (_, v) => { setDiaFim(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Até:" />}
+            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Até:" />}
           />
           <br/>
           <span> <b>
@@ -220,8 +202,6 @@ export default function ConfiguracaoAgenda() {
           />
         </Container>
       </Container>
-      <Footer />
     </>
   );
-
 }

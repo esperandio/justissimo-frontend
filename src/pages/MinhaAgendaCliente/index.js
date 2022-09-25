@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
-import Footer from "../Main/Footer";
-import { CssBaseline, Container, Grid, FormControl } from "@material-ui/core/";
+import { Container, Grid, FormControl } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
 import { 
   Button, 
@@ -21,6 +20,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { ClientService } from "../../services";
+import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
 
 export default function MinhaAgenda() {
   const history = useHistory();
@@ -121,7 +121,7 @@ export default function MinhaAgenda() {
 
   return (
     <>
-      <CssBaseline />
+      <ValidarAutenticacaoCliente />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Minha Agenda" />
@@ -235,7 +235,6 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
       </Container>
-      <Footer />
     </>
   );
 }

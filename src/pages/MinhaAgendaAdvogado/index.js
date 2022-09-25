@@ -16,7 +16,7 @@ import {
   FormControlLabel,
   Radio
 } from "@mui/material";
-import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl, Grid } from "@material-ui/core/";
+import { InputLabel, Select, MenuItem, Container, FormControl, Grid } from "@material-ui/core/";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
@@ -25,10 +25,10 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
-import Footer from "../Main/Footer";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
 import { LawyerService } from "../../services";
+import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticacao";
 
 export default function MinhaAgenda() {
   const [agendas, setAgendas] = useState([]);  
@@ -37,7 +37,6 @@ export default function MinhaAgenda() {
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
-  const [redirect, setRedirect] = useState(false);
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
@@ -216,13 +215,6 @@ export default function MinhaAgenda() {
   }
 
   useEffect(() => {
-    function validarSessao() {
-      if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Advogado") {
-        alert("Você precisa estar conectado como Advogado para acessar essa tela!");
-        setRedirect({ redirect: true });
-      }
-    }
-
     async function buscarInformacoesAgendaAdvogado() {
       const id = parseInt(sessionStorage.getItem("id_advogado"));
       const resultado = await api.get(`schedulings/lawyer/${id}`);
@@ -236,7 +228,6 @@ export default function MinhaAgenda() {
       setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
     }
 
-    validarSessao();
     buscarInformacoesAgendaAdvogado();
     buscarAreas();
   }, []);
@@ -262,17 +253,13 @@ export default function MinhaAgenda() {
     alert("excluido com sucesso")
   }
 
-  if (redirect) {
-    return <Redirect to='../home' />;
-  }
-
   if (redirectConfigAgenda) {
     return <Redirect to='../configuracao/agenda' />;
   }
 
   return (
     <>
-      <CssBaseline />
+      <ValidarAutenticacaoAdvogado />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Minha Agenda" />
@@ -538,7 +525,6 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
       </Container>
-      <Footer />
     </>
   );
 }
