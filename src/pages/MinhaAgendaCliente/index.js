@@ -190,46 +190,45 @@ export default function MinhaAgenda() {
           <DialogTitle>Filtrar Agendamentos</DialogTitle>
           <DialogContent>
             <br />
+            
             <Grid container spacing={2}>
-              <Grid item xs={12} sm container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                      <DatePicker
-                        label="De:"
-                        value={dataAgendamentoDe}
-                        onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
-                  </FormControl>
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                    <DatePicker
+                      label="De:"
+                      value={dataAgendamentoDe}
+                      onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
 
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                      <DatePicker
-                        label="Até:"
-                        value={dataAgendamentoAte}
-                        onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
-                  </FormControl>
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                    <DatePicker
+                      label="Até:"
+                      value={dataAgendamentoAte}
+                      onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
 
-                <Grid item xs={12} sm={12}>
-                  <FormControl>
-                    <Button 
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      onClick={ handleClickBuscarAgenda }
-                    >
-                      Filtrar
-                    </Button>
-                  </FormControl>
-                </Grid>
+              <Grid item xs={12} sm={12}>
+                <FormControl>
+                  <Button 
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    onClick={ handleClickBuscarAgenda }
+                  >
+                    Filtrar
+                  </Button>
+                </FormControl>
               </Grid>
             </Grid>
           </DialogContent>
