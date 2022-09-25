@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "../../Main/Header";
-import Footer from "../../Main/Footer";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@mui/material/TextField";
@@ -90,7 +88,6 @@ export default function CadastroDivulgacao() {
   return (
     <>
       <ValidarAutenticacaoCliente />
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Divulgue sua causa" />
@@ -167,7 +164,6 @@ export default function CadastroDivulgacao() {
           </Grid>
         </form>
       </Container>
-      <Footer />
     </>
   );
 }

@@ -10,7 +10,8 @@
     "react/prop-types": 0,
     "indent": ["error", 2],
     "linebreak-style": 1,
-    "quotes": ["error", "double"]
+    "quotes": ["error", "double"],
+    "no-unused-vars": "warn"
   },
   "parserOptions": {
     "ecmaVersion": 2021,

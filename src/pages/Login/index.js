@@ -2,7 +2,6 @@ import "./login.css";
 import React, { useState } from "react";
 import api from "../../services/api";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
@@ -102,7 +101,6 @@ export default function Login() {
   return (
   // Form
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <TitleJustissimo/>
       <TitlePage internal="ENTRAR" />
       <div className={classes.paper}>

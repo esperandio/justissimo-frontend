@@ -16,8 +16,7 @@ import {
   FormControlLabel,
   Radio
 } from "@mui/material";
-import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl, Grid } from "@material-ui/core/";
-import { makeStyles } from "@material-ui/core/styles";
+import { InputLabel, Select, MenuItem, Container, FormControl, Grid } from "@material-ui/core/";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
@@ -26,31 +25,12 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
-import Footer from "../Main/Footer";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
 import { LawyerService } from "../../services";
 import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticacao";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    margin: "0px auto",
-    maxWidth: "80%",
-    fontFamily:"Inter",
-    alignItems: "center"
-  },
-  user: {
-    width: "20vh",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    backgroundColor:" ff0000",
-  }
-}));
-
 export default function MinhaAgenda() {
-  const classes = useStyles();
-
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
@@ -274,88 +254,85 @@ export default function MinhaAgenda() {
   }
 
   if (redirectConfigAgenda) {
-    return <Redirect to='configuracao/agenda' />;
+    return <Redirect to='../configuracao/agenda' />;
   }
 
   return (
     <>
       <ValidarAutenticacaoAdvogado />
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Minha Agenda" />
 
-        <div className={classes.paper}>
-          <Stack
-            direction={{ xs: "column", md: "row" }} 
-            spacing={2}
-          >
-            <Button variant="contained" startIcon={<CalendarMonthIcon />} onClick={ handleClickAgendamentoManual }>
-              Agendamento manual
-            </Button>
-            <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleClickConfiguracaoAgenda }>
-              Configuração da Agenda
-            </Button>
-            <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
-              Filtro
-            </Button>
-          </Stack>
+        <Stack
+          direction={{ xs: "column", sm: "row" }} 
+          spacing={2}
+        >
+          <Button variant="contained" startIcon={<CalendarMonthIcon />} onClick={ handleClickAgendamentoManual }>
+            Agendamento manual
+          </Button>
+          <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleClickConfiguracaoAgenda }>
+            Configuração da Agenda
+          </Button>
+          <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
+            Filtro
+          </Button>
+        </Stack>
 
-          <br />
+        <br />
 
-          {agendas.map((agenda) => (
-            <Grid key={agenda.id_agenda} container spacing={5}>
-              <Grid item xs={12}>
-                <Card>
-                  <CardContent>
-                    <Stack
-                      direction={{ xs: "column", md: "row" }} 
-                      justifyContent="space-between"
-                      spacing={2}
-                    >
-                      <Typography variant="h6" component="div">
-                        <b>{agenda.nome_cliente}</b>
-                      </Typography>
-                      <Typography variant="h6" component="div">
-                        <b>Causa: {agenda.area_atuacao}</b>
-                      </Typography>
-                    </Stack>
-
-                    <Typography gutterBottom variant="h7" component="div">
-                      <b>{formatDate(agenda.data_agendamento)}</b>
-                    </Typography>
-
-                    <Typography gutterBottom variant="h8" component="div">
-                      {formatDia(agenda.data_agendamento)}
-                    </Typography>
-
-                    <Typography gutterBottom variant="h8" component="div">
-                      {formatTime(new Date(agenda.horario))}h
-                    </Typography>
-
-                    <Typography gutterBottom variant="h7" component="div">
-                      Contato em {agenda.contato_cliente}
-                    </Typography>
-                  </CardContent>
-
+        {agendas.map((agenda) => (
+          <Grid key={agenda.id_agenda} container spacing={2}>
+            <Grid item xs={12}>
+              <Card>
+                <CardContent>
                   <Stack
-                    direction="row"
-                    justifyContent="flex-end"
+                    direction={{ xs: "column", md: "row" }} 
+                    justifyContent="space-between"
+                    spacing={2}
                   >
-                    <CardActions>
-                      <Button
-                        type="submit"
-                        color="error"
-                        onClick={ () => deleteAgenda(agenda.id_agenda) }>
-                        <b>ENCERRAR</b>
-                      </Button>
-                    </CardActions>
+                    <Typography variant="h6" component="div">
+                      <b>{agenda.nome_cliente}</b>
+                    </Typography>
+                    <Typography variant="h6" component="div">
+                      <b>Causa: {agenda.area_atuacao}</b>
+                    </Typography>
                   </Stack>
-                </Card>
-              </Grid>
+
+                  <Typography gutterBottom variant="h7" component="div">
+                    <b>{formatDate(agenda.data_agendamento)}</b>
+                  </Typography>
+
+                  <Typography gutterBottom variant="h8" component="div">
+                    {formatDia(agenda.data_agendamento)}
+                  </Typography>
+
+                  <Typography gutterBottom variant="h8" component="div">
+                    {formatTime(new Date(agenda.horario))}h
+                  </Typography>
+
+                  <Typography gutterBottom variant="h7" component="div">
+                    Contato em {agenda.contato_cliente}
+                  </Typography>
+                </CardContent>
+
+                <Stack
+                  direction="row"
+                  justifyContent="flex-end"
+                >
+                  <CardActions>
+                    <Button
+                      type="submit"
+                      color="error"
+                      onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                      <b>ENCERRAR</b>
+                    </Button>
+                  </CardActions>
+                </Stack>
+              </Card>
             </Grid>
-          ))}
-        </div>
+          </Grid>
+        ))}
 
         {/* Agendamento manual */}
         <Dialog open={isOpenDialogAgendamentoManual} onClose={ handleCloseDialogAgendamentoManual }>
@@ -398,7 +375,7 @@ export default function MinhaAgenda() {
             </DialogContentText>
 
             {/* Data do agendamento */}
-            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+            <FormControl fullWidth variant="outlined" margin="normal">
               <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
                 <DatePicker
                   label="Data do agendamento"
@@ -410,7 +387,7 @@ export default function MinhaAgenda() {
             </FormControl>
 
             {/* Área de atuação */}
-            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+            <FormControl fullWidth variant="outlined" margin="normal">
               <InputLabel id="Area">Área de atuação</InputLabel>
               <Select
                 required
@@ -469,7 +446,7 @@ export default function MinhaAgenda() {
                   4° Passo - Adicione uma observação
                 </DialogContentText>
 
-                <FormControl fullWidth className={classes.margin}>
+                <FormControl fullWidth>
                   <TextField
                     required
                     id="Nome"
@@ -500,7 +477,7 @@ export default function MinhaAgenda() {
           <DialogContent>
             <br />
 
-            <FormControl fullWidth className={classes.margin}>
+            <FormControl fullWidth>
               <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
                 <DatePicker
                   label="De:"
@@ -517,7 +494,7 @@ export default function MinhaAgenda() {
               </LocalizationProvider>
             </FormControl>
 
-            <FormControl fullWidth variant="outlined" margin="normal" className={classes.margin}>
+            <FormControl fullWidth variant="outlined" margin="normal">
               <InputLabel id="Area">Área de atuação</InputLabel>
               <Select
                 required
@@ -548,7 +525,6 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
       </Container>
-      <Footer />
     </>
   );
 }

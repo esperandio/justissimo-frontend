@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Header from "../Main/Header";
-import Footer from "../Main/Footer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { TitlePage } from "../../components/Utils/title";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
@@ -118,7 +116,6 @@ export default function EditarPerfil() {
 
   return (
     <>
-      <CssBaseline />
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}
@@ -282,7 +279,6 @@ export default function EditarPerfil() {
           </Grid>
         </form>
       </Container>
-      <Footer />
     </>
   )
 }

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "../../Main/Header";
-import Footer from "../../Main/Footer";
 import { makeStyles } from "@material-ui/core/styles";
 import { TitlePage } from "../../../components/Utils/title";
 import Grid from "@material-ui/core/Grid";
@@ -98,7 +96,6 @@ export default function ListarAdvogado() {
 
   return (
     <>
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Busque advogados" />
@@ -239,7 +236,6 @@ export default function ListarAdvogado() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   );
 }

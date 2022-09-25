@@ -9,8 +9,6 @@ import ButtonOutlined from "../../../../components/Utils/buttom";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Header from "../../../Main/Header";
-import Footer from "../../../Main/Footer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { ValidarAutenticacaoCliente } from "../../../../components/ValidarAutenticacao";
 
 // Style
@@ -113,7 +111,6 @@ export default function AvaliacaoAdvogado() {
   return (
     <>
       <ValidarAutenticacaoCliente />
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Avaliar Advogado" />
@@ -181,7 +178,6 @@ export default function AvaliacaoAdvogado() {
           </div>
         </Container>
       </Container>
-      <Footer />
     </>
   );
 }

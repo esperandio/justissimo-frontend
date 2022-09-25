@@ -5,8 +5,6 @@ import { TitlePage } from "../../../../components/Utils/title";
 import ButtonOutlined from "../../../../components/Utils/buttom";
 import api from "../../../../services/api";
 import Header from "../../../Main/Header";
-import Footer from "../../../Main/Footer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { ValidarAutenticacaoAdvogado } from "../../../../components/ValidarAutenticacao"
 
 export default function ConfiguracaoAgenda() {
@@ -133,7 +131,6 @@ export default function ConfiguracaoAgenda() {
   return (
     <>
       <ValidarAutenticacaoAdvogado />
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Configuração da Agenda" />
@@ -151,14 +148,14 @@ export default function ConfiguracaoAgenda() {
             options={dias}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             onChange={ (_, v) => { setDiaInicio(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="De:" />}
+            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="De:" />}
           />
 
           <Autocomplete
             options={dias}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             onChange={ (_, v) => { setDiaFim(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Até:" />}
+            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Até:" />}
           />
           <br/>
           <span> <b>
@@ -205,7 +202,6 @@ export default function ConfiguracaoAgenda() {
           />
         </Container>
       </Container>
-      <Footer />
     </>
   );
 }
