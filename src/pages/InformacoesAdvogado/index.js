@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { TitlePage }  from "../../components/Utils/title";
 import { Rating } from "@mui/material";
@@ -207,7 +206,6 @@ export default function InformacoesAdvogado() {
 
   return (
     <>
-      <CssBaseline />
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}

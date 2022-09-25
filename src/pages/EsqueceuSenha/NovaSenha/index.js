@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import api from "../../../services/api";
 import { Redirect } from "react-router-dom";
@@ -110,7 +109,6 @@ export default function RedefinirSenha_NovaSenha() {
   return (
   // Form
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <TitleJustissimo/>
       <TitlePage internal="Redefinir Senha" />
       <div className={classes.paper}>

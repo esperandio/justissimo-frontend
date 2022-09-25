@@ -16,7 +16,7 @@ import {
   FormControlLabel,
   Radio
 } from "@mui/material";
-import { InputLabel, Select, MenuItem, CssBaseline, Container, FormControl, Grid } from "@material-ui/core/";
+import { InputLabel, Select, MenuItem, Container, FormControl, Grid } from "@material-ui/core/";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
@@ -261,7 +261,6 @@ export default function MinhaAgenda() {
   return (
     <>
       <ValidarAutenticacaoAdvogado />
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Minha Agenda" />

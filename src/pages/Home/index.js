@@ -1,5 +1,4 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
 import Container from "@mui/material/Container";
@@ -11,7 +10,6 @@ export default function Home() {
   return (
     <>
       <WatsonComponent />
-      <CssBaseline />
       <Header />
       <Container>
         <Stack

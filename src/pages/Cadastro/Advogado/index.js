@@ -24,7 +24,6 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Box from "@mui/material/Box";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 const steps = ["Dados pessoais", "Dados da OAB", "Dados de acesso"];
 
@@ -140,7 +139,6 @@ export default function CadastroAdvogado() {
 
   return (
     <>
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Cadastro de advogado" />

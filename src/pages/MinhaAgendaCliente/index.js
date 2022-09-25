@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
-import { CssBaseline, Container, Grid, FormControl } from "@material-ui/core/";
+import { Container, Grid, FormControl } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
 import { 
   Button, 
@@ -123,7 +123,6 @@ export default function MinhaAgenda() {
   return (
     <>
       <ValidarAutenticacaoCliente />
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Minha Agenda" />

@@ -6,7 +6,6 @@ import ButtonOutlined from "../../../../components/Utils/buttom";
 import api from "../../../../services/api";
 import Header from "../../../Main/Header";
 import Footer from "../../../Main/Footer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { ValidarAutenticacaoAdvogado } from "../../../../components/ValidarAutenticacao"
 
 export default function ConfiguracaoAgenda() {
@@ -133,7 +132,6 @@ export default function ConfiguracaoAgenda() {
   return (
     <>
       <ValidarAutenticacaoAdvogado />
-      <CssBaseline />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Configuração da Agenda" />
