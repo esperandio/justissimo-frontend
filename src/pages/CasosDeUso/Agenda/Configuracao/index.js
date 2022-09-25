@@ -149,14 +149,14 @@ export default function ConfiguracaoAgenda() {
             options={dias}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             onChange={ (_, v) => { setDiaInicio(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="De:" />}
+            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="De:" />}
           />
 
           <Autocomplete
             options={dias}
             isOptionEqualToValue={(option, value) => option.value === value.value}
             onChange={ (_, v) => { setDiaFim(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" multiline label="Até:" />}
+            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Até:" />}
           />
           <br/>
           <span> <b>
