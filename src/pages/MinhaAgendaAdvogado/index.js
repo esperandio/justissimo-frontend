@@ -255,7 +255,7 @@ export default function MinhaAgenda() {
   }
 
   if (redirectConfigAgenda) {
-    return <Redirect to='configuracao/agenda' />;
+    return <Redirect to='/configuracao/agenda' />;
   }
 
   return (
