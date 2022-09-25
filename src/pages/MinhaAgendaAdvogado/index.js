@@ -25,7 +25,6 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
-import Footer from "../Main/Footer";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
 import { LawyerService } from "../../services";
@@ -526,7 +525,6 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
       </Container>
-      <Footer />
     </>
   );
 }

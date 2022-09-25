@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Header from "../../Main/Header";
-import Footer from "../../Main/Footer";
 import { TitlePage } from "../../../components/Utils/title";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
@@ -428,7 +427,6 @@ export default function CadastroAdvogado() {
           </Box>
         </form>
       </Container>
-      <Footer />
     </>
   );
 }

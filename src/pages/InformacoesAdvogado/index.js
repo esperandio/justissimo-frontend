@@ -30,7 +30,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useHistory } from "react-router-dom";
-import Footer from "../Main/Footer";
 import Header from "../Main/Header";
 import Stack from "@mui/material/Stack";
 import Backdrop from "@mui/material/Backdrop";
@@ -420,7 +419,6 @@ export default function InformacoesAdvogado() {
           </DialogActions>
         </Dialog>
       </Container>
-      <Footer />
     </>
   );
 }

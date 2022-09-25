@@ -9,7 +9,6 @@ import ButtonOutlined from "../../../../components/Utils/buttom";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Header from "../../../Main/Header";
-import Footer from "../../../Main/Footer";
 import { ValidarAutenticacaoCliente } from "../../../../components/ValidarAutenticacao";
 
 // Style
@@ -179,7 +178,6 @@ export default function AvaliacaoAdvogado() {
           </div>
         </Container>
       </Container>
-      <Footer />
     </>
   );
 }
