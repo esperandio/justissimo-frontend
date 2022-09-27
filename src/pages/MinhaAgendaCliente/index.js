@@ -19,6 +19,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import { ClientService } from "../../services";
 import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
 
@@ -49,9 +50,9 @@ export default function MinhaAgenda() {
     date = new Date(date);
 
     return `${date.getUTCDate()}`.padStart(2, 0)
-      + "-"
+      + "/"
       + `${date.getUTCMonth() + 1}`.padStart(2, 0)
-      + "-"
+      + "/"
       + `${date.getUTCFullYear()}`;
   }
 
@@ -136,54 +137,59 @@ export default function MinhaAgenda() {
 
         <br />
         
-        {agendas.map((agenda) => (
-          <Grid key={agenda.id_agenda} container spacing={2}>
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm container spacing={1}>
+            {agendas.map((agenda) => (
+              <Grid key={agenda.id_agenda} item xs={12} sm={4}>
+                <Card>
+                  <CardContent>
+                    <Stack direction="row" alignItems="center" gap={1}>
+                      <EventAvailableIcon />
+                      {formatDate(agenda.data_agendamento)}
+                    </Stack>
+
+                    <br />
+
+                    <Stack
+                      direction={{ xs: "column", md: "row" }} 
+                      justifyContent="space-between"
+                      spacing={2}
+                    >
+                      <Typography variant="h7">
+                        <b>{agenda.advogado.nome}</b>
+                      </Typography>
+                      <Typography variant="h7">
+                        <b>Causa: {agenda.area_atuacao}</b>
+                      </Typography>
+                    </Stack>
+
+                    <Typography gutterBottom variant="h8" component="div">
+                      {formatDia(agenda.data_agendamento)}
+                    </Typography>
+
+                    <Typography gutterBottom variant="h8" component="div">
+                      {formatTime(new Date(agenda.horario))}h
+                    </Typography>
+                  </CardContent>
+
                   <Stack
-                    direction={{ xs: "column", md: "row" }} 
-                    justifyContent="space-between"
-                    spacing={2}
+                    direction="row"
+                    justifyContent="flex-end"
                   >
-                    <Typography variant="h6" component="div">
-                      <b>{agenda.advogado.nome}</b>
-                    </Typography>
-                    <Typography variant="h6" component="div">
-                      <b>Causa: {agenda.area_atuacao}</b>
-                    </Typography>
+                    <CardActions>
+                      <Button
+                        type="submit"
+                        color="primary"
+                        onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }>
+                        <b>Visualizar perfil</b>
+                      </Button>
+                    </CardActions>
                   </Stack>
-
-                  <Typography gutterBottom variant="h7" component="div">
-                    <b>{formatDate(agenda.data_agendamento)}</b>
-                  </Typography>
-
-                  <Typography gutterBottom variant="h8" component="div">
-                    {formatDia(agenda.data_agendamento)}
-                  </Typography>
-
-                  <Typography gutterBottom variant="h8" component="div">
-                    {formatTime(new Date(agenda.horario))}h
-                  </Typography>
-                </CardContent>
-
-                <Stack
-                  direction="row"
-                  justifyContent="flex-end"
-                >
-                  <CardActions>
-                    <Button
-                      type="submit"
-                      color="primary"
-                      onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }>
-                      <b>Visualizar perfil</b>
-                    </Button>
-                  </CardActions>
-                </Stack>
-              </Card>
-            </Grid>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
+        </Grid>
 
         {/* Filtros de agenda */}
         <Dialog open={isOpenDialogFiltrarAgendamentos} onClose={ handleCloseDialogFiltrarAgendamentos }>
