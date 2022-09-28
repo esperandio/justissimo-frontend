@@ -136,6 +136,16 @@ export default function MinhaAgenda() {
         </Stack>
 
         <br />
+
+        <Grid container spacing={1} justifyContent="center">
+          {agendas == "" && (
+            <>
+              <Typography style={{ fontWeight: 600 }}>
+                Nenhum agendamento encontrado
+              </Typography>
+            </>
+          )}
+        </Grid>
         
         <Grid container spacing={2}>
           <Grid item xs={12} sm container spacing={1}>
