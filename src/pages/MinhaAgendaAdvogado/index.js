@@ -23,6 +23,7 @@ import { ptBR } from "date-fns/locale";
 import ConfigIcon from "@mui/icons-material/Settings";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
 import { TitlePage } from "../../components/Utils/title";
@@ -281,58 +282,73 @@ export default function MinhaAgenda() {
 
         <br />
 
-        {agendas.map((agenda) => (
-          <Grid key={agenda.id_agenda} container spacing={2}>
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
+        <Grid container spacing={1} justifyContent="center">
+          {agendas == "" && (
+            <>
+              <Typography style={{ fontWeight: 600 }}>
+                Nenhum agendamento encontrado
+              </Typography>
+            </>
+          )}
+        </Grid>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm container spacing={1}>
+            {agendas.map((agenda) => (
+              <Grid key={agenda.id_agenda} item xs={12} sm={4}>
+                <Card>
+                  <CardContent>
+                    <Stack direction="row" alignItems="center" gap={1}>
+                      <EventAvailableIcon />
+                      {formatDate(agenda.data_agendamento)}
+                    </Stack>
+
+                    <br />
+
+                    <Stack
+                      direction={{ xs: "column", md: "row" }} 
+                      justifyContent="space-between"
+                      spacing={2}
+                    >
+                      <Typography variant="h7" component="div">
+                        <b>{agenda.nome_cliente}</b>
+                      </Typography>
+                      <Typography variant="h7" component="div">
+                        <b>Causa: {agenda.area_atuacao}</b>
+                      </Typography>
+                    </Stack>
+
+                    <Typography gutterBottom variant="h8" component="div">
+                      {formatDia(agenda.data_agendamento)}
+                    </Typography>
+
+                    <Typography gutterBottom variant="h8" component="div">
+                      {formatTime(new Date(agenda.horario))}h
+                    </Typography>
+
+                    <Typography gutterBottom variant="h7" component="div">
+                      Contato em {agenda.contato_cliente}
+                    </Typography>
+                  </CardContent>
+
                   <Stack
-                    direction={{ xs: "column", md: "row" }} 
-                    justifyContent="space-between"
-                    spacing={2}
+                    direction="row"
+                    justifyContent="flex-end"
                   >
-                    <Typography variant="h6" component="div">
-                      <b>{agenda.nome_cliente}</b>
-                    </Typography>
-                    <Typography variant="h6" component="div">
-                      <b>Causa: {agenda.area_atuacao}</b>
-                    </Typography>
+                    <CardActions>
+                      <Button
+                        type="submit"
+                        color="error"
+                        onClick={ () => deleteAgenda(agenda.id_agenda) }>
+                        <b>ENCERRAR</b>
+                      </Button>
+                    </CardActions>
                   </Stack>
-
-                  <Typography gutterBottom variant="h7" component="div">
-                    <b>{formatDate(agenda.data_agendamento)}</b>
-                  </Typography>
-
-                  <Typography gutterBottom variant="h8" component="div">
-                    {formatDia(agenda.data_agendamento)}
-                  </Typography>
-
-                  <Typography gutterBottom variant="h8" component="div">
-                    {formatTime(new Date(agenda.horario))}h
-                  </Typography>
-
-                  <Typography gutterBottom variant="h7" component="div">
-                    Contato em {agenda.contato_cliente}
-                  </Typography>
-                </CardContent>
-
-                <Stack
-                  direction="row"
-                  justifyContent="flex-end"
-                >
-                  <CardActions>
-                    <Button
-                      type="submit"
-                      color="error"
-                      onClick={ () => deleteAgenda(agenda.id_agenda) }>
-                      <b>ENCERRAR</b>
-                    </Button>
-                  </CardActions>
-                </Stack>
-              </Card>
-            </Grid>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
+        </Grid>
 
         {/* Agendamento manual */}
         <Dialog open={isOpenDialogAgendamentoManual} onClose={ handleCloseDialogAgendamentoManual }>
