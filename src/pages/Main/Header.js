@@ -37,7 +37,7 @@ const Header = () => {
     let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado"];
 
     if (sessionStorage.getItem("tipo_usuario") === "Advogado") {
-      pages = ["Home", "Minha Agenda"];
+      pages = ["Home", "Minha Agenda", "Buscar Divulgações"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
       pages = ["Home", "Minha Agenda", "Minhas Divulgações", "Pesquisar Advogado", "Cadastrar Divulgação"];
     }
@@ -73,6 +73,8 @@ const Header = () => {
       return "/advogado/listar";
     case "Minhas Divulgações":
       return "/cliente/minhas-divulgacoes";
+    case "Buscar Divulgações":
+      return "/advogado/buscar-divulgacoes";
     case "Cadastrar Divulgação":
       return "/cliente/divulgacao/cad";
     case "Cadastrar Cliente":
