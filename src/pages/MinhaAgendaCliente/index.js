@@ -74,7 +74,7 @@ export default function MinhaAgenda() {
   }
 
   async function handleClickBuscarAgenda() {
-    const fk_advogado = parseInt(sessionStorage.getItem("id_cliente"));
+    const id_cliente = parseInt(sessionStorage.getItem("id_cliente"));
 
     const dataAgendamentoDeFormatada = `${dataAgendamentoDe.getUTCFullYear()}` 
       + "-"
@@ -90,7 +90,7 @@ export default function MinhaAgenda() {
 
     try {
       const resultado = await ClientService.getAllSchedulings(
-        fk_advogado, 
+        id_cliente, 
         dataAgendamentoDeFormatada, 
         dataAgendamentoAteFormatada
       );

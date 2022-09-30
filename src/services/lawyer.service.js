@@ -16,6 +16,16 @@ class LawyerService {
       observacao
     })
   }
+
+  getAllDivulgations(data_inicial = null, data_final = null) {
+    let url = "divulgations";
+
+    if (data_inicial != null && data_final != null) {
+      url = `${url}/?data_inicial=${data_inicial}&data_final=${data_final}`
+    }
+
+    return api.get(url);
+  }
 }
 
 export default new LawyerService();
