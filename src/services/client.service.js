@@ -10,6 +10,10 @@ class ClientService {
 
     return api.get(url);
   }
+
+  getAllDivulgations(client_id) {
+    return api.get(`clients/divulgations/${client_id}`);
+  }
 }
 
 export default new ClientService();
