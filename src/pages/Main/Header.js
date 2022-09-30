@@ -74,7 +74,7 @@ const Header = () => {
     case "Minhas Divulgações":
       return "/cliente/minhas-divulgacoes";
     case "Cadastrar Divulgação":
-      return "/divulgacao/cad";
+      return "/cliente/divulgacao/cad";
     case "Cadastrar Cliente":
       return "/cliente/cad";
     case "Cadastrar Advogado":
