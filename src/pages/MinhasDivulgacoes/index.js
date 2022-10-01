@@ -114,7 +114,7 @@ export default function MinhasDivulgacoes() {
       <ValidarAutenticacaoCliente />
       <Header />
       <Container maxWidth="lg">
-        <TitlePage internal="Minhas Divulgações" />
+        <TitlePage internal="Minhas divulgações" />
 
         <Stack
           direction={{ xs: "column", sm: "row" }} 
