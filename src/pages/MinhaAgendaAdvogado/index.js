@@ -263,7 +263,7 @@ export default function MinhaAgenda() {
       <ValidarAutenticacaoAdvogado />
       <Header />
       <Container maxWidth="lg">
-        <TitlePage internal="Minha Agenda" />
+        <TitlePage internal="Meus agendamentos" />
 
         <Stack
           direction={{ xs: "column", sm: "row" }} 

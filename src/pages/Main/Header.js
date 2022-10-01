@@ -37,9 +37,9 @@ const Header = () => {
     let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado"];
 
     if (sessionStorage.getItem("tipo_usuario") === "Advogado") {
-      pages = ["Home", "Minha Agenda", "Buscar Divulgações"];
+      pages = ["Home", "Meus agendamentos", "Buscar Divulgações"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
-      pages = ["Home", "Minha Agenda", "Minhas Divulgações", "Pesquisar Advogado", "Cadastrar Divulgação"];
+      pages = ["Home", "Meus agendamentos", "Minhas Divulgações", "Pesquisar Advogado", "Cadastrar Divulgação"];
     }
 
     setPages(pages);
@@ -64,7 +64,7 @@ const Header = () => {
     switch (page) {
     case "Home":
       return "/home";
-    case "Minha Agenda":
+    case "Meus agendamentos":
       if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
         return "/cliente/minha-agenda";
       }

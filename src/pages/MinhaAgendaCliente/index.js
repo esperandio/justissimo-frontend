@@ -125,7 +125,7 @@ export default function MinhaAgenda() {
       <ValidarAutenticacaoCliente />
       <Header />
       <Container maxWidth="lg">
-        <TitlePage internal="Minha Agenda" />
+        <TitlePage internal="Meus agendamentos" />
         <Stack
           direction={{ xs: "column", sm: "row" }} 
           spacing={2}
