@@ -157,7 +157,7 @@ export default function MinhasDivulgacoes() {
                 <Link href="/cliente/minhas-divulgacoes" variant="h6">
                   { divulgacao.titulo }
                 </Link>
-                <Typography>
+                <Typography textAlign={"justify"}>
                   { divulgacao.descricao }
                 </Typography>
                 <br />
