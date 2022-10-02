@@ -36,8 +36,8 @@ function Routes() {
           <Route path="/cliente/cad" component={CadCliente}/>
           <Route path="/cliente/minha-agenda" component={MinhaAgendaCliente}/>
           <Route path="/cliente/minhas-divulgacoes" component={MinhasDivulgacoes}/>
-          <Route path="/cliente/divulgacao/:id" component={InformacoesDivulgacao}/>
           <Route path="/cliente/divulgacao/cad" component={CadDivulgacao}/>
+          <Route path="/cliente/divulgacao/:id" component={InformacoesDivulgacao}/>
           <Route path="/login" component={Login}/>
           <Route path="/home" component={Home}/>
           <Route path="/redefinirsenha/email" component={RedefinirSenha_Email}/>
