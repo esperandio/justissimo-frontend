@@ -12,13 +12,17 @@ class ClientService {
   }
 
   getAllDivulgations(client_id, data_inicial = null, data_final = null) {
-    let url = `clients/divulgations/${client_id}`;
+    let url = `clients/${client_id}/divulgations`;
 
     if (data_inicial != null && data_final != null) {
       url = `${url}/?data_inicial=${data_inicial}&data_final=${data_final}`
     }
 
     return api.get(url);
+  }
+
+  getDivulgationInfo(divulgation_id) {
+    return api.get(`clients/divulgation/${divulgation_id}`);
   }
 }
 

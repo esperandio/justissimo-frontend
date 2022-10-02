@@ -19,6 +19,8 @@ import ConfiguracaoAgenda from "./pages/CasosDeUso/Agenda/Configuracao";
 import EditarPerfil from "./pages/EditarPerfil";
 import MinhasDivulgacoes from "./pages/MinhasDivulgacoes";
 import BuscarDivulgacoes from "./pages/BuscarDivulgacoes";
+import InformacoesDivulgacao from "./pages/InformacoesDivulgacao";
+import VisualizarDivulgacao from "./pages/VisualizarDivulgacao";
 
 function Routes() {
   return (
@@ -31,11 +33,13 @@ function Routes() {
           <Route path="/advogado/listar" component={ListarAdvogado}/>
           <Route path="/advogado/minha-agenda" component={MinhaAgendaAdvogado}/>
           <Route path="/advogado/buscar-divulgacoes" component={BuscarDivulgacoes}/>
+          <Route path="/advogado/divulgacao/:id" component={VisualizarDivulgacao}/>
           <Route path="/advogado/:id" component={InformacoesAdvogado}/>
           <Route path="/cliente/cad" component={CadCliente}/>
           <Route path="/cliente/minha-agenda" component={MinhaAgendaCliente}/>
           <Route path="/cliente/minhas-divulgacoes" component={MinhasDivulgacoes}/>
           <Route path="/cliente/divulgacao/cad" component={CadDivulgacao}/>
+          <Route path="/cliente/divulgacao/:id" component={InformacoesDivulgacao}/>
           <Route path="/login" component={Login}/>
           <Route path="/home" component={Home}/>
           <Route path="/redefinirsenha/email" component={RedefinirSenha_Email}/>
