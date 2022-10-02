@@ -147,7 +147,7 @@ export default function BuscarDivulgacoes() {
                 />
                 <br />
                 <br />
-                <Link href="/advogado/buscar-divulgacoes" variant="h6">
+                <Link href={`/advogado/divulgacao/${divulgacao.id_divulgacao}`} variant="h6">
                   { divulgacao.titulo }
                 </Link>
                 <Typography>
