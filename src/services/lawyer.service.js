@@ -30,6 +30,12 @@ class LawyerService {
   getDivulgationInfo(lawyer_id, divulgation_id) {
     return api.get(`lawyers/${lawyer_id}/divulgation/${divulgation_id}`);
   }
+
+  sendMessageDivulgation(lawyer_id, divulgation_id, mensagem) {
+    return api.post(`lawyers/${lawyer_id}/divulgation/${divulgation_id}/message`, {
+      mensagem
+    });
+  }
 }
 
 export default new LawyerService();
