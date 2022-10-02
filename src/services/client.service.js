@@ -12,7 +12,7 @@ class ClientService {
   }
 
   getAllDivulgations(client_id, data_inicial = null, data_final = null) {
-    let url = `clients/${client_id}/divulgations/`;
+    let url = `clients/${client_id}/divulgations`;
 
     if (data_inicial != null && data_final != null) {
       url = `${url}/?data_inicial=${data_inicial}&data_final=${data_final}`
