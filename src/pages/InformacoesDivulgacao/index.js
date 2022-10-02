@@ -102,6 +102,7 @@ export default function InformacoesDivulgacao() {
               <Grid item xs={12} sm container spacing={1}>
                 {mensagens.map((mensagem) => (
                   <Grid key={mensagem.id_mensagem_divulgacao} item xs={12}>
+                    <br />
                     <Chip 
                       variant="outlined" 
                       color="default" 
