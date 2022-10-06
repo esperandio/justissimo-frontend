@@ -597,7 +597,7 @@ export default function MinhaAgenda() {
                 required
                 id="Justificativa"
                 label="Justificativa"
-                placeholder="Justificativa"
+                placeholder="A justificativa deve ter pelo menos 10 caracteres"
                 multiline
                 minRows={4}
                 variant="outlined"
@@ -613,7 +613,7 @@ export default function MinhaAgenda() {
             <Button onClick={ handleClickFecharDialogEncerrarAgendamento }>Cancelar</Button>
             <Button 
               onClick={ handleClickConfirmarDialogEncerrarAgendamento } 
-              disabled={motivoEncerramento === "" || justificativa === ""}
+              disabled={motivoEncerramento === "" || justificativa === "" || justificativa.length < 10}
             >
               Confirmar
             </Button>
