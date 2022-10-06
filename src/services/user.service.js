@@ -29,6 +29,14 @@ class UserService {
 
     return api.putForm(`user/${user_id}`, formData, config);
   }
+
+  closeScheduling(user_id, scheduling_id, justificativa, motivo) {
+    return api.put(`scheduling/${scheduling_id}`, {
+      id_usuario: user_id,
+      justificativa,
+      motivo
+    })
+  }
 }
 
 export default new UserService();
