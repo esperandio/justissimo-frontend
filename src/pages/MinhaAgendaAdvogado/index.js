@@ -249,12 +249,12 @@ export default function MinhaAgenda() {
 
       fecharDialogEncerrarAgendamento();
     } catch (error) {
-      let retorno = "";
+      let retorno = "Erro ao encerrar agendamento!";
 
       if (error.response.status === 400) {
-        retorno = "Erro ao enviar mensagem! \n\n" + error.response.data.message;
+        retorno += "\n\n" + error.response.data.message;
       } else {
-        retorno = "Erro ao enviar mensagem! \n" + error.message;
+        retorno += "\n" + error.message;
       }
 
       alert(retorno);
