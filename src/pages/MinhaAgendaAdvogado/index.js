@@ -149,7 +149,7 @@ export default function MinhaAgenda() {
     }
   }
 
-  function handleClickFecharDialogAgendamentoManual() {
+  function fecharDialogAgendamentoManual() {
     setOpenDialogAgendamentoManual(false);
 
     setNome("");
@@ -160,6 +160,10 @@ export default function MinhaAgenda() {
     setObservacao("");
 
     setExibirHorariosDisponiveis(false);
+  }
+
+  function handleClickFecharDialogAgendamentoManual() {
+    fecharDialogAgendamentoManual();
   }
 
   async function handleClickConfirmarDialogAgendamentoManual() {
