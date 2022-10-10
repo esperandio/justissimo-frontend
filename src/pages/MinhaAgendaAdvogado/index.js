@@ -323,6 +323,7 @@ export default function MinhaAgenda() {
                     <CardActions>
                       <EncerrarAgendamento 
                         id_agenda={agenda.id_agenda}
+                        encerrado={agenda.encerrado}
                         onSubmit={ (id_agenda) => handleEncerramento(id_agenda) }
                       />
                     </CardActions>
