@@ -82,7 +82,7 @@ export default function MinhaAgenda() {
     setRedirectConfigAgenda({redirectConfigAgenda: true})
   }
 
-  async function handleClickBuscarAgenda() {
+  async function buscarAgenda() {
     const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
 
     const dataAgendamentoDeFormatada = `${dataAgendamentoDe.getUTCFullYear()}` 
@@ -111,6 +111,10 @@ export default function MinhaAgenda() {
 
       alert(mensagem_retorno_api);
     }
+  }
+
+  async function handleClickBuscarAgenda() {
+    buscarAgenda();
   }
 
   async function handleClickBuscarHorarios() {
