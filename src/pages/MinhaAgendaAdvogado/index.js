@@ -243,7 +243,7 @@ export default function MinhaAgenda() {
     buscarAreas();
   }, []);
 
-  function handleEncerramento(id_agenda) {
+  function handleOnSubmitEncerramento(id_agenda) {
     const agendaDepois = agendas.filter((x) => x.id_agenda != id_agenda);
     setAgendas(agendaDepois);
   }
@@ -333,7 +333,7 @@ export default function MinhaAgenda() {
                       <EncerrarAgendamento 
                         id_agenda={agenda.id_agenda}
                         encerrado={agenda.encerrado}
-                        onSubmit={ (id_agenda) => handleEncerramento(id_agenda) }
+                        onSubmit={ (id_agenda) => handleOnSubmitEncerramento(id_agenda) }
                       />
                     </CardActions>
                   </Stack>
