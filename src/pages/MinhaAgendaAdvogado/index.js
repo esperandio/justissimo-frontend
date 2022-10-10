@@ -188,7 +188,8 @@ export default function MinhaAgenda() {
 
       alert("Agendamento confirmado!!!");
 
-      handleClickFecharDialogAgendamentoManual();
+      buscarAgenda();
+      fecharDialogAgendamentoManual();
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
