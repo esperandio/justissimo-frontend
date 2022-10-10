@@ -28,20 +28,19 @@ import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
-import { LawyerService, UserService } from "../../services";
+import { LawyerService } from "../../services";
 import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticacao";
+import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 
 export default function MinhaAgenda() {
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
-  const [isOpenDialogEncerrarAgendamento, setOpenDialogEncerrarAgendamento] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
-  const [motivosEncerramento] = useState(["Cancelamento", "Atendimento encerrado"]);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -51,10 +50,6 @@ export default function MinhaAgenda() {
   const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
   const [horarioAgendamento, setHorarioAgendamento] = useState("");
   const [observacao, setObservacao] = useState("");
-
-  const [motivoEncerramento, setMotivoEncerramento] = useState("");
-  const [justificativa, setJustificativa] = useState("");
-  const [idAgendamentoSelecionado, setIdAgendamentoSelecionado] = useState("");
 
   function formatDia(date) {
     const data = new Date(date);
@@ -221,46 +216,6 @@ export default function MinhaAgenda() {
     setOpenDialogFiltrarAgendamentos(false);
   }
 
-  function handleCloseDialogEncerrarAgendamento() {
-    fecharDialogEncerrarAgendamento();
-  }
-
-  function handleClickFecharDialogEncerrarAgendamento() {
-    fecharDialogEncerrarAgendamento();
-  }
-
-  function fecharDialogEncerrarAgendamento() {
-    setOpenDialogEncerrarAgendamento(false);
-    setMotivoEncerramento("");
-    setJustificativa("");
-    setIdAgendamentoSelecionado("");
-  }
-
-  async function handleClickConfirmarDialogEncerrarAgendamento() {
-    try {   
-      const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
-      const agendaDepois = agendas.filter((x) => x.id_agenda != idAgendamentoSelecionado);
-
-      await UserService.closeScheduling(id_usuario, idAgendamentoSelecionado, justificativa, motivoEncerramento);
-
-      setAgendas(agendaDepois);
-
-      alert("Agendamento encerrado com sucesso!");
-
-      fecharDialogEncerrarAgendamento();
-    } catch (error) {
-      let retorno = "Erro ao encerrar agendamento!";
-
-      if (error.response.status === 400) {
-        retorno += "\n\n" + error.response.data.message;
-      } else {
-        retorno += "\n" + error.message;
-      }
-
-      alert(retorno);
-    }
-  }
-
   useEffect(() => {
     async function buscarInformacoesAgendaAdvogado() {
       const id = parseInt(sessionStorage.getItem("id_advogado"));
@@ -279,9 +234,9 @@ export default function MinhaAgenda() {
     buscarAreas();
   }, []);
 
-  async function handleClickEncerrarAgendamento(id_agenda) {
-    setIdAgendamentoSelecionado(id_agenda);
-    setOpenDialogEncerrarAgendamento(true);
+  function handleEncerramento(id_agenda) {
+    const agendaDepois = agendas.filter((x) => x.id_agenda != id_agenda);
+    setAgendas(agendaDepois);
   }
 
   if (redirectConfigAgenda) {
@@ -366,12 +321,10 @@ export default function MinhaAgenda() {
                     justifyContent="flex-end"
                   >
                     <CardActions>
-                      <Button
-                        type="submit"
-                        color="error"
-                        onClick={ () => handleClickEncerrarAgendamento(agenda.id_agenda) }>
-                        <b>ENCERRAR</b>
-                      </Button>
+                      <EncerrarAgendamento 
+                        id_agenda={agenda.id_agenda}
+                        onSubmit={ (id_agenda) => handleEncerramento(id_agenda) }
+                      />
                     </CardActions>
                   </Stack>
                 </Card>
@@ -569,55 +522,6 @@ export default function MinhaAgenda() {
               Filtrar
             </Button>
           </DialogContent>
-        </Dialog>
-
-        {/* Encerramento de agendamento */}
-        <Dialog open={isOpenDialogEncerrarAgendamento} onClose={ handleCloseDialogEncerrarAgendamento }>
-          <DialogTitle>Encerrar agendamento</DialogTitle>
-          <DialogContent>
-            {/* Motivo */}
-            <FormControl fullWidth variant="outlined" margin="normal">
-              <InputLabel id="Area">Motivo</InputLabel>
-              <Select
-                required
-                variant="outlined"
-                label="Motivo"
-                value={motivoEncerramento}
-                onChange={e => setMotivoEncerramento(e.target.value)}
-              >
-                {motivosEncerramento.map((motivo, index)=>{
-                  return <MenuItem key={index} value={motivo}>{motivo}</MenuItem>
-                })}
-              </Select>
-            </FormControl>
-
-            {/* Justificativa */}
-            <FormControl fullWidth>
-              <TextField
-                required
-                id="Justificativa"
-                label="Justificativa"
-                placeholder="A justificativa deve ter pelo menos 10 caracteres"
-                multiline
-                minRows={4}
-                variant="outlined"
-                value={justificativa}
-                inputProps={{ maxLength: 200 }}
-                onChange={e => setJustificativa(e.target.value)}
-                margin="normal"
-              />
-            </FormControl>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={ handleClickFecharDialogEncerrarAgendamento }>Cancelar</Button>
-            <Button 
-              onClick={ handleClickConfirmarDialogEncerrarAgendamento } 
-              disabled={motivoEncerramento === "" || justificativa === "" || justificativa.length < 10}
-            >
-              Confirmar
-            </Button>
-          </DialogActions>
         </Dialog>
       </Container>
     </>
