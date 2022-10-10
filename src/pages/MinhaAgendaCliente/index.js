@@ -22,6 +22,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import { ClientService } from "../../services";
 import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
+import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 
 export default function MinhaAgenda() {
   const history = useHistory();
@@ -120,6 +121,11 @@ export default function MinhaAgenda() {
     setDataAgendamentoAte(newValue);
   }
 
+  function handleEncerramento(id_agenda) {
+    const agendaDepois = agendas.filter((x) => x.id_agenda != id_agenda);
+    setAgendas(agendaDepois);
+  }
+
   return (
     <>
       <ValidarAutenticacaoCliente />
@@ -190,9 +196,15 @@ export default function MinhaAgenda() {
                       <Button
                         type="submit"
                         color="primary"
-                        onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }>
+                        onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }
+                      >
                         <b>Visualizar perfil</b>
                       </Button>
+
+                      <EncerrarAgendamento 
+                        id_agenda={agenda.id_agenda} 
+                        onSubmit={ (id_agenda) => handleEncerramento(id_agenda) }
+                      />
                     </CardActions>
                   </Stack>
                 </Card>
