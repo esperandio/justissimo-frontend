@@ -20,6 +20,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { ClientService } from "../../services";
 import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
 import EncerrarAgendamento from "../../components/EncerrarAgendamento";
@@ -126,6 +127,14 @@ export default function MinhaAgenda() {
     setAgendas(agendaDepois);
   }
 
+  async function handleClickLimparFiltroAgendamento() {
+    const id_cliente = parseInt(sessionStorage.getItem("id_cliente"));
+
+    const resultado = await ClientService.getAllSchedulings(id_cliente);
+
+    setAgendas(resultado.data);
+  }
+
   return (
     <>
       <ValidarAutenticacaoCliente />
@@ -138,6 +147,10 @@ export default function MinhaAgenda() {
         >
           <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
             Filtro
+          </Button>
+
+          <Button variant="contained" startIcon={<FilterAltOffIcon />} onClick={ handleClickLimparFiltroAgendamento }>
+            Limpar filtros
           </Button>
         </Stack>
 
