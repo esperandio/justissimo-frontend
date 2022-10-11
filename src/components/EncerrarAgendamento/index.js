@@ -3,7 +3,7 @@ import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } 
 import { InputLabel, Select, MenuItem, FormControl } from "@material-ui/core/";
 import { UserService } from "../../services";
 
-export default function EncerrarAgendamento({ id_agenda, encerrado, onSubmit }) {
+export default function EncerrarAgendamento({ id_agenda, encerrado, afterSubmit }) {
   const [motivosEncerramento] = useState(["Cancelamento", "Atendimento encerrado"]);
   const [isOpenDialogEncerrarAgendamento, setOpenDialogEncerrarAgendamento] = useState(false);
 
@@ -38,7 +38,7 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, onSubmit }) 
 
       fecharDialogEncerrarAgendamento();
 
-      onSubmit(id_agenda);
+      afterSubmit(id_agenda);
     } catch (error) {
       let retorno = "Erro ao encerrar agendamento!";
 
