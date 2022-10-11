@@ -52,6 +52,24 @@ export default function MinhaAgenda() {
   const [horarioAgendamento, setHorarioAgendamento] = useState("");
   const [observacao, setObservacao] = useState("");
 
+  useEffect(() => {
+    async function buscarInformacoesAgendaAdvogado() {
+      const id = parseInt(sessionStorage.getItem("id_advogado"));
+      const resultado = await api.get(`schedulings/lawyer/${id}`);
+      setAgendas(resultado.data)
+    }
+
+    async function buscarAreas() {
+      const id = parseInt(sessionStorage.getItem("id_advogado"));
+      const resultado = await LawyerService.getLawyer(id);
+
+      setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
+    }
+
+    buscarInformacoesAgendaAdvogado();
+    buscarAreas();
+  }, []);
+
   function formatDia(date) {
     const data = new Date(date);
     return dias[data.getUTCDay()];
@@ -225,24 +243,6 @@ export default function MinhaAgenda() {
   function handleCloseDialogFiltrarAgendamentos() {
     setOpenDialogFiltrarAgendamentos(false);
   }
-
-  useEffect(() => {
-    async function buscarInformacoesAgendaAdvogado() {
-      const id = parseInt(sessionStorage.getItem("id_advogado"));
-      const resultado = await api.get(`schedulings/lawyer/${id}`);
-      setAgendas(resultado.data)
-    }
-
-    async function buscarAreas() {
-      const id = parseInt(sessionStorage.getItem("id_advogado"));
-      const resultado = await LawyerService.getLawyer(id);
-
-      setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
-    }
-
-    buscarInformacoesAgendaAdvogado();
-    buscarAreas();
-  }, []);
 
   function handleOnSubmitEncerramento(id_agenda) {
     const agendaDepois = agendas.filter((x) => x.id_agenda != id_agenda);

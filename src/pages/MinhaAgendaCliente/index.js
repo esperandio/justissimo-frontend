@@ -129,9 +129,7 @@ export default function MinhaAgenda() {
 
   async function handleClickLimparFiltroAgendamento() {
     const id_cliente = parseInt(sessionStorage.getItem("id_cliente"));
-
     const resultado = await ClientService.getAllSchedulings(id_cliente);
-
     setAgendas(resultado.data);
   }
 
