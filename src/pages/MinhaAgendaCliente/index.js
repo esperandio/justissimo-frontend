@@ -33,6 +33,8 @@ export default function MinhaAgenda() {
 
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
+
+  const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
   
   useEffect(() => {
     async function buscarInformacoesAgendaAdvogado() {
@@ -45,8 +47,6 @@ export default function MinhaAgenda() {
 
     buscarInformacoesAgendaAdvogado();
   }, []);
-
-  const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
   function formatDate(date) {
     date = new Date(date);

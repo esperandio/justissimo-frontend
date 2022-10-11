@@ -89,18 +89,6 @@ export default function MinhaAgenda() {
       + `${date.getUTCFullYear()}`;
   }
 
-  function handleClickAgendamentoManual() {
-    setOpenDialogAgendamentoManual(true);
-  }
-
-  function handleClickFiltroAgendamento() {
-    setOpenDialogFiltrarAgendamentos(true);
-  }
-
-  function handleClickConfiguracaoAgenda() {
-    setRedirectConfigAgenda({redirectConfigAgenda: true})
-  }
-
   async function buscarAgenda() {
     const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
 
@@ -130,6 +118,31 @@ export default function MinhaAgenda() {
 
       alert(mensagem_retorno_api);
     }
+  }
+
+  function fecharDialogAgendamentoManual() {
+    setOpenDialogAgendamentoManual(false);
+
+    setNome("");
+    setEmail("");
+    setDataAgendamento(new Date());
+    setAreaAtuacao("");
+    setHorarioAgendamento("");
+    setObservacao("");
+
+    setExibirHorariosDisponiveis(false);
+  }
+
+  function handleClickAgendamentoManual() {
+    setOpenDialogAgendamentoManual(true);
+  }
+
+  function handleClickFiltroAgendamento() {
+    setOpenDialogFiltrarAgendamentos(true);
+  }
+
+  function handleClickConfiguracaoAgenda() {
+    setRedirectConfigAgenda({redirectConfigAgenda: true})
   }
 
   async function handleClickBuscarAgenda() {
@@ -166,19 +179,6 @@ export default function MinhaAgenda() {
 
       alert(mensagem_retorno_api);
     }
-  }
-
-  function fecharDialogAgendamentoManual() {
-    setOpenDialogAgendamentoManual(false);
-
-    setNome("");
-    setEmail("");
-    setDataAgendamento(new Date());
-    setAreaAtuacao("");
-    setHorarioAgendamento("");
-    setObservacao("");
-
-    setExibirHorariosDisponiveis(false);
   }
 
   function handleClickFecharDialogAgendamentoManual() {
