@@ -53,12 +53,6 @@ export default function MinhaAgenda() {
   const [observacao, setObservacao] = useState("");
 
   useEffect(() => {
-    async function buscarInformacoesAgendaAdvogado() {
-      const id = parseInt(sessionStorage.getItem("id_advogado"));
-      const resultado = await api.get(`schedulings/lawyer/${id}`);
-      setAgendas(resultado.data)
-    }
-
     async function buscarAreas() {
       const id = parseInt(sessionStorage.getItem("id_advogado"));
       const resultado = await LawyerService.getLawyer(id);
@@ -87,6 +81,12 @@ export default function MinhaAgenda() {
       + `${date.getUTCMonth() + 1}`.padStart(2, 0)
       + "-"
       + `${date.getUTCFullYear()}`;
+  }
+
+  async function buscarInformacoesAgendaAdvogado() {
+    const id = parseInt(sessionStorage.getItem("id_advogado"));
+    const resultado = await api.get(`schedulings/lawyer/${id}`);
+    setAgendas(resultado.data)
   }
 
   async function buscarAgenda() {
