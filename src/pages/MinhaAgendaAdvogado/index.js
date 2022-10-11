@@ -250,9 +250,7 @@ export default function MinhaAgenda() {
   }
 
   async function handleClickLimparFiltroAgendamento() {
-    const id = parseInt(sessionStorage.getItem("id_advogado"));
-    const resultado = await api.get(`schedulings/lawyer/${id}`);
-    setAgendas(resultado.data)
+    buscarInformacoesAgendaAdvogado();
   }
 
   if (redirectConfigAgenda) {
