@@ -496,22 +496,33 @@ export default function MinhaAgenda() {
           <DialogContent>
             <br />
 
-            <FormControl fullWidth>
-              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                <DatePicker
-                  label="De:"
-                  value={dataAgendamentoDe}
-                  onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <DatePicker
-                  label="Até:"
-                  value={dataAgendamentoAte}
-                  onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
-            </FormControl>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                    <DatePicker
+                      label="De:"
+                      value={dataAgendamentoDe}
+                      onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                    <DatePicker
+                      label="Até:"
+                      value={dataAgendamentoAte}
+                      onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
+            </Grid>
 
             <FormControl fullWidth variant="outlined" margin="normal">
               <InputLabel id="Area">Área de atuação</InputLabel>
