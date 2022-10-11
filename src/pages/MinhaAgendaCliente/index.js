@@ -61,9 +61,7 @@ export default function MinhaAgenda() {
 
   async function buscarInformacoesAgendaAdvogado() {
     const id = parseInt(sessionStorage.getItem("id_cliente"));
-
     const resultado = await ClientService.getAllSchedulings(id);
-
     setAgendas(resultado.data);
   }
 
@@ -128,9 +126,7 @@ export default function MinhaAgenda() {
   }
 
   async function handleClickLimparFiltroAgendamento() {
-    const id_cliente = parseInt(sessionStorage.getItem("id_cliente"));
-    const resultado = await ClientService.getAllSchedulings(id_cliente);
-    setAgendas(resultado.data);
+    buscarInformacoesAgendaAdvogado();
   }
 
   return (
