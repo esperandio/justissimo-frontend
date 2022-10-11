@@ -244,9 +244,8 @@ export default function MinhaAgenda() {
     setOpenDialogFiltrarAgendamentos(false);
   }
 
-  function handleOnSubmitEncerramento(id_agenda) {
-    const agendaDepois = agendas.filter((x) => x.id_agenda != id_agenda);
-    setAgendas(agendaDepois);
+  function handleOnSubmitEncerramento() {
+    buscarInformacoesAgendaAdvogado();
   }
 
   async function handleClickLimparFiltroAgendamento() {
@@ -341,7 +340,7 @@ export default function MinhaAgenda() {
                       <EncerrarAgendamento 
                         id_agenda={agenda.id_agenda}
                         encerrado={agenda.encerrado}
-                        onSubmit={ (id_agenda) => handleOnSubmitEncerramento(id_agenda) }
+                        onSubmit={ handleOnSubmitEncerramento }
                       />
                     </CardActions>
                   </Stack>
