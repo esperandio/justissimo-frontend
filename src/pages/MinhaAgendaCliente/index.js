@@ -37,14 +37,6 @@ export default function MinhaAgenda() {
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
   
   useEffect(() => {
-    async function buscarInformacoesAgendaAdvogado() {
-      const id = parseInt(sessionStorage.getItem("id_cliente"));
-
-      const resultado = await ClientService.getAllSchedulings(id);
-
-      setAgendas(resultado.data);
-    }
-
     buscarInformacoesAgendaAdvogado();
   }, []);
 
@@ -65,6 +57,14 @@ export default function MinhaAgenda() {
 
   function formatTime(date) {
     return `${date.getUTCHours()}`.padStart(2, "0") + ":" + `${date.getUTCMinutes()}`.padStart(2, "0")
+  }
+
+  async function buscarInformacoesAgendaAdvogado() {
+    const id = parseInt(sessionStorage.getItem("id_cliente"));
+
+    const resultado = await ClientService.getAllSchedulings(id);
+
+    setAgendas(resultado.data);
   }
 
   function handleClickVisualizarPerfilAdvogado(id_advogado) {
