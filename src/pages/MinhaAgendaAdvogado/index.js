@@ -24,6 +24,7 @@ import ConfigIcon from "@mui/icons-material/Settings";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
 import { TitlePage } from "../../components/Utils/title";
@@ -248,6 +249,12 @@ export default function MinhaAgenda() {
     setAgendas(agendaDepois);
   }
 
+  async function handleClickLimparFiltroAgendamento() {
+    const id = parseInt(sessionStorage.getItem("id_advogado"));
+    const resultado = await api.get(`schedulings/lawyer/${id}`);
+    setAgendas(resultado.data)
+  }
+
   if (redirectConfigAgenda) {
     return <Redirect to='../configuracao/agenda' />;
   }
@@ -271,6 +278,9 @@ export default function MinhaAgenda() {
           </Button>
           <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
             Filtro
+          </Button>
+          <Button variant="contained" startIcon={<FilterAltOffIcon />} onClick={ handleClickLimparFiltroAgendamento }>
+            Limpar filtros
           </Button>
         </Stack>
 
