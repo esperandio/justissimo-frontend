@@ -20,8 +20,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { ClientService } from "../../services";
 import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
+import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 
 export default function MinhaAgenda() {
   const history = useHistory();
@@ -31,20 +33,12 @@ export default function MinhaAgenda() {
 
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
-  
-  useEffect(() => {
-    async function buscarInformacoesAgendaAdvogado() {
-      const id = parseInt(sessionStorage.getItem("id_cliente"));
-
-      const resultado = await ClientService.getAllSchedulings(id);
-
-      setAgendas(resultado.data);
-    }
-
-    buscarInformacoesAgendaAdvogado();
-  }, []);
 
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
+  
+  useEffect(() => {
+    buscarInformacoesAgendaAdvogado();
+  }, []);
 
   function formatDate(date) {
     date = new Date(date);
@@ -63,6 +57,12 @@ export default function MinhaAgenda() {
 
   function formatTime(date) {
     return `${date.getUTCHours()}`.padStart(2, "0") + ":" + `${date.getUTCMinutes()}`.padStart(2, "0")
+  }
+
+  async function buscarInformacoesAgendaAdvogado() {
+    const id = parseInt(sessionStorage.getItem("id_cliente"));
+    const resultado = await ClientService.getAllSchedulings(id);
+    setAgendas(resultado.data);
   }
 
   function handleClickVisualizarPerfilAdvogado(id_advogado) {
@@ -120,6 +120,14 @@ export default function MinhaAgenda() {
     setDataAgendamentoAte(newValue);
   }
 
+  function handleAfterSubmitEncerramento() {
+    buscarInformacoesAgendaAdvogado();
+  }
+
+  async function handleClickLimparFiltroAgendamento() {
+    buscarInformacoesAgendaAdvogado();
+  }
+
   return (
     <>
       <ValidarAutenticacaoCliente />
@@ -132,6 +140,10 @@ export default function MinhaAgenda() {
         >
           <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
             Filtro
+          </Button>
+
+          <Button variant="contained" startIcon={<FilterAltOffIcon />} onClick={ handleClickLimparFiltroAgendamento }>
+            Limpar filtros
           </Button>
         </Stack>
 
@@ -190,9 +202,16 @@ export default function MinhaAgenda() {
                       <Button
                         type="submit"
                         color="primary"
-                        onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }>
+                        onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }
+                      >
                         <b>Visualizar perfil</b>
                       </Button>
+
+                      <EncerrarAgendamento 
+                        id_agenda={agenda.id_agenda} 
+                        encerrado={agenda.encerrado}
+                        afterSubmit={ handleAfterSubmitEncerramento }
+                      />
                     </CardActions>
                   </Stack>
                 </Card>

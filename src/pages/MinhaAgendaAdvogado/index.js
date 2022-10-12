@@ -24,24 +24,24 @@ import ConfigIcon from "@mui/icons-material/Settings";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
-import { LawyerService, UserService } from "../../services";
+import { LawyerService } from "../../services";
 import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticacao";
+import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 
 export default function MinhaAgenda() {
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
-  const [isOpenDialogEncerrarAgendamento, setOpenDialogEncerrarAgendamento] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
   const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
-  const [motivosEncerramento] = useState(["Cancelamento", "Atendimento encerrado"]);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -52,9 +52,17 @@ export default function MinhaAgenda() {
   const [horarioAgendamento, setHorarioAgendamento] = useState("");
   const [observacao, setObservacao] = useState("");
 
-  const [motivoEncerramento, setMotivoEncerramento] = useState("");
-  const [justificativa, setJustificativa] = useState("");
-  const [idAgendamentoSelecionado, setIdAgendamentoSelecionado] = useState("");
+  useEffect(() => {
+    async function buscarAreas() {
+      const id = parseInt(sessionStorage.getItem("id_advogado"));
+      const resultado = await LawyerService.getLawyer(id);
+
+      setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
+    }
+
+    buscarInformacoesAgendaAdvogado();
+    buscarAreas();
+  }, []);
 
   function formatDia(date) {
     const data = new Date(date);
@@ -75,19 +83,13 @@ export default function MinhaAgenda() {
       + `${date.getUTCFullYear()}`;
   }
 
-  function handleClickAgendamentoManual() {
-    setOpenDialogAgendamentoManual(true);
+  async function buscarInformacoesAgendaAdvogado() {
+    const id = parseInt(sessionStorage.getItem("id_advogado"));
+    const resultado = await api.get(`schedulings/lawyer/${id}`);
+    setAgendas(resultado.data)
   }
 
-  function handleClickFiltroAgendamento() {
-    setOpenDialogFiltrarAgendamentos(true);
-  }
-
-  function handleClickConfiguracaoAgenda() {
-    setRedirectConfigAgenda({redirectConfigAgenda: true})
-  }
-
-  async function handleClickBuscarAgenda() {
+  async function buscarAgenda() {
     const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
 
     const dataAgendamentoDeFormatada = `${dataAgendamentoDe.getUTCFullYear()}` 
@@ -116,6 +118,35 @@ export default function MinhaAgenda() {
 
       alert(mensagem_retorno_api);
     }
+  }
+
+  function fecharDialogAgendamentoManual() {
+    setOpenDialogAgendamentoManual(false);
+
+    setNome("");
+    setEmail("");
+    setDataAgendamento(new Date());
+    setAreaAtuacao("");
+    setHorarioAgendamento("");
+    setObservacao("");
+
+    setExibirHorariosDisponiveis(false);
+  }
+
+  function handleClickAgendamentoManual() {
+    setOpenDialogAgendamentoManual(true);
+  }
+
+  function handleClickFiltroAgendamento() {
+    setOpenDialogFiltrarAgendamentos(true);
+  }
+
+  function handleClickConfiguracaoAgenda() {
+    setRedirectConfigAgenda({redirectConfigAgenda: true})
+  }
+
+  async function handleClickBuscarAgenda() {
+    buscarAgenda();
   }
 
   async function handleClickBuscarHorarios() {
@@ -151,16 +182,7 @@ export default function MinhaAgenda() {
   }
 
   function handleClickFecharDialogAgendamentoManual() {
-    setOpenDialogAgendamentoManual(false);
-
-    setNome("");
-    setEmail("");
-    setDataAgendamento(new Date());
-    setAreaAtuacao("");
-    setHorarioAgendamento("");
-    setObservacao("");
-
-    setExibirHorariosDisponiveis(false);
+    fecharDialogAgendamentoManual();
   }
 
   async function handleClickConfirmarDialogAgendamentoManual() {
@@ -185,7 +207,8 @@ export default function MinhaAgenda() {
 
       alert("Agendamento confirmado!!!");
 
-      handleClickFecharDialogAgendamentoManual();
+      buscarAgenda();
+      fecharDialogAgendamentoManual();
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -221,67 +244,12 @@ export default function MinhaAgenda() {
     setOpenDialogFiltrarAgendamentos(false);
   }
 
-  function handleCloseDialogEncerrarAgendamento() {
-    fecharDialogEncerrarAgendamento();
-  }
-
-  function handleClickFecharDialogEncerrarAgendamento() {
-    fecharDialogEncerrarAgendamento();
-  }
-
-  function fecharDialogEncerrarAgendamento() {
-    setOpenDialogEncerrarAgendamento(false);
-    setMotivoEncerramento("");
-    setJustificativa("");
-    setIdAgendamentoSelecionado("");
-  }
-
-  async function handleClickConfirmarDialogEncerrarAgendamento() {
-    try {   
-      const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
-      const agendaDepois = agendas.filter((x) => x.id_agenda != idAgendamentoSelecionado);
-
-      await UserService.closeScheduling(id_usuario, idAgendamentoSelecionado, justificativa, motivoEncerramento);
-
-      setAgendas(agendaDepois);
-
-      alert("Agendamento encerrado com sucesso!");
-
-      fecharDialogEncerrarAgendamento();
-    } catch (error) {
-      let retorno = "Erro ao encerrar agendamento!";
-
-      if (error.response.status === 400) {
-        retorno += "\n\n" + error.response.data.message;
-      } else {
-        retorno += "\n" + error.message;
-      }
-
-      alert(retorno);
-    }
-  }
-
-  useEffect(() => {
-    async function buscarInformacoesAgendaAdvogado() {
-      const id = parseInt(sessionStorage.getItem("id_advogado"));
-      const resultado = await api.get(`schedulings/lawyer/${id}`);
-      setAgendas(resultado.data)
-    }
-
-    async function buscarAreas() {
-      const id = parseInt(sessionStorage.getItem("id_advogado"));
-      const resultado = await LawyerService.getLawyer(id);
-
-      setAreas(resultado.data.areas.map((x) => x.areaAtuacao));
-    }
-
+  function handleAfterSubmitEncerramento() {
     buscarInformacoesAgendaAdvogado();
-    buscarAreas();
-  }, []);
+  }
 
-  async function handleClickEncerrarAgendamento(id_agenda) {
-    setIdAgendamentoSelecionado(id_agenda);
-    setOpenDialogEncerrarAgendamento(true);
+  async function handleClickLimparFiltroAgendamento() {
+    buscarInformacoesAgendaAdvogado();
   }
 
   if (redirectConfigAgenda) {
@@ -307,6 +275,9 @@ export default function MinhaAgenda() {
           </Button>
           <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
             Filtro
+          </Button>
+          <Button variant="contained" startIcon={<FilterAltOffIcon />} onClick={ handleClickLimparFiltroAgendamento }>
+            Limpar filtros
           </Button>
         </Stack>
 
@@ -366,12 +337,11 @@ export default function MinhaAgenda() {
                     justifyContent="flex-end"
                   >
                     <CardActions>
-                      <Button
-                        type="submit"
-                        color="error"
-                        onClick={ () => handleClickEncerrarAgendamento(agenda.id_agenda) }>
-                        <b>ENCERRAR</b>
-                      </Button>
+                      <EncerrarAgendamento 
+                        id_agenda={agenda.id_agenda}
+                        encerrado={agenda.encerrado}
+                        afterSubmit={ handleAfterSubmitEncerramento }
+                      />
                     </CardActions>
                   </Stack>
                 </Card>
@@ -523,22 +493,33 @@ export default function MinhaAgenda() {
           <DialogContent>
             <br />
 
-            <FormControl fullWidth>
-              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-                <DatePicker
-                  label="De:"
-                  value={dataAgendamentoDe}
-                  onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <DatePicker
-                  label="Até:"
-                  value={dataAgendamentoAte}
-                  onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
-            </FormControl>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                    <DatePicker
+                      label="De:"
+                      value={dataAgendamentoDe}
+                      onChange={(newValue) => { handleChangeDataAgendamentoDe(newValue) }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                    <DatePicker
+                      label="Até:"
+                      value={dataAgendamentoAte}
+                      onChange={(newValue) => { handleChangeDataAgendamentoAte(newValue) }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
+            </Grid>
 
             <FormControl fullWidth variant="outlined" margin="normal">
               <InputLabel id="Area">Área de atuação</InputLabel>
@@ -569,55 +550,6 @@ export default function MinhaAgenda() {
               Filtrar
             </Button>
           </DialogContent>
-        </Dialog>
-
-        {/* Encerramento de agendamento */}
-        <Dialog open={isOpenDialogEncerrarAgendamento} onClose={ handleCloseDialogEncerrarAgendamento }>
-          <DialogTitle>Encerrar agendamento</DialogTitle>
-          <DialogContent>
-            {/* Motivo */}
-            <FormControl fullWidth variant="outlined" margin="normal">
-              <InputLabel id="Area">Motivo</InputLabel>
-              <Select
-                required
-                variant="outlined"
-                label="Motivo"
-                value={motivoEncerramento}
-                onChange={e => setMotivoEncerramento(e.target.value)}
-              >
-                {motivosEncerramento.map((motivo, index)=>{
-                  return <MenuItem key={index} value={motivo}>{motivo}</MenuItem>
-                })}
-              </Select>
-            </FormControl>
-
-            {/* Justificativa */}
-            <FormControl fullWidth>
-              <TextField
-                required
-                id="Justificativa"
-                label="Justificativa"
-                placeholder="A justificativa deve ter pelo menos 10 caracteres"
-                multiline
-                minRows={4}
-                variant="outlined"
-                value={justificativa}
-                inputProps={{ maxLength: 200 }}
-                onChange={e => setJustificativa(e.target.value)}
-                margin="normal"
-              />
-            </FormControl>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={ handleClickFecharDialogEncerrarAgendamento }>Cancelar</Button>
-            <Button 
-              onClick={ handleClickConfirmarDialogEncerrarAgendamento } 
-              disabled={motivoEncerramento === "" || justificativa === "" || justificativa.length < 10}
-            >
-              Confirmar
-            </Button>
-          </DialogActions>
         </Dialog>
       </Container>
     </>
