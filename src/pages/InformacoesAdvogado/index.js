@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { 
   Container, 
-  Grid, 
-  Button,
   Divider,
   FormControl,
   InputLabel,
@@ -12,6 +10,7 @@ import {
   MenuItem
 } from "@material-ui/core";
 import { 
+  Button,
   Rating,
   TextField,
   Radio,
@@ -253,7 +252,10 @@ export default function InformacoesAdvogado() {
           <p>E-mail: {advogado.usuario?.email}</p>
         </div>
 
-        <Grid item sx={3} md={9}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }} 
+          spacing={2}
+        >
           {advogado.tel_celular != null && (
             <Button className={classes.submit}
               variant="contained"
@@ -265,8 +267,6 @@ export default function InformacoesAdvogado() {
             </Button>
           )}
 
-          {" "}
-
           <Button className={classes.submit}
             variant="contained"
             color="primary"
@@ -277,8 +277,6 @@ export default function InformacoesAdvogado() {
             Agendar uma consulta
           </Button>
 
-          {" "}
-
           <Button className={classes.submit}
             variant="contained"
             color="primary"
@@ -288,7 +286,9 @@ export default function InformacoesAdvogado() {
           >
             Avaliar advogado
           </Button>
-        </Grid>
+        </Stack>
+
+        <br />
 
         <Divider/>
 
