@@ -267,14 +267,16 @@ export default function EditarPerfil() {
                 </FormControl>
               </Grid>
 
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                startIcon={<SaveIcon />}
-              >
-                Alterar dados
-              </Button>              
+              <Grid item xs={12} sm={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  startIcon={<SaveIcon />}
+                >
+                  Alterar dados
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </form>
