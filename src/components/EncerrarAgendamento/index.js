@@ -62,7 +62,7 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, afterSubmit 
             color="error"
             disabled={true}
           >
-            <b>Já encerrado</b>
+            Já encerrado
           </Button>
         </>
         : <>
@@ -71,7 +71,7 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, afterSubmit 
             color="error"
             onClick={ () => handleClickEncerrarAgendamento() }
           >
-            <b>ENCERRAR</b>
+            Encerrar
           </Button> 
         </>
       }
