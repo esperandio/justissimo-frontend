@@ -13,10 +13,10 @@ import {
 import { 
   Autocomplete, 
   TextField, 
-  Stack 
+  Stack,
+  Avatar
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import UserDefaultIcon from "../../../user.svg";
 import { TitlePage } from "../../../components/Utils/title";
 import api from "../../../services/api";
 import { Rating } from "@mui/material";
@@ -205,13 +205,13 @@ export default function ListarAdvogado() {
                       spacing={2}
                       sx={{ height: "20vh", minHeight: "20vh" }}
                     >
-                      <img 
+                      <Avatar
+                        alt="profile"
                         src={advogado.usuario.url_foto_perfil == null
-                          ? UserDefaultIcon
+                          ? ""
                           : advogado.usuario.url_foto_perfil
-                        } 
-                        className={classes.user} 
-                        alt="profile" 
+                        }
+                        sx={{ width: "20vh", height: "20vh" }}
                       />
                     </Stack>
                     <h2>{advogado.nome}</h2>
