@@ -216,7 +216,7 @@ const Header = () => {
                 : <>
                   <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt="Avatar" />
+                      <Avatar alt="Avatar" src={sessionStorage.getItem("url_foto_perfil") ?? ""} />
                     </IconButton>
                   </Tooltip>
                   <Menu
