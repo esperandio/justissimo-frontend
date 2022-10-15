@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import Container from "@material-ui/core/Container";
-import Header from "../../Main/Header";
 import { makeStyles } from "@material-ui/core/styles";
-import { TitlePage } from "../../../components/Utils/title";
-import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
+import { 
+  Container, 
+  Grid, 
+  FormControl, 
+  Button, 
+  Collapse, 
+  FormControlLabel,
+  Switch
+} from "@material-ui/core";
+import { 
+  Autocomplete, 
+  TextField, 
+  Stack 
+} from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import UserDefaultIcon from "../../../user.svg";
+import { TitlePage } from "../../../components/Utils/title";
 import api from "../../../services/api";
 import { Rating } from "@mui/material";
-import Collapse from "@material-ui/core/Collapse";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
+import Header from "../../Main/Header";
 
 const useStyles = makeStyles((theme) => ({
   user: {
