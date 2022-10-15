@@ -137,8 +137,9 @@ export default function InformacoesDivulgacao() {
                     <Button
                       type="submit"
                       variant="contained"
-                      onClick={ () => handleClickVisualizarPerfilAdvogado(mensagem.advogado.id_advogado) }>
-                      <b>Visualizar perfil</b>
+                      onClick={ () => handleClickVisualizarPerfilAdvogado(mensagem.advogado.id_advogado) }
+                    >
+                      Visualizar perfil
                     </Button>
                     <br />
                     <br />

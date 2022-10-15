@@ -204,7 +204,7 @@ export default function MinhaAgenda() {
                         color="primary"
                         onClick={ () => handleClickVisualizarPerfilAdvogado(agenda.fk_advogado) }
                       >
-                        <b>Visualizar perfil</b>
+                        Visualizar perfil
                       </Button>
 
                       <EncerrarAgendamento 
