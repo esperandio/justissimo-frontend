@@ -23,7 +23,8 @@ import {
   DialogTitle,
   Stack,
   Backdrop,
-  CircularProgress
+  CircularProgress,
+  Avatar
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
@@ -31,7 +32,6 @@ import StarHalfIcon from "@mui/icons-material/StarHalf";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { TitlePage }  from "../../components/Utils/title";
-import UserDefaultIcon from "../../user.svg";
 import api from "../../services/api";
 import { ptBR } from "date-fns/locale";
 import { useHistory } from "react-router-dom";
@@ -222,13 +222,13 @@ export default function InformacoesAdvogado() {
             spacing={2}
             sx={{ height: "20vh", minHeight: "20vh" }}
           >
-            <img 
+            <Avatar
+              alt="profile"
               src={advogado?.usuario?.url_foto_perfil == null && backdropOpen === false
-                ? UserDefaultIcon
+                ? ""
                 : advogado?.usuario?.url_foto_perfil
               } 
-              className={classes.user} 
-              alt="profile" 
+              sx={{ width: "20vh", height: "20vh" }}
             />
           </Stack>
 
