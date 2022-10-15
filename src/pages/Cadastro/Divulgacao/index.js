@@ -149,14 +149,14 @@ export default function CadastroDivulgacao() {
 
               <Grid item xs={12} sm={12}>
                 <FormControl>
-                  <Button className={classes.submit}
+                  <Button
                     variant="contained"
                     color="primary"
                     type="submit"
                     startIcon={<SaveIcon />}
                     onClick={ handleSubmit }
                   >
-                                        Cadastrar
+                    Cadastrar
                   </Button>
                 </FormControl>
               </Grid>
