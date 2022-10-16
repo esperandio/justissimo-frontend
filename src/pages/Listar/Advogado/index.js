@@ -14,6 +14,8 @@ import {
   Autocomplete, 
   TextField, 
   Stack,
+  Backdrop,
+  CircularProgress,
   Avatar
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -36,6 +38,7 @@ export default function ListarAdvogado() {
   const classes = useStyles();
   const history = useHistory();
 
+  const [backdropOpen, setBackdropOpen] = useState(true);
   const [nome, setNome] = useState("");
   const [advogados, setAdvogados] = useState([]);
   const [usarFiltroAvancado, setUsarFiltroAvancado] = useState(false);
@@ -48,18 +51,17 @@ export default function ListarAdvogado() {
     "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"]);
 
   useEffect(() => {
-    async function buscarAdvogados() {
-      const resultado = await api.get("lawyers");
-      setAdvogados(resultado.data);
+    async function buscarListaAdvogados() {
+      const resultadoAdvogados = await api.get("lawyers");
+      setAdvogados(resultadoAdvogados.data);
+
+      const resultadoAreas = await api.get("areas");
+      setAreas(resultadoAreas.data);
+
+      setBackdropOpen(false);
     }
 
-    async function buscarAreas() {
-      const resultado = await api.get("areas");
-      setAreas(resultado.data);
-    }
-
-    buscarAdvogados();
-    buscarAreas();
+    buscarListaAdvogados();
   }, []);
 
   function handleAutocompleteAreaChange(event, values) {
@@ -100,6 +102,12 @@ export default function ListarAdvogado() {
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Busque advogados" />
