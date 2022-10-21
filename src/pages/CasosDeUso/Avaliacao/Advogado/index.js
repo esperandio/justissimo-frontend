@@ -3,12 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import api from "../../../../services/api";
 import { TitlePage } from "../../../../components/Utils/title";
-import TextArea from "../../../../components/Utils/input";
 import { Rating } from "@mui/material";
 import ButtonOutlined from "../../../../components/Utils/buttom";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Header from "../../../Main/Header";
+import { TextField } from "@mui/material";
+import { FormControl } from "@material-ui/core/";
 import { ValidarAutenticacaoCliente } from "../../../../components/ValidarAutenticacao";
 
 // Style
@@ -137,34 +138,22 @@ export default function AvaliacaoAdvogado() {
                 />
               </div>
 
-              <div 
-                style={{
-                  "color": "#3B485E"
-                }}
-              >
+              <br />
 
-                <br/><br/>
-                <span>
-                  <b>
-                                        Deixe um comentário
-                  </b>
-                </span> <br/>
-
-                <br/>
-              </div>
-
-              {/* Input TextArea 'Descrição' */}
-              <TextArea
-                id="descricao"
-                name="descricao"
-                autoComplete="descricao"
-                
-                margin="normal"
-                variant="outlined"
-                placeholder="Aqui vai uma descrição da sua avaliação"
-                value={descricao}
-                onChange={e => setDescricao(e.target.value)}
-              />
+              <FormControl fullWidth>
+                <TextField
+                  id="descricao"
+                  label="Deixe um comentário"
+                  placeholder="Aqui vai uma descrição da sua avaliação"
+                  multiline
+                  minRows={4}
+                  variant="outlined"
+                  value={descricao}
+                  inputProps={{ maxLength: 200 }}
+                  onChange={e => setDescricao(e.target.value)}
+                  margin="normal"
+                />
+              </FormControl>
 
               <ButtonOutlined 
                 className={classes.submit}
