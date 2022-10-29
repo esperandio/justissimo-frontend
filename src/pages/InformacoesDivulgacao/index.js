@@ -29,16 +29,6 @@ export default function InformacoesDivulgacao() {
   const [mensagens, setMensagens] = useState([]);
 
   useEffect(() => {
-    async function buscarInformacoesDivulgacao() {
-      const id = parseInt(params.id);
-      const resultado = await ClientService.getDivulgationInfo(id);
-
-      setDivulgacao(resultado.data);
-      setMensagens(resultado.data.mensagens)
-
-      setBackdropOpen(false)
-    }
-
     buscarInformacoesDivulgacao();
   }, []);
 
@@ -52,8 +42,45 @@ export default function InformacoesDivulgacao() {
       + `${date.getUTCFullYear()}`;
   }
 
+  async function buscarInformacoesDivulgacao() {
+    const id = parseInt(params.id);
+    const resultado = await ClientService.getDivulgationInfo(id);
+
+    setDivulgacao(resultado.data);
+    setMensagens(resultado.data.mensagens)
+
+    setBackdropOpen(false)
+  }
+
   function handleClickVisualizarPerfilAdvogado(id_advogado) {
     history.push(`/advogado/${id_advogado}`);
+  }
+
+  async function handleClickEncerrarDivulgacao() {
+    const confirmaEncerramento = confirm("Tem certeza que deseja prosseguir com o encerramento da divulgação?");
+
+    if (!confirmaEncerramento) {
+      return;
+    }
+
+    try {
+      const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
+      const id_divulgacao = parseInt(params.id);
+  
+      await ClientService.closeDivulgation(id_usuario, id_divulgacao);
+
+      buscarInformacoesDivulgacao();
+    } catch (error) {
+      let retorno = "Erro ao encerrar divulgacao!";
+
+      if (error.response.status === 400) {
+        retorno += "\n\n" + error.response.data.message;
+      } else {
+        retorno += "\n" + error.message;
+      }
+
+      alert(retorno);
+    }
   }
 
   return (
@@ -83,6 +110,34 @@ export default function InformacoesDivulgacao() {
         <Typography sx={{fontStyle: "italic"}} textAlign={"justify"}>
           {divulgacao.descricao}
         </Typography>
+        <br />
+
+        {divulgacao.encerrado === true 
+          ? <>
+            <Button
+              type="submit"
+              variant="contained"
+              color="error"
+              disabled={true}
+            >
+              Já encerrado
+            </Button>
+          </>
+          : <>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              onClick={ handleClickEncerrarDivulgacao }
+            >
+              Encerrar divulgação
+            </Button>
+          </>
+        }
+
+        <br />
+        <br />
+        <Divider />
         <br />
 
         {mensagens == "" && (
