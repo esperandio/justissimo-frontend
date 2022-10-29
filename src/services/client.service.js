@@ -24,6 +24,12 @@ class ClientService {
   getDivulgationInfo(divulgation_id) {
     return api.get(`clients/divulgation/${divulgation_id}`);
   }
+
+  closeDivulgation(user_id, divulgation_id) {
+    return api.put(`divulgations/${divulgation_id}`, {
+      id_usuario: user_id
+    })
+  }
 }
 
 export default new ClientService();
