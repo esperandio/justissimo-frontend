@@ -9,6 +9,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Redirect } from "react-router-dom";
 import { TitleJustissimo, TitlePage } from "../../components/Utils/title";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import FormControl from "@mui/material/FormControl";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,6 +39,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [redirect, setState] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
     
   async function handleLogin(e) {
         
@@ -93,6 +101,11 @@ export default function Login() {
     }
   }
 
+  function handleClickMostrarSenha()
+  {
+    setMostrarSenha(!mostrarSenha);
+  }
+
   // Se o 'login' for aceito, redireciona para a tela de home
   if (redirect) {
     return <Redirect to='home' />;
@@ -122,19 +135,26 @@ export default function Login() {
           />
                     
           {/* Input 'Senha' */}
-          <TextField
-            type="password"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="senha"
-            label="Senha"
-            id="senha"
-            autoComplete="current-senha"
-            value={senha}
-            onChange={e => setSenha(e.target.value)}
-          />
+          <FormControl required fullWidth variant="outlined" margin="normal">
+            <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={mostrarSenha ? "text" : "password"}
+              value={senha}
+              onChange={e => setSenha(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={ handleClickMostrarSenha }
+                    edge="end"
+                  >
+                    {mostrarSenha ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Senha"
+            />
+          </FormControl>
 
           {/* Button 'Login' */}
           <Button className={classes.submit}
