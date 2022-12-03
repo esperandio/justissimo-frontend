@@ -136,11 +136,20 @@ export default function Login() {
                     Login
           </Button>
 
-          {/* href (link) 'Esqueceu a senha' */}
           <Grid container>
             <Grid item>
               <Link href="redefinirsenha/email" variant="body2">
-                {"Esqueceu a senha?"}
+                Esqueceu a senha?
+              </Link>
+            </Grid>
+          </Grid>
+
+          <br />
+
+          <Grid container>
+            <Grid item>
+              <Link href="home" variant="body2">
+                Voltar para home
               </Link>
             </Grid>
           </Grid>
