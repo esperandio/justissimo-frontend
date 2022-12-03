@@ -23,7 +23,7 @@ import { Redirect } from "react-router-dom";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import TextFieldPassword from "../../../components/TextFieldPassword"
 
 const steps = ["Dados pessoais", "Dados da OAB", "Dados de acesso"];
@@ -367,7 +367,12 @@ export default function CadastroAdvogado() {
             </Grid>
           </Grid>
 
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <br />
+
+          <Stack 
+            direction={{ xs: "column", sm: "row" }} 
+            spacing={1}
+          >
             <Button
               variant="contained"
               disabled={activeStep === 0}
@@ -398,7 +403,7 @@ export default function CadastroAdvogado() {
                 </Button>
               </>
             }
-          </Box>
+          </Stack>
         </form>
       </Container>
       <Footer />

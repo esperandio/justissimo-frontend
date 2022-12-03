@@ -10,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import Header from "../../Main/Header";
 import Footer from "../../Main/Footer";
 import { Redirect } from "react-router-dom";
@@ -269,7 +269,12 @@ export default function CadastroUsuario() {
             </Grid>
           </Grid>
 
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <br />
+
+          <Stack 
+            direction={{ xs: "column", sm: "row" }} 
+            spacing={1}
+          >
             <Button
               variant="contained"
               disabled={activeStep === 0}
@@ -300,7 +305,7 @@ export default function CadastroUsuario() {
                 </Button>
               </>
             }
-          </Box>
+          </Stack>
         </form>
       </Container>
       <Footer />
