@@ -5,8 +5,7 @@ import {
   Container, 
   Divider
 } from "@material-ui/core";
-import { 
-  Button,
+import {
   Rating,
   Stack,
   Backdrop,
@@ -23,6 +22,7 @@ import Header from "../Main/Header";
 import Footer from "../Main/Footer";
 import ButtonWithTooltip from "../../components/ButtonWithTooltip";
 import RealizarAgendamento from "../../components/RealizarAgendamento";
+import EnviarMensagem from "../../components/EnviarMensagem";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,6 +51,7 @@ export default function InformacoesAdvogado() {
   const[autenticado, setAutenticado] = useState(false);
 
   const [openRealizarAgendamento, setOpenRealizarAgendamento] = useState(false);
+  const [openEnviarMensagem, setOpenEnviarMensagem] = useState(false);
 
   useEffect(() => {
     async function buscarInformacoesAdvogado() {
@@ -75,6 +76,14 @@ export default function InformacoesAdvogado() {
 
   function handleClickFecharModalAgendamento() {
     setOpenRealizarAgendamento(false);
+  }
+
+  function handleClickAbrirModalEnviarMensagem() {
+    setOpenEnviarMensagem(true);
+  }
+
+  function handleClickFecharModalEnviarMensagem() {
+    setOpenEnviarMensagem(false);
   }
 
   function handleClickAvaliarAdvogado() {
@@ -143,16 +152,14 @@ export default function InformacoesAdvogado() {
           direction={{ xs: "column", sm: "row" }} 
           spacing={2}
         >
-          {advogado.tel_celular != null && (
-            <Button className={classes.submit}
-              variant="contained"
-              color="primary"
-              startIcon={<WhatsAppIcon/>}
-              onClick={ () => { window.open(`https://api.whatsapp.com/send?phone=${advogado.tel_celular.replace(/\+/g, "")}`, "_blank"); } }
-            >
-              Entrar em contato
-            </Button>
-          )}
+          <ButtonWithTooltip
+            startIcon={<WhatsAppIcon/>}
+            disabled={!autenticado}
+            tooltip="Você precisa estar autenticado para acessar esse recurso."
+            onClick={ handleClickAbrirModalEnviarMensagem }
+          >
+            Entrar em contato
+          </ButtonWithTooltip>
 
           <ButtonWithTooltip 
             startIcon={<CalendarMonthIcon/>}
@@ -203,12 +210,18 @@ export default function InformacoesAdvogado() {
           </div>
         )}
 
+        <EnviarMensagem 
+          open={openEnviarMensagem}
+          advogado={advogado}
+          onClose={ handleClickFecharModalEnviarMensagem }
+        />
+
         <RealizarAgendamento
           open={openRealizarAgendamento}
           advogado={advogado}
           areas={advogadoAreas}
           onClose={ handleClickFecharModalAgendamento }
-        ></RealizarAgendamento>
+        />
       </Container>
       <Footer />
     </>
