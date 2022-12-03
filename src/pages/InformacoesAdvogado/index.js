@@ -37,6 +37,7 @@ import { ptBR } from "date-fns/locale";
 import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
+import ButtonWithTooltip from "../../components/ButtonWithTooltip";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,6 +70,8 @@ export default function InformacoesAdvogado() {
   const [exibirHorariosDisponiveis, setExibirHorariosDisponiveis] = useState(false);
   const [avaliacoes, setAvaliacoes] = useState([]);
 
+  const[autenticado, setAutenticado] = useState(false);
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -82,14 +85,13 @@ export default function InformacoesAdvogado() {
     }
 
     buscarInformacoesAdvogado();
+
+    if (sessionStorage.getItem("token") !== null || sessionStorage.getItem("tipo_usuario") === "Cliente") {
+      setAutenticado(true);
+    }
   }, [params.id]);
 
   function handleAbrirModalAgendamento() {
-    if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Cliente") {
-      alert("Você precisa estar conectado como cliente para acessar essa tela!");
-      return;
-    }
-
     setOpen(true);
   }
 
@@ -187,11 +189,6 @@ export default function InformacoesAdvogado() {
   }
 
   function handleClickAvaliarAdvogado() {
-    if (sessionStorage.getItem("token") === null || sessionStorage.getItem("tipo_usuario") !== "Cliente") {
-      alert("Você precisa estar conectado como cliente para acessar essa tela!");
-      return;
-    }
-
     history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
   }
 
@@ -268,25 +265,23 @@ export default function InformacoesAdvogado() {
             </Button>
           )}
 
-          <Button className={classes.submit}
-            variant="contained"
-            color="primary"
-            type="submit"
+          <ButtonWithTooltip 
             startIcon={<CalendarMonthIcon/>}
+            disabled={!autenticado}
+            tooltip="Você precisa estar autenticado para acessar esse recurso."
             onClick={ handleAbrirModalAgendamento }
           >
             Agendar uma consulta
-          </Button>
+          </ButtonWithTooltip>
 
-          <Button className={classes.submit}
-            variant="contained"
-            color="primary"
-            type="submit"
+          <ButtonWithTooltip
             startIcon={<StarHalfIcon/>}
-            onClick={ () => handleClickAvaliarAdvogado() }
+            disabled={!autenticado}
+            tooltip="Você precisa estar autenticado para acessar esse recurso."
+            onClick={ handleClickAvaliarAdvogado }
           >
             Avaliar advogado
-          </Button>
+          </ButtonWithTooltip>
         </Stack>
 
         <br />
