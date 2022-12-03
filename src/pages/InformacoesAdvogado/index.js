@@ -91,7 +91,7 @@ export default function InformacoesAdvogado() {
     }
   }, [params.id]);
 
-  function handleAbrirModalAgendamento() {
+  function handleClickAbrirModalAgendamento() {
     setOpen(true);
   }
 
@@ -269,7 +269,7 @@ export default function InformacoesAdvogado() {
             startIcon={<CalendarMonthIcon/>}
             disabled={!autenticado}
             tooltip="Você precisa estar autenticado para acessar esse recurso."
-            onClick={ handleAbrirModalAgendamento }
+            onClick={ handleClickAbrirModalAgendamento }
           >
             Agendar uma consulta
           </ButtonWithTooltip>
@@ -314,7 +314,7 @@ export default function InformacoesAdvogado() {
           </div>
         )}
 
-        <Dialog open={open} onClose={handleClickFecharModalAgendamento}>
+        <Dialog open={open} onClose={ handleClickFecharModalAgendamento }>
           <DialogTitle>Realizar agendamento</DialogTitle>
 
           <DialogContent>
