@@ -50,7 +50,7 @@ export default function InformacoesAdvogado() {
 
   const[autenticado, setAutenticado] = useState(false);
 
-  const [open, setOpen] = useState(false);
+  const [openRealizarAgendamento, setOpenRealizarAgendamento] = useState(false);
 
   useEffect(() => {
     async function buscarInformacoesAdvogado() {
@@ -70,11 +70,11 @@ export default function InformacoesAdvogado() {
   }, [params.id]);
 
   function handleClickAbrirModalAgendamento() {
-    setOpen(true);
+    setOpenRealizarAgendamento(true);
   }
 
   function handleClickFecharModalAgendamento() {
-    setOpen(false);
+    setOpenRealizarAgendamento(false);
   }
 
   function handleClickAvaliarAdvogado() {
@@ -204,7 +204,7 @@ export default function InformacoesAdvogado() {
         )}
 
         <RealizarAgendamento
-          open={open}
+          open={openRealizarAgendamento}
           advogado={advogado}
           areas={advogadoAreas}
           onClose={ handleClickFecharModalAgendamento }
