@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import SaveIcon from "@material-ui/icons/Save";
 import InputLabel from "@material-ui/core/InputLabel";
 import Header from "../../Main/Header";
+import Footer from "../../Main/Footer";
 import { Redirect } from "react-router-dom";
 import { TitlePage } from "../../../components/Utils/title";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -260,6 +261,7 @@ export default function CadastroUsuario() {
 
         </form>
       </Container>
+      <Footer />
     </>
   );
 }

@@ -36,6 +36,7 @@ import api from "../../services/api";
 import { ptBR } from "date-fns/locale";
 import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -426,6 +427,7 @@ export default function InformacoesAdvogado() {
           </DialogActions>
         </Dialog>
       </Container>
+      <Footer />
     </>
   );
 }

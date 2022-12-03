@@ -23,6 +23,7 @@ import { TitlePage } from "../../../components/Utils/title";
 import api from "../../../services/api";
 import { Rating } from "@mui/material";
 import Header from "../../Main/Header";
+import Footer from "../../Main/Footer";
 
 const useStyles = makeStyles((theme) => ({
   user: {
@@ -248,6 +249,7 @@ export default function ListarAdvogado() {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </>
   );
 }

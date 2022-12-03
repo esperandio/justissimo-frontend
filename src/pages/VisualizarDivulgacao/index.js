@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticacao";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 import { Container, Grid, FormControl, Button } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
 import { 
@@ -196,6 +197,7 @@ export default function VisualizarDivulgacao() {
           </>
         )}
       </Container>
+      <Footer />
     </>
   );
 }

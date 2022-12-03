@@ -27,6 +27,7 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
 import { LawyerService } from "../../services";
@@ -552,6 +553,7 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
       </Container>
+      <Footer />
     </>
   );
 }

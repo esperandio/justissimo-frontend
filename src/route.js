@@ -1,7 +1,6 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Footer from "./pages/Main/Footer"
 import CadAdvogado from "./pages/Cadastro/Advogado"
 import CadCliente from "./pages/Cadastro/Cliente"
 import CadDivulgacao from "./pages/Cadastro/Divulgacao"
@@ -50,7 +49,6 @@ function Routes() {
           <Route path="/editar-perfil" component={EditarPerfil}/>
         </Switch>
       </BrowserRouter>
-      <Footer />
     </>
   )
 }
