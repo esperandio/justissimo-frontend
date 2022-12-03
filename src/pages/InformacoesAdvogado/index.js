@@ -21,8 +21,8 @@ import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
 import ButtonWithTooltip from "../../components/ButtonWithTooltip";
-import RealizarAgendamento from "../../components/RealizarAgendamento";
-import EnviarMensagem from "../../components/EnviarMensagem";
+import DialogRealizarAgendamento from "../../components/DialogRealizarAgendamento";
+import DialogEnviarMensagem from "../../components/DialogEnviarMensagem";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -210,13 +210,13 @@ export default function InformacoesAdvogado() {
           </div>
         )}
 
-        <EnviarMensagem 
+        <DialogEnviarMensagem 
           open={openEnviarMensagem}
           advogado={advogado}
           onClose={ handleClickFecharModalEnviarMensagem }
         />
 
-        <RealizarAgendamento
+        <DialogRealizarAgendamento
           open={openRealizarAgendamento}
           advogado={advogado}
           areas={advogadoAreas}

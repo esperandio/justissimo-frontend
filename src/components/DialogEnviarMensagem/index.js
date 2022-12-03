@@ -11,7 +11,7 @@ import {
 import { FormControl } from "@material-ui/core/";
 import api from "../../services/api";
 
-export default function EnviarMensagem({ open, advogado, onClose }) {
+export default function DialogEnviarMensagem({ open, advogado, onClose }) {
   const [mensagem, setMensagem] = useState("");
 
   function handleClickFecharModalEnvioMensagem() {
