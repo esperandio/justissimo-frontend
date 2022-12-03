@@ -294,7 +294,12 @@ export default function InformacoesAdvogado() {
 
         {avaliacoes.length > 0 && (
           <div>
-            <h2>Avaliações</h2>
+            {avaliacoes.length == 1 && (
+              <h2>Avaliação</h2>  
+            )}
+            {avaliacoes.length > 1 && (
+              <h2>Avaliações</h2>  
+            )}
             {avaliacoes.map((avaliacao)=>{
               return (
                 <div key={avaliacao.id_avaliacao}>
