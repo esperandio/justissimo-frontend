@@ -9,7 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Redirect } from "react-router-dom";
 import { TitleJustissimo, TitlePage } from "../../components/Utils/title";
-import TextFieldPassword from "../../components/TextFieldPassword"
+import TextFieldPassword from "../../components/TextFieldPassword";
+import Stack from "@mui/material/Stack";
+import Footer from "./../../pages/Main/Footer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -102,60 +104,67 @@ export default function Login() {
   return (
   // Form
     <Container component="main" maxWidth="xs">
-      <TitleJustissimo/>
-      <TitlePage internal="ENTRAR" />
-      <div className={classes.paper}>
-        <form className={classes.form} /*onSubmit={handleLogin}*/>
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ height: "100vh" }}
+      >
+        <TitleJustissimo/>
+        <TitlePage internal="ENTRAR" />
+        <div className={classes.paper}>
+          <form className={classes.form} /*onSubmit={handleLogin}*/>
 
-          {/* Input 'Email' */}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="E-mail"
-            name="email"
-            autoComplete="email"
-            
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-                    
-          {/* Input 'Senha' */}
-          <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
+            {/* Input 'Email' */}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="E-mail"
+              name="email"
+              autoComplete="email"
+              
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+                      
+            {/* Input 'Senha' */}
+            <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
 
-          {/* Button 'Login' */}
-          <Button className={classes.submit}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleLogin}
-          >
-                    Login
-          </Button>
+            {/* Button 'Login' */}
+            <Button className={classes.submit}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleLogin}
+            >
+                      Login
+            </Button>
 
-          <Grid container>
-            <Grid item>
-              <Link href="redefinirsenha/email" variant="body2">
-                Esqueceu a senha?
-              </Link>
+            <Grid container>
+              <Grid item>
+                <Link href="redefinirsenha/email" variant="body2">
+                  Esqueceu a senha?
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <br />
+            <br />
 
-          <Grid container>
-            <Grid item>
-              <Link href="home" variant="body2">
-                Voltar para home
-              </Link>
+            <Grid container>
+              <Grid item>
+                <Link href="home" variant="body2">
+                  Voltar para home
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
 
-        </form>
-      </div>
+          </form>
+        </div>
+        <Footer />
+      </Stack>
     </Container>
   );
 }
