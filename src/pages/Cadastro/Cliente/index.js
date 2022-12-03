@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import api from "../../../services/api";
-import TextField from "@mui/material/TextField";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import FormControl from "@material-ui/core/FormControl";
-import Grid from "@material-ui/core/Grid";
 import SaveIcon from "@material-ui/icons/Save";
-import InputLabel from "@material-ui/core/InputLabel";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Stack from "@mui/material/Stack";
 import Header from "../../Main/Header";
 import Footer from "../../Main/Footer";
 import { Redirect } from "react-router-dom";
@@ -19,11 +9,25 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ptBR } from "date-fns/locale";
-import Autocomplete from "@mui/material/Autocomplete";
 import InputCepMask from "../../../components/Utils/mask/inputCepMask";
 import InputCnpjMask from "../../../components/Utils/mask/inputCnpjMask";
 import InputCpfMask from "../../../components/Utils/mask/inputCpfMask";
-import TextFieldPassword from "../../../components/TextFieldPassword"
+import TextFieldPassword from "../../../components/TextFieldPassword";
+import {
+  TextField,
+  Stepper,
+  Step,
+  StepLabel,
+  Stack,
+  Autocomplete
+} from "@mui/material";
+import {
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel
+} from "@material-ui/core";
 
 export default function CadastroUsuario() {
   const [nome, setNome] = useState("");
