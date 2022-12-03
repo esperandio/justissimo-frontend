@@ -23,6 +23,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Box from "@mui/material/Box";
+import TextFieldPassword from "../../../components/TextFieldPassword"
 
 const steps = ["Dados pessoais", "Dados da OAB", "Dados de acesso"];
 
@@ -347,39 +348,11 @@ export default function CadastroAdvogado() {
                   </Grid>
                                     
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="senha"
-                        label="Senha"
-                        type="password"
-                        id="senha"
-                        autoComplete="current-senha"
-                        value={senha}
-                        onChange={e => setSenha(e.target.value)}
-                      />
-                    </FormControl>
+                    <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
                   </Grid>
 
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="senha"
-                        label="Confirmar senha"
-                        type="password"
-                        id="senha"
-                        autoComplete="current-senha"
-                        value={senhaConfirmacao}
-                        onChange={e => setSenhaConfirmacao(e.target.value)}
-                      />
-                    </FormControl>
+                    <TextFieldPassword onChange={e => setSenhaConfirmacao(e.target.value)}></TextFieldPassword>
                   </Grid>
 
                   <Grid item xs={12} sm={12}>
