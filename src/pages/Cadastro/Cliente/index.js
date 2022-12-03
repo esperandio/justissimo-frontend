@@ -19,6 +19,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import InputCepMask from "../../../components/Utils/mask/inputCepMask";
 import InputCnpjMask from "../../../components/Utils/mask/inputCnpjMask";
 import InputCpfMask from "../../../components/Utils/mask/inputCpfMask";
+import TextFieldPassword from "../../../components/TextFieldPassword"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -228,39 +229,11 @@ export default function CadastroUsuario() {
               </Grid>
                             
               <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="senha"
-                    label="Senha"
-                    type="password"
-                    id="senha"
-                    autoComplete="current-senha"
-                    value={senha}
-                    onChange={e => setSenha(e.target.value)}
-                  />
-                </FormControl>
+                <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="senha"
-                    label="Confirmar senha"
-                    type="password"
-                    id="senha"
-                    autoComplete="current-senha"
-                    value={senhaConfirmacao}
-                    onChange={e => setSenhaConfirmacao(e.target.value)}
-                  />
-                </FormControl>
+                <TextFieldPassword onChange={e => setSenhaConfirmacao(e.target.value)}></TextFieldPassword>
               </Grid>
 
               <Grid item xs={12} sm={12}>
@@ -278,7 +251,7 @@ export default function CadastroUsuario() {
                     type="submit"
                     startIcon={<SaveIcon />}
                   >
-                                        Cadastrar
+                    Cadastrar
                   </Button>
                 </FormControl>
               </Grid>
