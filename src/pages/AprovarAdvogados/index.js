@@ -1,29 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Header from "../Main/Header";
-import { ValidarAutenticacaoAdmin } from "../../components/ValidarAutenticacao";
-import { Container, Link, Grid, FormControl, Tooltip } from "@material-ui/core/";
+import { Container, Tooltip } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
 import { 
-  Typography,
-  Chip,
-  Divider,
-  Stack,
   Button,
-  Dialog, 
-  DialogTitle,
-  DialogContent,
-  TextField,
-  ButtonGroup,
   IconButton,
-  Avatar
+  Avatar,
+  Typography
 } from "@mui/material";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { ptBR } from "date-fns/locale";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
-import { LawyerService } from "../../services";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -32,6 +16,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import adminService from "../../services/admin.service";
+import { Redirect } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -53,91 +39,57 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  name,
-  calories,
-  fat,
-  carbs,
-  protein,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("David Jesus", 159, "SC"),
-  createData("Matheus Felipe", 237, "PR"),
-  createData("Gabriel Ratke", 262, "PA"),
-  createData("Jonathas Rocha", 305, "SC"),
-];
-
 export default function AprovarAdvogados() {
-  const [divulgacoes, setDivulgacoes] = useState([]); 
-  const [isOpenDialogFiltrarDivulgacoes, setOpenDialogFiltrarDivulgacoes] = useState(false);
-  const [dataDivulgacaoDe, setDataDivulgacaoDe] = useState(new Date());
-  const [dataDivulgacaoAte, setDataDivulgacaoAte] = useState(new Date());
+  const [advogados, setAdvogados] = useState([]); 
+  const [redirect, setState] = useState(false);
 
   useEffect(() => {
-    async function buscarDivulgacoes() {
-      const resultado = await LawyerService.getAllDivulgations();
+    async function buscarAdvogadosPendentes() {
+      try {
+        const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
+        const resultado = await adminService.getAllLawyersPending(id_usuario);
+        console.log(resultado.data);
+        setAdvogados(resultado.data);
+      } catch (error) {
+        const mensagem_retorno_api = error?.response?.data?.message;
 
-      setDivulgacoes(resultado.data);
+        if (mensagem_retorno_api == null) {
+          alert("🤨 Algo deu errado! Tente novamente mais tarde");
+          setState(true);
+        }
+      }
     }
 
-    buscarDivulgacoes();
+    buscarAdvogadosPendentes();
   }, []);
 
-  function formatDate(date) {
-    date = new Date(date);
-
-    return `${date.getUTCDate()}`.padStart(2, 0)
-      + "/"
-      + `${date.getUTCMonth() + 1}`.padStart(2, 0)
-      + "/"
-      + `${date.getUTCFullYear()}`;
-  }
-
-  function handleClickFiltroDivulgacao() {
-    setOpenDialogFiltrarDivulgacoes(true);
-  }
-
-  async function handleClickLimparFiltroDivulgacao() {
-    const resultado = await LawyerService.getAllDivulgations();
-
-    setDivulgacoes(resultado.data);
-  }
-
-  function handleCloseDialogFiltrarDivulgacoes() {
-    setOpenDialogFiltrarDivulgacoes(false);
-  }
-
-  function handleChangeDataDivulgacaoDe(newValue) {
-    setDataDivulgacaoDe(newValue);
-  }
-
-  function handleChangeDataDivulgacaoAte(newValue) {
-    setDataDivulgacaoAte(newValue);
-  }
-
-  async function handleClickBuscarDivulgacao() {
-    const dataDivulgacaoDeFormatada = `${dataDivulgacaoDe.getUTCFullYear()}` 
-      + "-"
-      + `${dataDivulgacaoDe.getUTCMonth() + 1}`.padStart(2, 0)
-      + "-"
-      + `${dataDivulgacaoDe.getDate()}`.padStart(2, 0);
-
-    const dataDivulgacaoAteFormatada = `${dataDivulgacaoAte.getUTCFullYear()}` 
-      + "-"
-      + `${dataDivulgacaoAte.getUTCMonth() + 1}`.padStart(2, 0)
-      + "-"
-      + `${dataDivulgacaoAte.getDate()}`.padStart(2, 0);
-
+  async function handleClickAprovarAdvogado(id_advogado) {
     try {
-      const resultado = await LawyerService.getAllDivulgations(
-        dataDivulgacaoDeFormatada, 
-        dataDivulgacaoAteFormatada
-      );
-      setDivulgacoes(resultado.data)
-      setOpenDialogFiltrarDivulgacoes(false);
+      const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
+      const resultado = await adminService.approveLawyer(id_usuario, id_advogado);
+      
+      alert(resultado.data.message);
+      window.location.reload();
+    } catch (error) {
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        setState(true);
+        return ;
+      }
+
+      alert(mensagem_retorno_api);
+    }
+  }
+
+  async function handleClickReprovarAdvogado(id_advogado) {
+    try {
+      const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
+      const resultado = await adminService.rejectLawyer(id_usuario, id_advogado);
+  
+      alert(resultado.data.message);
+      window.location.reload();
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -150,9 +102,12 @@ export default function AprovarAdvogados() {
     }
   }
 
+  if (redirect) {
+    return <Redirect to='../home' />;
+  }
+
   return (
     <>
-      <ValidarAutenticacaoAdmin />
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Aprovar Advogados" />
@@ -169,28 +124,31 @@ export default function AprovarAdvogados() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell align="center">
-                    {sessionStorage.getItem("token") === null
-                      ? <>
-                        <Button color="inherit" href="/login">Login</Button>
-                      </>
-                      : <>
-                        <Tooltip title="Foto">
-                          <IconButton  sx={{ p: 0 }}>
-                            <Avatar alt="Avatar" src="https://justissimo-s3.s3.amazonaws.com/3fff7ff6ba00b96ed7779c184db3ac0206b561114abdc9ecf6a5975cb7196ff4-David_FotoPerfil.jpg" />
-                          </IconButton>
-                        </Tooltip>
-                      </>}
+              {advogados.length === 0 && (
+                <TableRow>
+                  <StyledTableCell align="center" colSpan={5}>
+                    <Typography variant="h6" component="h6">
+                      Não há advogados pendentes para aprovação
+                    </Typography>
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row" align="left">{row.name}</StyledTableCell>
-                  <StyledTableCell align="left">{row.calories}</StyledTableCell>
-                  <StyledTableCell align="left">{row.fat}</StyledTableCell>
+                </TableRow>
+              )}
+
+              {advogados.map((row) => (
+                <StyledTableRow key={row.id_advogado}>
                   <StyledTableCell align="center">
-                    <Button variant="contained" color="success">Aprovar</Button>
-                    
-                    <Button variant="contained" color="error" style={{ marginLeft: 10 }}>Reprovar</Button>
+                    <Tooltip title="Foto">
+                      <IconButton  sx={{ p: 0 }}>
+                        <Avatar alt="Avatar" src={row.usuario.url_foto_perfil ?? ""} />
+                      </IconButton>
+                    </Tooltip>
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row" align="left">{row.nome}</StyledTableCell>
+                  <StyledTableCell align="left">{row.nr_cna}</StyledTableCell>
+                  <StyledTableCell align="left">{row.uf_cna}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button variant="contained" color="success" onClick={() => handleClickAprovarAdvogado(row.id_advogado)}>Aprovar</Button>
+                    <Button variant="contained" color="error" style={{ marginLeft: 10 }} onClick={() => handleClickReprovarAdvogado(row.id_advogado)}>Reprovar</Button>
                   </StyledTableCell >
                 </StyledTableRow>
               ))}
