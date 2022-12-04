@@ -18,11 +18,11 @@ export default function Home() {
           sx={{ height: "60vh" }}
         >
           <Typography variant="h2" gutterBottom align='center' style={{ fontWeight: 600 }}>
-                        The Progressive <br/>JavaScript Framework
+            A maneira mais simples <br></br> de encontrar um advogado
           </Typography>
 
           <Typography variant="subtitle1" gutterBottom align='center' style={{ fontStyle: "italic" }}>
-                        An approachable, performant and versatile framework for building web user interfaces. 
+            Justissimo, mais do que justo. 
           </Typography>
         </Stack>
 
@@ -37,11 +37,11 @@ export default function Home() {
             spacing={2}
           >
             <Typography variant="h6" style={{ fontWeight: 600 }}>
-                            Approachable
+              Objetivo do Justissimo
             </Typography>
 
             <Typography variant="subtitle1" gutterBottom>
-                            Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation. 
+              Temos o objetivo de propor que clientes consigam encontrar e entrar em contato com advogados verificados pela equipe do Justíssimo. 
             </Typography>
           </Stack>
 
@@ -51,11 +51,11 @@ export default function Home() {
             spacing={2}
           >
             <Typography variant="h6" style={{ fontWeight: 600 }}>
-                            Performant
+              Uma solução inovadora
             </Typography>
 
             <Typography variant="subtitle1" gutterBottom>
-                            Truly reactive, compiler-optimized rendering system that rarely requires manual optimization. 
+              O Justíssimo difere de todas as atuais soluções existentes no mercado. Oferece um módulo de agendamento diretamente pela plataforma, entregando agilidade na gestão de agenda dos advogados. 
             </Typography>
           </Stack>
 
@@ -65,11 +65,11 @@ export default function Home() {
             spacing={2}
           >
             <Typography variant="h6" style={{ fontWeight: 600 }}>
-                            Versatile
+              Ficou com alguma dúvida?
             </Typography>
 
             <Typography variant="subtitle1" gutterBottom>
-                            A rich, incrementally adoptable ecosystem that scales between a library and a full-featured framework. 
+              O Justissimo também dispõe de uma ferramenta de inteligencia artificial. Batizado de Justus Assistente, seu objetivo é auxiliar os usuários a tirar eventuais dúvidas relacionadas ao Justissimo ou até mesmo, sobre a área juridica. 
             </Typography>
           </Stack>
         </Stack>
