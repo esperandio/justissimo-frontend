@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <WatsonComponent />
       <Header />
-      <Container position="sticky" maxWidth="xl" sx={{ backgroundImage: "url(https://images.pexels.com/photos/7979418/pexels-photo-7979418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)", WebkitFilter: "grayscale(50%)", filter: "gray", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }} style={{ height: "70vh", marginTop: 0, padding: 0 }}>
+      <Container position="sticky" maxWidth="100%" sx={{ backgroundImage: "url(https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }} style={{ height: "70vh", marginTop: 0, padding: 0 }}>
         <Stack
           justifyContent="center"
           alignItems="center"
