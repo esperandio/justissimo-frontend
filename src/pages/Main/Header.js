@@ -34,7 +34,7 @@ const Header = () => {
   const [settings] = useState(["Editar perfil", "Logout"]);
 
   useEffect(() => {
-    let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado", "Aprovar Advogados"];
+    let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado"];
 
     if (sessionStorage.getItem("tipo_usuario") === "Advogado") {
       pages = ["Home", "Meus agendamentos", "Buscar Divulgações"];
