@@ -45,7 +45,7 @@ export default function ConfiguracaoAgenda() {
 
   const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
 
-  async function handleConfiguracao(e) {
+  async function handleSubmit(e) {
         
     e.preventDefault();
         
@@ -119,15 +119,15 @@ export default function ConfiguracaoAgenda() {
     }
   }
 
-  function handleHorarioInicioChange(event, values) {
+  function handleChangeHorarioInicio(_, values) {
     setHorarioInicio(values);
   }
     
-  function handleHorarioFinalChange(event, values) {
+  function handleChangeHorarioFinal(_, values) {
     setHorarioFinal(values);
   }
 
-  function handleDuracaoChange(event, values) {
+  function handleChangeDuracao(_, values) {
     setDuracao(parseInt(values));
   }
 
@@ -138,7 +138,7 @@ export default function ConfiguracaoAgenda() {
       <Container maxWidth="lg">
         <TitlePage internal="Configuração da Agenda" />
 
-        <form onSubmit={handleConfiguracao}>
+        <form onSubmit={ handleSubmit }>
           <Grid container spacing={2}>
             <Grid item xs={12} sm container spacing={1}>
               <Grid item sm={12}>
@@ -172,7 +172,7 @@ export default function ConfiguracaoAgenda() {
                   options={horarios}
                   renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Horário inicial dos atendimentos" />}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
-                  onChange={ handleHorarioInicioChange }
+                  onChange={ handleChangeHorarioInicio }
                 />
               </Grid>
 
@@ -181,7 +181,7 @@ export default function ConfiguracaoAgenda() {
                   options={horarios}
                   renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Horário final dos atendimentos" />}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
-                  onChange={ handleHorarioFinalChange }
+                  onChange={ handleChangeHorarioFinal }
                 />
               </Grid>
 
@@ -195,7 +195,7 @@ export default function ConfiguracaoAgenda() {
                   required
                   renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Duração do Agendamento (formato em minutos)" />}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
-                  onChange={ handleDuracaoChange }
+                  onChange={ handleChangeDuracao }
                 />
               </Grid>
 
