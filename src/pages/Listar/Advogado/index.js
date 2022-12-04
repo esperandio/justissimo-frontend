@@ -233,7 +233,10 @@ export default function ListarAdvogado() {
                       value={advogado.nota}
                     />
 
-                    <p>{advogado._count?.avaliacoes} avaliações</p>
+                    <p>
+                      {advogado._count?.avaliacoes} 
+                      {advogado._count?.avaliacoes == 1 ? " avaliação" : " avaliações"}
+                    </p>
 
                     <Button
                       variant="contained"

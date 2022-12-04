@@ -141,7 +141,10 @@ export default function InformacoesAdvogado() {
             readOnly
             value={advogado.nota ?? 0}
           />
-          <p>{advogado._count?.avaliacoes} avaliações</p>
+          <p>
+            {advogado._count?.avaliacoes} 
+            {advogado._count?.avaliacoes == 1 ? " avaliação" : " avaliações"}
+          </p>
         </div>
 
         <Divider/>
@@ -189,13 +192,9 @@ export default function InformacoesAdvogado() {
         <Divider/>
 
         {avaliacoes.length > 0 && (
-          <div>
-            {avaliacoes.length == 1 && (
-              <h2>Avaliação</h2>  
-            )}
-            {avaliacoes.length > 1 && (
-              <h2>Avaliações</h2>  
-            )}
+          <>
+            <h2>Avaliações</h2>  
+
             {avaliacoes.map((avaliacao)=>{
               return (
                 <div key={avaliacao.id_avaliacao}>
@@ -211,7 +210,7 @@ export default function InformacoesAdvogado() {
                 </div>
               )
             })}
-          </div>
+          </>
         )}
 
         <DialogEnviarMensagem 
