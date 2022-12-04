@@ -16,7 +16,7 @@ export default function Home() {
           justifyContent="center"
           alignItems="center"
           spacing={2}
-          sx={{ height: "60vh" }}
+          sx={{ height: { xs: "100vh", sm: "60vh" } }}
         >
           <Typography variant="h2" gutterBottom align='center' style={{ fontWeight: 600 }}>
             A maneira mais simples <br></br> de encontrar um advogado
