@@ -75,31 +75,18 @@ export default function ConfiguracaoAgenda() {
     };
         
     try {
-      // Verifica se todos os campos foram preenchidos
-      if (hora_inicio !== "" && hora_final !== "" && duracao !== 0) {
-        // Envia ao backend/api os dados inseridos na configuração da agenda
-        const configuracaoAgenda = await api.post("lawyers/config-schedule", {dados});
-    
-        // Verifica o 'status code' recebido
-        switch ((configuracaoAgenda).status) {
-        case 200:
-          alert("Cadastro de horarios efetuado com sucesso!");
-          break;
-        default:
-          alert("🤨 Algo deu errado! Tente novamente mais tarde");
-          break;
-        }
-
-      } else {
-        alert("Preencha todos os campos!")
-      }
+      await api.post("lawyers/config-schedule", { dados });
+  
+      alert("Cadastro de horarios efetuado com sucesso!");
     } catch (error) {
-      if (error.response.status === 400) {
-        alert("Cadastro Inválido! " + error.response.data.message); 
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        return ;
       }
-      else {
-        alert("Cadastro Inválido! " + error.message);
-      } 
+
+      alert(mensagem_retorno_api);
     }
   }
 
