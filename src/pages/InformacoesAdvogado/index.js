@@ -17,12 +17,12 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { TitlePage }  from "../../components/Utils/title";
 import api from "../../services/api";
-import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
 import ButtonWithTooltip from "../../components/ButtonWithTooltip";
 import DialogRealizarAgendamento from "../../components/DialogRealizarAgendamento";
 import DialogEnviarMensagem from "../../components/DialogEnviarMensagem";
+import DialogAvaliacaoAdvogado from "../../components/DialogAvaliacaoAdvogado";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 export default function InformacoesAdvogado() {
   const classes = useStyles();
   const params = useParams();
-  const history = useHistory();
 
   const [backdropOpen, setBackdropOpen] = useState(true);
   const [advogado, setAdvogado] = useState({});
@@ -52,6 +51,7 @@ export default function InformacoesAdvogado() {
 
   const [openRealizarAgendamento, setOpenRealizarAgendamento] = useState(false);
   const [openEnviarMensagem, setOpenEnviarMensagem] = useState(false);
+  const [openAvaliacaoAdvogado, setOpenAvaliacaoAdvogado] = useState(false);
 
   useEffect(() => {
     async function buscarInformacoesAdvogado() {
@@ -86,8 +86,12 @@ export default function InformacoesAdvogado() {
     setOpenEnviarMensagem(false);
   }
 
-  function handleClickAvaliarAdvogado() {
-    history.push(`/avaliacao/advogado/${advogado?.id_advogado}`);
+  function handleClickAbrirModalAvaliacaoAdvogado() {
+    setOpenAvaliacaoAdvogado(true);
+  }
+
+  function handleClickFecharModalAvaliacaoAdvogado() {
+    setOpenAvaliacaoAdvogado(false);
   }
 
   function formatarDataAvaliacao(dt_avaliacao) {
@@ -174,7 +178,7 @@ export default function InformacoesAdvogado() {
             startIcon={<StarHalfIcon/>}
             disabled={!autenticado}
             tooltip="Você precisa estar autenticado para acessar esse recurso."
-            onClick={ handleClickAvaliarAdvogado }
+            onClick={ handleClickAbrirModalAvaliacaoAdvogado }
           >
             Avaliar advogado
           </ButtonWithTooltip>
@@ -221,6 +225,12 @@ export default function InformacoesAdvogado() {
           advogado={advogado}
           areas={advogadoAreas}
           onClose={ handleClickFecharModalAgendamento }
+        />
+
+        <DialogAvaliacaoAdvogado
+          open={openAvaliacaoAdvogado}
+          advogado={advogado}
+          onClose={ handleClickFecharModalAvaliacaoAdvogado }
         />
       </Container>
       <Footer />
