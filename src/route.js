@@ -30,7 +30,7 @@ function Routes() {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact={true} component={Home}/>
-          <Route path="/administrador/aprovar-advogado" component={AprovarAdvogados}/>
+          <Route path="/admin/aprovar-advogados" component={AprovarAdvogados}/>
           <Route path="/advogado/cad" component={CadAdvogado}/>
           <Route path="/advogado/listar" component={ListarAdvogado}/>
           <Route path="/advogado/minha-agenda" component={MinhaAgendaAdvogado}/>
