@@ -59,4 +59,33 @@ function ValidarAutenticacaoAdvogado() {
   )
 }
 
-export { ValidarAutenticacaoCliente, ValidarAutenticacaoAdvogado }
+function ValidarAutenticacaoAdmin() {
+  const [redirect, setRedirect] = useState(false);
+
+  useEffect(() => {
+    function validarSessao() {
+      if (sessionStorage.getItem("token") === null) {
+        alert("Você precisa estar conectado a sua conta para acessar essa tela!");
+        setRedirect({ redirect: true });
+        return;
+      }
+
+      if (sessionStorage.getItem("tipo_usuario") !== "Administrador") {
+        alert("Você precisa estar conectado como administrador para acessar essa tela!");
+        setRedirect({ redirect: true });
+      }
+    }
+
+    validarSessao();
+  }, []);
+
+  return (
+    <>
+      {redirect && (
+        <Redirect to='/login' />
+      )}
+    </>
+  )
+}
+
+export { ValidarAutenticacaoCliente, ValidarAutenticacaoAdvogado, ValidarAutenticacaoAdmin };
