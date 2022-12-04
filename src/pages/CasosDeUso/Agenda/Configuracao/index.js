@@ -24,8 +24,6 @@ export default function ConfiguracaoAgenda() {
     dias_inserir.push(diaInserirDados)
   }
 
-  // dias remover
-  let dias_remover = [];
 
   const [hora_inicio, setHorarioInicio] = useState("");
   const [hora_final, setHorarioFinal] = useState("");
@@ -58,7 +56,6 @@ export default function ConfiguracaoAgenda() {
     if(diaInicio === diaFim) {
       setDia(diaInicio.toLowerCase());
       setDiasInserir({
-        fk_advogado,
         dia,
         hora_inicio,
         hora_final,
@@ -68,11 +65,11 @@ export default function ConfiguracaoAgenda() {
     else {
       let indexInicio = dias.indexOf(diaInicio);
       let indexFim = dias.indexOf(diaFim);
+
       dias_api_format.map((dia, index) =>{
         if((index >= indexInicio) && (index <= indexFim)){ 
           setDia(dia);
           setDiasInserir({
-            fk_advogado,
             dia,
             hora_inicio,
             hora_final,
@@ -84,15 +81,14 @@ export default function ConfiguracaoAgenda() {
       });
     }
 
-
     const dados = {
-      dias_inserir, 
-      dias_remover
+      fk_advogado,
+      dias_inserir
     };
 
     const dadosApi = {
       dados
-    };    
+    };
         
     try {
             
