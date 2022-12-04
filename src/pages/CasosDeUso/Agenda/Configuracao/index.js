@@ -17,14 +17,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function ConfiguracaoAgenda() {
-    
-  // dias inserir
-  let dias_inserir = [];
-  function setDiasInserir(diaInserirDados) {
-    dias_inserir.push(diaInserirDados)
-  }
-
-
   const [hora_inicio, setHorarioInicio] = useState("");
   const [hora_final, setHorarioFinal] = useState("");
   const [horarios] = useState([
@@ -36,7 +28,6 @@ export default function ConfiguracaoAgenda() {
     "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", 
     "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]);
 
-  const [dia, setDia] = useState("");
   const [diaInicio, setDiaInicio] = useState("");
   const [diaFim, setDiaFim] = useState("");
   const [dias] = useState(["Segunda", "Terça", "Quarta", "Quinta", "Sexta"]);
@@ -50,13 +41,13 @@ export default function ConfiguracaoAgenda() {
   const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
 
   async function handleSubmit(e) {
-        
     e.preventDefault();
+
+    let dias_inserir = [];
         
     if(diaInicio === diaFim) {
-      setDia(diaInicio.toLowerCase());
-      setDiasInserir({
-        dia,
+      dias_inserir.push({
+        dia: diaInicio.toLowerCase(),
         hora_inicio,
         hora_final,
         duracao
@@ -68,16 +59,13 @@ export default function ConfiguracaoAgenda() {
 
       dias_api_format.map((dia, index) =>{
         if((index >= indexInicio) && (index <= indexFim)){ 
-          setDia(dia);
-          setDiasInserir({
+          dias_inserir.push({
             dia,
             hora_inicio,
             hora_final,
             duracao
           });
         }
-
-        return dia;
       });
     }
 
@@ -85,18 +73,12 @@ export default function ConfiguracaoAgenda() {
       fk_advogado,
       dias_inserir
     };
-
-    const dadosApi = {
-      dados
-    };
         
     try {
-            
       // Verifica se todos os campos foram preenchidos
       if (hora_inicio !== "" && hora_final !== "" && duracao !== 0) {
-
         // Envia ao backend/api os dados inseridos na configuração da agenda
-        const configuracaoAgenda = await api.post("lawyers/config-schedule", dadosApi);
+        const configuracaoAgenda = await api.post("lawyers/config-schedule", {dados});
     
         // Verifica o 'status code' recebido
         switch ((configuracaoAgenda).status) {
