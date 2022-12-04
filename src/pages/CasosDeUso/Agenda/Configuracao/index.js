@@ -5,6 +5,7 @@ import { TitlePage } from "../../../../components/Utils/title";
 import ButtonOutlined from "../../../../components/Utils/buttom";
 import api from "../../../../services/api";
 import Header from "../../../Main/Header";
+import Footer from "../../../Main/Footer";
 import { ValidarAutenticacaoAdvogado } from "../../../../components/ValidarAutenticacao"
 
 export default function ConfiguracaoAgenda() {
@@ -202,6 +203,7 @@ export default function ConfiguracaoAgenda() {
           />
         </Container>
       </Container>
+      <Footer />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
 import { Container, Link, Grid, FormControl } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
@@ -220,6 +221,7 @@ export default function MinhasDivulgacoes() {
           </DialogContent>
         </Dialog>
       </Container>
+      <Footer />
     </>
   );
 }

@@ -23,6 +23,7 @@ import { TitlePage } from "../../../components/Utils/title";
 import api from "../../../services/api";
 import { Rating } from "@mui/material";
 import Header from "../../Main/Header";
+import Footer from "../../Main/Footer";
 
 const useStyles = makeStyles((theme) => ({
   user: {
@@ -232,7 +233,10 @@ export default function ListarAdvogado() {
                       value={advogado.nota}
                     />
 
-                    <p>{advogado._count?.avaliacoes} avaliações</p>
+                    <p>
+                      {advogado._count?.avaliacoes} 
+                      {advogado._count?.avaliacoes == 1 ? " avaliação" : " avaliações"}
+                    </p>
 
                     <Button
                       variant="contained"
@@ -248,6 +252,7 @@ export default function ListarAdvogado() {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </>
   );
 }

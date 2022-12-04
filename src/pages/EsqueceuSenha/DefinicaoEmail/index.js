@@ -6,6 +6,8 @@ import Container from "@material-ui/core/Container";
 import { Redirect } from "react-router";
 import api from "../../../services/api";
 import { TitleJustissimo, TitlePage } from "../../../components/Utils/title";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -119,6 +121,17 @@ export default function RedefinirSenha_Email() {
           </Button>
 
         </form>
+
+        <br />
+
+        <Grid container>
+          <Grid item>
+            <Link href="../home" variant="body2">
+              Voltar para home
+            </Link>
+          </Grid>
+        </Grid>
+
       </div>
     </Container>
   );
