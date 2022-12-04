@@ -9,6 +9,12 @@ import { ValidarAutenticacaoAdvogado } from "../../../../components/ValidarAuten
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import MuiAlert from "@mui/material/Alert";
+import Typography from "@mui/material/Typography";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function ConfiguracaoAgenda() {
     
@@ -140,9 +146,17 @@ export default function ConfiguracaoAgenda() {
 
         <form onSubmit={ handleSubmit }>
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={12}>
+              <Alert severity="info">
+                Alterações nas configurações irão valer apenas para novos agendamentos. Agendamentos já existentes não serão afetados.
+              </Alert>
+            </Grid>
+
             <Grid item xs={12} sm container spacing={1}>
               <Grid item sm={12}>
-                <b>Perído da semana em que realiza atendimentos:</b> 
+                <Typography style={{ fontWeight: 600 }}>
+                  Perído da semana em que realiza atendimentos:
+                </Typography> 
               </Grid>
 
               <Grid item xs={12} sm={6}>
@@ -164,7 +178,9 @@ export default function ConfiguracaoAgenda() {
               </Grid>
 
               <Grid item sm={12}>
-                <b>Agora defina o horário inicial e final de atendimento:</b> 
+                <Typography style={{ fontWeight: 600 }}>
+                  Horário inicial e final de atendimento:
+                </Typography> 
               </Grid>
 
               <Grid item xs={12} sm={6}>
@@ -186,14 +202,23 @@ export default function ConfiguracaoAgenda() {
               </Grid>
 
               <Grid item sm={12}>
-                <b>Por último defina o tempo (minutos) de cada sessão de atendimento:</b> 
+                <Typography style={{ fontWeight: 600 }}>
+                  Tempo (minutos) de cada sessão de atendimento:
+                </Typography> 
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={duracoes}
                   required
-                  renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Duração do Agendamento (formato em minutos)" />}
+                  renderInput={(params) => {
+                    return <TextField 
+                      {...params} 
+                      required 
+                      variant="outlined" 
+                      margin="normal" 
+                      label="Duração do agendamento" 
+                    />}}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
                   onChange={ handleChangeDuracao }
                 />
