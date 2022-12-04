@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Container, TextField } from "@material-ui/core";
 import { Autocomplete } from "@mui/material";
 import { TitlePage } from "../../../../components/Utils/title";
-import ButtonOutlined from "../../../../components/Utils/buttom";
 import api from "../../../../services/api";
 import Header from "../../../Main/Header";
 import Footer from "../../../Main/Footer";
 import { ValidarAutenticacaoAdvogado } from "../../../../components/ValidarAutenticacao"
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
 
 export default function ConfiguracaoAgenda() {
     
@@ -136,72 +138,80 @@ export default function ConfiguracaoAgenda() {
       <Container maxWidth="lg">
         <TitlePage internal="Configuração da Agenda" />
 
-        <Container maxWidth="sm">
-          <br/>
-          <br/>
+        <form onSubmit={handleConfiguracao}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm container spacing={1}>
+              <Grid item sm={12}>
+                <b>Perído da semana em que realiza atendimentos:</b> 
+              </Grid>
 
-          <span> <b>
-                    Defina por gentileza o perído da semana em que realiza atendimentos:
-          </b> </span>
-          <br/>
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  options={dias}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  onChange={ (_, v) => { setDiaInicio(v); } }
+                  renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="De:" />}
+                />
+              </Grid>
 
-          <Autocomplete
-            options={dias}
-            isOptionEqualToValue={(option, value) => option.value === value.value}
-            onChange={ (_, v) => { setDiaInicio(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="De:" />}
-          />
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  options={dias}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  onChange={ (_, v) => { setDiaFim(v); } }
+                  renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Até:" />}
+                />
+              </Grid>
 
-          <Autocomplete
-            options={dias}
-            isOptionEqualToValue={(option, value) => option.value === value.value}
-            onChange={ (_, v) => { setDiaFim(v); } }
-            renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Até:" />}
-          />
-          <br/>
-          <span> <b>
-                    Agora defina o horário inicial e final de atendimento:
-          </b> </span>
-          <br/>
+              <Grid item sm={12}>
+                <b>Agora defina o horário inicial e final de atendimento:</b> 
+              </Grid>
 
-          <Autocomplete
-            options={horarios}
-            renderInput={(params) => <TextField {...params} required label="Horário inicial dos atendimentos" />}
-            isOptionEqualToValue={(option, value) => option.value === value.value}
-            onChange={ handleHorarioInicioChange }
-          />
-          <br/>
-          <Autocomplete
-            options={horarios}
-            renderInput={(params) => <TextField {...params} required label="Horário final dos atendimentos" />}
-            isOptionEqualToValue={(option, value) => option.value === value.value}
-            onChange={ handleHorarioFinalChange }
-          />
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  options={horarios}
+                  renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Horário inicial dos atendimentos" />}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  onChange={ handleHorarioInicioChange }
+                />
+              </Grid>
 
-          <br/>
-          <br/>
-          <span> <b>
-                    Por último defina o tempo (minutos) de cada sessão de atendimento:
-          </b> </span>
-          <br/>
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  options={horarios}
+                  renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Horário final dos atendimentos" />}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  onChange={ handleHorarioFinalChange }
+                />
+              </Grid>
 
-          <Autocomplete
-            options={duracoes}
-            required
-            renderInput={(params) => <TextField {...params} required label="Duração do Agendamento (formato em minutos)" />}
-            isOptionEqualToValue={(option, value) => option.value === value.value}
-            onChange={ handleDuracaoChange }
-          />
+              <Grid item sm={12}>
+                <b>Por último defina o tempo (minutos) de cada sessão de atendimento:</b> 
+              </Grid>
 
-          <br/>
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  options={duracoes}
+                  required
+                  renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Duração do Agendamento (formato em minutos)" />}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  onChange={ handleDuracaoChange }
+                />
+              </Grid>
 
-          <ButtonOutlined
-            internal="SALVAR CONFIGURAÇÃO" 
-            type="submit"
-            variant="outlined"
-            onClick={handleConfiguracao}
-          />
-        </Container>
+              <Grid item xs={12} sm={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  startIcon={<SaveIcon />}
+                >
+                  Salvar configuração
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>              
+        </form>
       </Container>
       <Footer />
     </>
