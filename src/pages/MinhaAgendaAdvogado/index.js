@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { 
   TextField, 
   Card, 
@@ -25,7 +26,6 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
-import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
 import Footer from "../Main/Footer";
 import { TitlePage } from "../../components/Utils/title";
@@ -35,13 +35,14 @@ import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticaca
 import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 
 export default function MinhaAgenda() {
+  const history = useHistory();
+
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
-  const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
   const [nome, setNome] = useState("");
@@ -143,7 +144,7 @@ export default function MinhaAgenda() {
   }
 
   function handleClickConfiguracaoAgenda() {
-    setRedirectConfigAgenda({redirectConfigAgenda: true})
+    history.push("../configuracao/agenda");
   }
 
   async function handleClickBuscarAgenda() {
@@ -251,10 +252,6 @@ export default function MinhaAgenda() {
 
   async function handleClickLimparFiltroAgendamento() {
     buscarInformacoesAgendaAdvogado();
-  }
-
-  if (redirectConfigAgenda) {
-    return <Redirect to='../configuracao/agenda' />;
   }
 
   return (
