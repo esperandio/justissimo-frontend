@@ -127,7 +127,10 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose }) {
 
         <DialogActions>
           <Button onClick={ handleClickFecharDialogAvaliacaoAdvogado }>Cancelar</Button>
-          <ButtonWithLoader onClick={ handleClickConfirmarAvaliacaoAdvogado }>
+          <ButtonWithLoader 
+            disabled={descricao == ""}
+            onClick={ handleClickConfirmarAvaliacaoAdvogado }
+          >
             Confirmar
           </ButtonWithLoader>
         </DialogActions>
