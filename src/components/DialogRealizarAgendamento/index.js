@@ -21,7 +21,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { ptBR } from "date-fns/locale";
 import api from "../../services/api";
-import ButtonWithLoader from "../ButtonWithLoader"
+import ButtonWithLoader from "../ButtonWithLoader";
 
 export default function RealizarAgendamento({ open, advogado, areas, onClose }) {
   const [id_area_atuacao, setAreaAtuacao] = useState("");
