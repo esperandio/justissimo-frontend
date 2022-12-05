@@ -49,44 +49,38 @@ export default function Login() {
     };
         
     try {
-      // Verifica se todos os campos foram preenchidos
-      if (email !== "" && senha !== "") {
-        // Envia ao backend/api os dados inseridos no login
-        const login = await api.post("login", dados);
-        // Pega o token
-        const login_token = (login).data.token;
-        // Pega o tipo do usuario
-        const tipo_usuario = (login).data.tipo_usuario;
-        const id_usuario = login.data.id_usuario;
-        const url_foto_perfil = login.data.url_foto_perfil;
-                
-        // Seta o token na sessionStorage
-        sessionStorage.setItem("token", login_token);
-        sessionStorage.setItem("tipo_usuario", tipo_usuario);
-        sessionStorage.setItem("id_usuario", id_usuario);
-        sessionStorage.setItem("url_foto_perfil", url_foto_perfil);
-                
-        // Pega o id e seta na sessionStorage, de acordo o tipo do usuario
-        if (tipo_usuario === "Cliente") {
-          const id_cliente = (login).data.id_cliente;
-          sessionStorage.setItem("id_cliente", id_cliente);
-        } else if (tipo_usuario === "Advogado") {
-          const id_advogado = (login).data.id_advogado;
-          sessionStorage.setItem("id_advogado", id_advogado);
-        }
-    
-        // Verifica o 'status code' recebido
-        switch ((login).status) {
-        case 200:
-          setState({ redirect: true });
-          break;
-        default:
-          alert("🤨 Algo deu errado! Tente novamente mais tarde");
-          break;
-        }
-
-      } else {
-        alert("Preencha todos os campos!")
+      // Envia ao backend/api os dados inseridos no login
+      const login = await api.post("login", dados);
+      // Pega o token
+      const login_token = (login).data.token;
+      // Pega o tipo do usuario
+      const tipo_usuario = (login).data.tipo_usuario;
+      const id_usuario = login.data.id_usuario;
+      const url_foto_perfil = login.data.url_foto_perfil;
+              
+      // Seta o token na sessionStorage
+      sessionStorage.setItem("token", login_token);
+      sessionStorage.setItem("tipo_usuario", tipo_usuario);
+      sessionStorage.setItem("id_usuario", id_usuario);
+      sessionStorage.setItem("url_foto_perfil", url_foto_perfil);
+              
+      // Pega o id e seta na sessionStorage, de acordo o tipo do usuario
+      if (tipo_usuario === "Cliente") {
+        const id_cliente = (login).data.id_cliente;
+        sessionStorage.setItem("id_cliente", id_cliente);
+      } else if (tipo_usuario === "Advogado") {
+        const id_advogado = (login).data.id_advogado;
+        sessionStorage.setItem("id_advogado", id_advogado);
+      }
+  
+      // Verifica o 'status code' recebido
+      switch ((login).status) {
+      case 200:
+        setState({ redirect: true });
+        break;
+      default:
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        break;
       }
     } catch (error) {
       if (error.response.status === 401) {
@@ -122,7 +116,7 @@ export default function Login() {
           <TitleJustissimo/>
           <TitlePage internal="ENTRAR" />
           <div className={classes.paper}>
-            <form className={classes.form} /*onSubmit={handleLogin}*/>
+            <form className={classes.form} onSubmit={handleLogin}>
 
               {/* Input 'Email' */}
               <TextField
@@ -148,9 +142,8 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 color="primary"
-                onClick={handleLogin}
               >
-                        Login
+                Login
               </Button>
 
               <Grid container>
