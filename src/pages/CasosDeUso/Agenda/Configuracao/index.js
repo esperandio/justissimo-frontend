@@ -156,7 +156,7 @@ export default function ConfiguracaoAgenda() {
             <Grid item xs={12} sm container spacing={1}>
               <Grid item sm={12}>
                 <Typography style={{ fontWeight: 600 }}>
-                  Perído da semana em que realiza atendimentos:
+                  Período da semana em que realiza atendimentos:
                 </Typography> 
               </Grid>
 
