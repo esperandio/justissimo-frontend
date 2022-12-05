@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <WatsonComponent />
       <Header />
-      <Container position="sticky" maxWidth="100%" sx={{ backgroundImage: "url(https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }} style={{ height: "70vh", marginTop: 0, padding: 0 }}>
+      <Container position="sticky" maxWidth="100%" sx={{ backgroundImage: "linear-gradient(rgba(0,1,0,1), rgba(0,0,0,0.4)), url(https://img.freepik.com/fotos-gratis/pessoas-negocio-apertar-mao-em-um-sala-reuniao_53876-15185.jpg?w=740&t=st=1670258156~exp=1670258756~hmac=8acca085c980eaafdaaff8a1eccc6d5fe73864650c6b437d9257fd599c1f3048)", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }} style={{ height: "70vh", marginTop: 0, padding: 0 }}>
         <Stack
           justifyContent="center"
           alignItems="center"
