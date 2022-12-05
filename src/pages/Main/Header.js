@@ -37,7 +37,7 @@ const Header = () => {
     let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado"];
 
     if (sessionStorage.getItem("tipo_usuario") === "Advogado") {
-      pages = ["Home", "Meus agendamentos", "Buscar Divulgações"];
+      pages = ["Home", "Meus agendamentos", "Buscar Divulgações", "Configuração da agenda"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
       pages = ["Home", "Meus agendamentos", "Minhas Divulgações", "Pesquisar Advogado", "Cadastrar Divulgação"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Administrador") {
@@ -85,6 +85,8 @@ const Header = () => {
       return "/advogado/cad";
     case "Aprovar Advogados":
       return "/admin/aprovar-advogados";
+    case "Configuração da agenda":
+      return "/configuracao/agenda";
     default:
       return "/home";
     }

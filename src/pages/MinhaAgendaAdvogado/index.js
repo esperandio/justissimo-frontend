@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { 
   TextField, 
   Card, 
@@ -21,7 +20,6 @@ import { InputLabel, Select, MenuItem, Container, FormControl, Grid } from "@mat
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
-import ConfigIcon from "@mui/icons-material/Settings";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
@@ -35,8 +33,6 @@ import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticaca
 import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 
 export default function MinhaAgenda() {
-  const history = useHistory();
-
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
@@ -141,10 +137,6 @@ export default function MinhaAgenda() {
 
   function handleClickFiltroAgendamento() {
     setOpenDialogFiltrarAgendamentos(true);
-  }
-
-  function handleClickConfiguracaoAgenda() {
-    history.push("../configuracao/agenda");
   }
 
   async function handleClickBuscarAgenda() {
@@ -267,9 +259,6 @@ export default function MinhaAgenda() {
         >
           <Button variant="contained" startIcon={<CalendarMonthIcon />} onClick={ handleClickAgendamentoManual }>
             Agendamento manual
-          </Button>
-          <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleClickConfiguracaoAgenda }>
-            Configuração da Agenda
           </Button>
           <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
             Filtro
