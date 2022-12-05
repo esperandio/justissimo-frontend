@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import EmailIcon from "@mui/icons-material/Email";
 import { TitlePage }  from "../../components/Utils/title";
 import api from "../../services/api";
 import Header from "../Main/Header";
@@ -160,7 +160,7 @@ export default function InformacoesAdvogado() {
           spacing={2}
         >
           <ButtonWithTooltip
-            startIcon={<WhatsAppIcon/>}
+            startIcon={<EmailIcon/>}
             disabled={!autenticado}
             tooltip="Você precisa estar autenticado para acessar esse recurso."
             onClick={ handleClickAbrirModalEnviarMensagem }
