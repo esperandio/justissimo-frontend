@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 import { Container, Grid, FormControl } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
 import { 
@@ -269,6 +270,7 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
       </Container>
+      <Footer />
     </>
   );
 }

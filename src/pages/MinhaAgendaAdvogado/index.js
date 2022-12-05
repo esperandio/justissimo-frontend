@@ -20,13 +20,12 @@ import { InputLabel, Select, MenuItem, Container, FormControl, Grid } from "@mat
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
-import ConfigIcon from "@mui/icons-material/Settings";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
-import { Redirect } from "react-router-dom";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 import { TitlePage } from "../../components/Utils/title";
 import api from "../../services/api";
 import { LawyerService } from "../../services";
@@ -40,7 +39,6 @@ export default function MinhaAgenda() {
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
-  const [redirectConfigAgenda, setRedirectConfigAgenda] = useState(false);
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
   const [nome, setNome] = useState("");
@@ -139,10 +137,6 @@ export default function MinhaAgenda() {
 
   function handleClickFiltroAgendamento() {
     setOpenDialogFiltrarAgendamentos(true);
-  }
-
-  function handleClickConfiguracaoAgenda() {
-    setRedirectConfigAgenda({redirectConfigAgenda: true})
   }
 
   async function handleClickBuscarAgenda() {
@@ -252,10 +246,6 @@ export default function MinhaAgenda() {
     buscarInformacoesAgendaAdvogado();
   }
 
-  if (redirectConfigAgenda) {
-    return <Redirect to='../configuracao/agenda' />;
-  }
-
   return (
     <>
       <ValidarAutenticacaoAdvogado />
@@ -269,9 +259,6 @@ export default function MinhaAgenda() {
         >
           <Button variant="contained" startIcon={<CalendarMonthIcon />} onClick={ handleClickAgendamentoManual }>
             Agendamento manual
-          </Button>
-          <Button variant="contained" startIcon={<ConfigIcon />} onClick={ handleClickConfiguracaoAgenda }>
-            Configuração da Agenda
           </Button>
           <Button variant="contained" startIcon={<FilterAltIcon />} onClick={ handleClickFiltroAgendamento }>
             Filtro
@@ -552,6 +539,7 @@ export default function MinhaAgenda() {
           </DialogContent>
         </Dialog>
       </Container>
+      <Footer />
     </>
   );
 }

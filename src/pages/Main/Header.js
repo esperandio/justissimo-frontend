@@ -37,9 +37,11 @@ const Header = () => {
     let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado"];
 
     if (sessionStorage.getItem("tipo_usuario") === "Advogado") {
-      pages = ["Home", "Meus agendamentos", "Buscar Divulgações"];
+      pages = ["Home", "Meus agendamentos", "Buscar Divulgações", "Configuração da agenda"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
       pages = ["Home", "Meus agendamentos", "Minhas Divulgações", "Pesquisar Advogado", "Cadastrar Divulgação"];
+    } else if (sessionStorage.getItem("tipo_usuario") === "Administrador") {
+      pages = ["Home", "Pesquisar Advogado", "Aprovar Advogados"];
     }
 
     setPages(pages);
@@ -81,6 +83,10 @@ const Header = () => {
       return "/cliente/cad";
     case "Cadastrar Advogado":
       return "/advogado/cad";
+    case "Aprovar Advogados":
+      return "/admin/aprovar-advogados";
+    case "Configuração da agenda":
+      return "/configuracao/agenda";
     default:
       return "/home";
     }
@@ -236,10 +242,12 @@ const Header = () => {
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting) => (
-                      <MenuItem key={setting} onClick={() => handleClickSettingsMenuItem(setting)}>
-                        <Typography textAlign="center">{setting}</Typography>
-                      </MenuItem>
-                    ))}
+                      //caso for administrador não deve aparecer a opção de editar perfil 
+                      (setting === "Editar perfil" && sessionStorage.getItem("tipo_usuario") === "Administrador") ? null : (
+                        <MenuItem key={setting} onClick={() => handleClickSettingsMenuItem(setting)}>
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      )))}
                   </Menu>
                 </>
               }

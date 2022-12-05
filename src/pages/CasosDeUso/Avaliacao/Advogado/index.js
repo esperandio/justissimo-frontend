@@ -8,6 +8,7 @@ import ButtonOutlined from "../../../../components/Utils/buttom";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Header from "../../../Main/Header";
+import Footer from "../../../Main/Footer";
 import { TextField } from "@mui/material";
 import { FormControl } from "@material-ui/core/";
 import { ValidarAutenticacaoCliente } from "../../../../components/ValidarAutenticacao";
@@ -167,6 +168,7 @@ export default function AvaliacaoAdvogado() {
           </div>
         </Container>
       </Container>
+      <Footer />
     </>
   );
 }

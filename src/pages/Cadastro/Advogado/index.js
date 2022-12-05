@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from "react";
-import Container from "@material-ui/core/Container";
 import Header from "../../Main/Header";
+import Footer from "../../Main/Footer";
 import { TitlePage } from "../../../components/Utils/title";
-import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ptBR } from "date-fns/locale";
-import Autocomplete from "@mui/material/Autocomplete";
 import InputCnpjMask from "../../../components/Utils/mask/inputCnpjMask";
 import InputCpfMask from "../../../components/Utils/mask/inputCpfMask";
-import InputLabel from "@material-ui/core/InputLabel";
 import InputCepMask from "../../../components/Utils/mask/inputCepMask";
 import InputTelefone from "../../../components/Utils/mask/inputTelefoneMask";
 import api from "../../../services/api";
 import { Redirect } from "react-router-dom";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Box from "@mui/material/Box";
+import TextFieldPassword from "../../../components/TextFieldPassword"
+import {
+  TextField,
+  Autocomplete,
+  Stepper,
+  Step,
+  StepLabel,
+  Stack
+} from "@mui/material";
+import { 
+  Container, 
+  Grid,
+  FormControl,
+  Button,
+  InputLabel
+} from "@material-ui/core";
 
 const steps = ["Dados pessoais", "Dados da OAB", "Dados de acesso"];
 
@@ -347,39 +353,11 @@ export default function CadastroAdvogado() {
                   </Grid>
                                     
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="senha"
-                        label="Senha"
-                        type="password"
-                        id="senha"
-                        autoComplete="current-senha"
-                        value={senha}
-                        onChange={e => setSenha(e.target.value)}
-                      />
-                    </FormControl>
+                    <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
                   </Grid>
 
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="senha"
-                        label="Confirmar senha"
-                        type="password"
-                        id="senha"
-                        autoComplete="current-senha"
-                        value={senhaConfirmacao}
-                        onChange={e => setSenhaConfirmacao(e.target.value)}
-                      />
-                    </FormControl>
+                    <TextFieldPassword onChange={e => setSenhaConfirmacao(e.target.value)}></TextFieldPassword>
                   </Grid>
 
                   <Grid item xs={12} sm={12}>
@@ -393,7 +371,12 @@ export default function CadastroAdvogado() {
             </Grid>
           </Grid>
 
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <br />
+
+          <Stack 
+            direction={{ xs: "column", sm: "row" }} 
+            spacing={1}
+          >
             <Button
               variant="contained"
               disabled={activeStep === 0}
@@ -424,9 +407,10 @@ export default function CadastroAdvogado() {
                 </Button>
               </>
             }
-          </Box>
+          </Stack>
         </form>
       </Container>
+      <Footer />
     </>
   );
 }

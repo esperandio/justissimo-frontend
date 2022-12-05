@@ -9,13 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Redirect } from "react-router-dom";
 import { TitleJustissimo, TitlePage } from "../../components/Utils/title";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import FormControl from "@mui/material/FormControl";
+import TextFieldPassword from "../../components/TextFieldPassword";
+import Stack from "@mui/material/Stack";
+import Footer from "./../../pages/Main/Footer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,7 +35,6 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [redirect, setState] = useState(false);
-  const [mostrarSenha, setMostrarSenha] = useState(false);
     
   async function handleLogin(e) {
         
@@ -101,11 +96,6 @@ export default function Login() {
     }
   }
 
-  function handleClickMostrarSenha()
-  {
-    setMostrarSenha(!mostrarSenha);
-  }
-
   // Se o 'login' for aceito, redireciona para a tela de home
   if (redirect) {
     return <Redirect to='home' />;
@@ -114,70 +104,67 @@ export default function Login() {
   return (
   // Form
     <Container component="main" maxWidth="xs">
-      <TitleJustissimo/>
-      <TitlePage internal="ENTRAR" />
-      <div className={classes.paper}>
-        <form className={classes.form} /*onSubmit={handleLogin}*/>
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ height: "100vh" }}
+      >
+        <TitleJustissimo/>
+        <TitlePage internal="ENTRAR" />
+        <div className={classes.paper}>
+          <form className={classes.form} /*onSubmit={handleLogin}*/>
 
-          {/* Input 'Email' */}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="E-mail"
-            name="email"
-            autoComplete="email"
-            
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-                    
-          {/* Input 'Senha' */}
-          <FormControl required fullWidth variant="outlined" margin="normal">
-            <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={mostrarSenha ? "text" : "password"}
-              value={senha}
-              onChange={e => setSenha(e.target.value)}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={ handleClickMostrarSenha }
-                    edge="end"
-                  >
-                    {mostrarSenha ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Senha"
+            {/* Input 'Email' */}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="E-mail"
+              name="email"
+              autoComplete="email"
+              
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
-          </FormControl>
+                      
+            {/* Input 'Senha' */}
+            <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
 
-          {/* Button 'Login' */}
-          <Button className={classes.submit}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleLogin}
-          >
-                    Login
-          </Button>
+            {/* Button 'Login' */}
+            <Button className={classes.submit}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleLogin}
+            >
+                      Login
+            </Button>
 
-          {/* href (link) 'Esqueceu a senha' */}
-          <Grid container>
-            <Grid item>
-              <Link href="redefinirsenha/email" variant="body2">
-                {"Esqueceu a senha?"}
-              </Link>
+            <Grid container>
+              <Grid item>
+                <Link href="redefinirsenha/email" variant="body2">
+                  Esqueceu a senha?
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
 
-        </form>
-      </div>
+            <br />
+
+            <Grid container>
+              <Grid item>
+                <Link href="home" variant="body2">
+                  Voltar para home
+                </Link>
+              </Grid>
+            </Grid>
+
+          </form>
+        </div>
+        <Footer />
+      </Stack>
     </Container>
   );
 }

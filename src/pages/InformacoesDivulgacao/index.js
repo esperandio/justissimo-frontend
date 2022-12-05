@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 import { Container, Grid } from "@material-ui/core/";
 import { TitlePage } from "../../components/Utils/title";
 import { 
@@ -207,6 +208,7 @@ export default function InformacoesDivulgacao() {
           </>
         )}
       </Container>
+      <Footer />
     </>
   );
 }
