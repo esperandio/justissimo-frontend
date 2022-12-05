@@ -11,42 +11,52 @@ export default function Home() {
     <>
       <WatsonComponent />
       <Header />
-      <Container>
+      <Container position="sticky" maxWidth="100%" sx={{ backgroundImage: "linear-gradient(rgba(0,1,0,1), rgba(0,0,0,0.4)), url(https://img.freepik.com/fotos-gratis/pessoas-negocio-apertar-mao-em-um-sala-reuniao_53876-15185.jpg?w=740&t=st=1670258156~exp=1670258756~hmac=8acca085c980eaafdaaff8a1eccc6d5fe73864650c6b437d9257fd599c1f3048)", backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }} style={{ height: "70vh", marginTop: 0, padding: 0 }}>
         <Stack
           justifyContent="center"
           alignItems="center"
           spacing={2}
-          sx={{ height: { xs: "100vh", sm: "60vh" } }}
+          sx={{ height: "100%" }}
         >
-          <Typography variant="h2" gutterBottom align='center' style={{ fontWeight: 600 }}>
-            A maneira mais simples <br></br> de encontrar um advogado
+          <Typography variant="h2" gutterBottom align='center' style={{maxWidth: "100%", color: "#fff" }}>
+            A maneira mais simples de <br/> encontrar um advogadoo
           </Typography>
 
-          <Typography variant="subtitle1" gutterBottom align='center' style={{ fontStyle: "italic" }}>
-            Justissimo, mais do que justo. 
+          <Typography variant="h6" gutterBottom align='center' style={{ fontStyle: "italic", color: "#fff" }}>
+            Justíssimo, mais do que justo!
           </Typography>
         </Stack>
-
+      </Container>
+      {/* </AppBar> */}
+      <Container>
         <Stack
+          marginTop="3rem"
+          display="flex"
+          alignItems="flex-start"
           direction={{ xs: "column", md: "row" }} 
           justifyContent="center"
           spacing={2}
         >
           <Stack
+            flex={1}
+            alignItems="center"
             direction="column"
             justifyContent="center"
             spacing={2}
           >
             <Typography variant="h6" style={{ fontWeight: 600 }}>
-              Objetivo do Justissimo
+              Objetivo do Justíssimo
             </Typography>
 
-            <Typography variant="subtitle1" gutterBottom>
-              Temos o objetivo de propor que clientes consigam encontrar e entrar em contato com advogados verificados pela equipe do Justíssimo. 
+            <Typography variant="subtitle1" gutterBottom style={{ textAlign: "center" }}>
+              Nossa solução tem o objetivo de propor que clientes consigam encontrar e entrar em contato com advogados verificados pela equipe do 
+              Justíssimo, garantindo assim a confiabilidade e integridade de todos os usuários.
             </Typography>
           </Stack>
 
           <Stack
+            flex={1}
+            alignItems="center"
             direction="column"
             justifyContent="center"
             spacing={2}
@@ -55,12 +65,17 @@ export default function Home() {
               Uma solução inovadora
             </Typography>
 
-            <Typography variant="subtitle1" gutterBottom>
-              O Justíssimo difere de todas as atuais soluções existentes no mercado. Oferece um módulo de agendamento diretamente pela plataforma, entregando agilidade na gestão de agenda dos advogados. 
+            <Typography variant="subtitle1" gutterBottom style={{ textAlign: "center" }}>
+              O Justíssimo difere de todas as atuais soluções existentes no mercado. Oferecendo um módulo de agendamento diretamente pela 
+              plataforma, entregando agilidade na gestão de agendas dos advogados. Oferecemos também um módulo de divulgação de necessidades 
+              jurídicas, onde o usuário informa a sua necessidade e passa a ficar visível a todos os advogados cadastrados no Justíssimo, para que os 
+              mesmos entrem em contato caso estejam interessados.
             </Typography>
           </Stack>
 
           <Stack
+            flex={1}
+            alignItems="center"
             direction="column"
             justifyContent="center"
             spacing={2}
@@ -69,8 +84,9 @@ export default function Home() {
               Ficou com alguma dúvida?
             </Typography>
 
-            <Typography variant="subtitle1" gutterBottom>
-              O Justissimo também dispõe de uma ferramenta de inteligencia artificial. Batizado de Justus Assistente, seu objetivo é auxiliar os usuários a tirar eventuais dúvidas relacionadas ao Justissimo ou até mesmo, sobre a área juridica. 
+            <Typography variant="subtitle1" gutterBottom style={{ textAlign: "center" }}>
+              O Justíssimo também dispõe de uma ferramenta de inteligência artificial. Batizado de Justus Assistente, seu objetivo é auxiliar os usuários 
+              a tirar eventuais dúvidas relacionadas ao Justíssimo ou até mesmo, sobre a área jurídica. 
             </Typography>
           </Stack>
         </Stack>
