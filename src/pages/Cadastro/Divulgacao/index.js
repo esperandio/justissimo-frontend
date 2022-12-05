@@ -93,7 +93,7 @@ export default function CadastroDivulgacao() {
       <Container maxWidth="lg">
         <TitlePage internal="Divulgue sua causa" />
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm container spacing={1}>
               <Grid item xs={12} sm={6}>
@@ -155,7 +155,6 @@ export default function CadastroDivulgacao() {
                     color="primary"
                     type="submit"
                     startIcon={<SaveIcon />}
-                    onClick={ handleSubmit }
                   >
                     Cadastrar
                   </Button>
