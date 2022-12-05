@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, TextField } from "@material-ui/core";
 import { Autocomplete } from "@mui/material";
 import { TitlePage } from "../../../../components/Utils/title";
@@ -19,6 +19,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function ConfiguracaoAgenda() {
   const [hora_inicio, setHorarioInicio] = useState("");
   const [hora_final, setHorarioFinal] = useState("");
+  const [diaInicio, setDiaInicio] = useState("");
+  const [diaFim, setDiaFim] = useState("");
+  const [duracao, setDuracao] = useState("");
+
+  const [dias] = useState(["Segunda", "Terça", "Quarta", "Quinta", "Sexta"]);
+  const [dias_api_format] = useState(["segunda", "terca", "quarta", "quinta", "sexta"]);
   const [horarios] = useState([
     "00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", 
     "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30",
@@ -26,19 +32,38 @@ export default function ConfiguracaoAgenda() {
     "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", 
     "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", 
     "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", 
-    "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]);
-
-  const [diaInicio, setDiaInicio] = useState("");
-  const [diaFim, setDiaFim] = useState("");
-  const [dias] = useState(["Segunda", "Terça", "Quarta", "Quinta", "Sexta"]);
-  const [dias_api_format] = useState(["segunda", "terca", "quarta", "quinta", "sexta"]);
-
-  const [duracao, setDuracao] = useState(0);
+    "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"
+  ]);
   const [duracoes] = useState([
     "30", "45", "60", "75", "90",
-    "105", "120", "135", "150", "165"]);
+    "105", "120", "135", "150", "165"
+  ]);
 
   const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
+
+  useEffect(() => {
+    async function buscarInformacoesAgenda() {
+      const agenda = await api.get(`lawyers/${fk_advogado}/config-schedule`);
+
+      if (agenda.data.length == 0) {
+        return;
+      }
+
+      const indexDe = dias_api_format.indexOf(agenda.data.de);
+      const indexAte = dias_api_format.indexOf(agenda.data.ate);
+      const indexHoraInicial = horarios.indexOf(agenda.data.hora_inicial);
+      const indexHoraFinal = horarios.indexOf(agenda.data.hora_final);
+      const indexDuracao = duracoes.indexOf(`${agenda.data.duracao}`);
+
+      setHorarioInicio(horarios[indexHoraInicial]);
+      setHorarioFinal(horarios[indexHoraFinal]);
+      setDiaInicio(dias[indexDe]);
+      setDiaFim(dias[indexAte]);
+      setDuracao(`${duracoes[indexDuracao]}`);
+    }
+
+    buscarInformacoesAgenda();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -50,7 +75,7 @@ export default function ConfiguracaoAgenda() {
         dia: diaInicio.toLowerCase(),
         hora_inicio,
         hora_final,
-        duracao
+        duracao: parseInt(duracao)
       });
     }
     else {
@@ -63,7 +88,7 @@ export default function ConfiguracaoAgenda() {
             dia,
             hora_inicio,
             hora_final,
-            duracao
+            duracao: parseInt(duracao)
           });
         }
       });
@@ -99,7 +124,7 @@ export default function ConfiguracaoAgenda() {
   }
 
   function handleChangeDuracao(_, values) {
-    setDuracao(parseInt(values));
+    setDuracao(values);
   }
 
   return (
@@ -127,6 +152,7 @@ export default function ConfiguracaoAgenda() {
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={dias}
+                  value={diaInicio}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
                   onChange={ (_, v) => { setDiaInicio(v); } }
                   renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="De:" />}
@@ -136,6 +162,7 @@ export default function ConfiguracaoAgenda() {
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={dias}
+                  value={diaFim}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
                   onChange={ (_, v) => { setDiaFim(v); } }
                   renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Até:" />}
@@ -151,6 +178,7 @@ export default function ConfiguracaoAgenda() {
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={horarios}
+                  value={hora_inicio}
                   renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Horário inicial dos atendimentos" />}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
                   onChange={ handleChangeHorarioInicio }
@@ -160,6 +188,7 @@ export default function ConfiguracaoAgenda() {
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={horarios}
+                  value={hora_final}
                   renderInput={(params) => <TextField {...params} required variant="outlined" margin="normal" label="Horário final dos atendimentos" />}
                   isOptionEqualToValue={(option, value) => option.value === value.value}
                   onChange={ handleChangeHorarioFinal }
@@ -175,6 +204,7 @@ export default function ConfiguracaoAgenda() {
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={duracoes}
+                  value={duracao}
                   required
                   renderInput={(params) => {
                     return <TextField 
