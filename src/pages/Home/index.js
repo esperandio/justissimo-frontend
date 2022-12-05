@@ -18,8 +18,8 @@ export default function Home() {
           spacing={2}
           sx={{ height: "100%" }}
         >
-          <Typography variant="h2" gutterBottom align='center' style={{ fontWeight: 600, color: "#fff" }}>
-            A maneira mais simples de <br/> encontrar um advogado
+          <Typography variant="h2" gutterBottom align='center' style={{maxWidth: "100%", color: "#fff" }}>
+            A maneira mais simples de <br/> encontrar um advogadoo
           </Typography>
 
           <Typography variant="h6" gutterBottom align='center' style={{ fontStyle: "italic", color: "#fff" }}>
