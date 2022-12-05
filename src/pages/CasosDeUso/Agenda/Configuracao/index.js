@@ -11,12 +11,15 @@ import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import MuiAlert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function ConfiguracaoAgenda() {
+  const [backdropOpen, setBackdropOpen] = useState(true);
   const [hora_inicio, setHorarioInicio] = useState("");
   const [hora_final, setHorarioFinal] = useState("");
   const [diaInicio, setDiaInicio] = useState("");
@@ -60,6 +63,8 @@ export default function ConfiguracaoAgenda() {
       setDiaInicio(dias[indexDe]);
       setDiaFim(dias[indexAte]);
       setDuracao(`${duracoes[indexDuracao]}`);
+
+      setBackdropOpen(false);
     }
 
     buscarInformacoesAgenda();
@@ -130,6 +135,12 @@ export default function ConfiguracaoAgenda() {
   return (
     <>
       <ValidarAutenticacaoAdvogado />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Header />
       <Container maxWidth="lg">
         <TitlePage internal="Configuração da Agenda" />
