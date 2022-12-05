@@ -72,26 +72,21 @@ export default function Login() {
         const id_advogado = (login).data.id_advogado;
         sessionStorage.setItem("id_advogado", id_advogado);
       }
-  
-      // Verifica o 'status code' recebido
-      switch ((login).status) {
-      case 200:
-        setState({ redirect: true });
-        break;
-      default:
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
-        break;
-      }
-    } catch (error) {
-      if (error.response.status === 401) {
-        alert("Login Inválido! " + error.response.data.message); 
-      }
-      else {
-        alert("Login Inválido! " + error.message);
-      } 
-    }
 
-    setBackdropOpen(false);
+      setBackdropOpen(false);
+      setState({ redirect: true });
+    } catch (error) {
+      setBackdropOpen(false);
+
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        return ;
+      }
+
+      alert(mensagem_retorno_api);
+    }
   }
 
   // Se o 'login' for aceito, redireciona para a tela de home
