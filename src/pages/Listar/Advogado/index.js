@@ -228,7 +228,7 @@ export default function ListarAdvogado() {
                       id="nota"
                       name="nota" 
                       size='large'
-                      
+                      precision={0.5}
                       readOnly
                       value={advogado.nota}
                     />
