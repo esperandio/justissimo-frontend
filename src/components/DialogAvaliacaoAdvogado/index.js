@@ -97,7 +97,7 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose }) {
               id="nota"
               name="nota" 
               defaultValue={3} 
-              precision={0.5}
+              precision={0.1}
               size='large'
               required 
               

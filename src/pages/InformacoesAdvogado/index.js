@@ -137,7 +137,7 @@ export default function InformacoesAdvogado() {
             id="nota"
             name="nota" 
             size='large'
-            precision={0.5}
+            precision={0.1}
             readOnly
             value={advogado.nota ?? 0}
           />
@@ -200,7 +200,7 @@ export default function InformacoesAdvogado() {
                 <div key={avaliacao.id_avaliacao}>
                   <Rating 
                     readOnly
-                    precision={0.5}
+                    precision={0.1}
                     value={avaliacao.nota ?? 0}
                   />  
 

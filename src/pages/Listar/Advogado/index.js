@@ -229,7 +229,7 @@ export default function ListarAdvogado() {
                       id="nota"
                       name="nota" 
                       size='large'
-                      precision={0.5}
+                      precision={0.1}
                       readOnly
                       value={advogado.nota}
                     />
