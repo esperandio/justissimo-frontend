@@ -19,6 +19,7 @@ import {
   Avatar
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import PersonIcon from "@mui/icons-material/Person";
 import { TitlePage } from "../../../components/Utils/title";
 import api from "../../../services/api";
 import { Rating } from "@mui/material";
@@ -228,7 +229,7 @@ export default function ListarAdvogado() {
                       id="nota"
                       name="nota" 
                       size='large'
-                      
+                      precision={0.1}
                       readOnly
                       value={advogado.nota}
                     />
@@ -242,8 +243,9 @@ export default function ListarAdvogado() {
                       variant="contained"
                       type="submit"
                       onClick={ () => handleExibirAdvogado(advogado.id_advogado) }
+                      startIcon={<PersonIcon />}
                     >
-                        Visualizar
+                      Perfil
                     </Button>
                   </Stack>
                 </Grid>

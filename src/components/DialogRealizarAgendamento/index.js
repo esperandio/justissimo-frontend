@@ -21,6 +21,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { ptBR } from "date-fns/locale";
 import api from "../../services/api";
+import ButtonWithLoader from "../ButtonWithLoader";
 
 export default function RealizarAgendamento({ open, advogado, areas, onClose }) {
   const [id_area_atuacao, setAreaAtuacao] = useState("");
@@ -228,7 +229,12 @@ export default function RealizarAgendamento({ open, advogado, areas, onClose }) 
 
         <DialogActions>
           <Button onClick={handleClickFecharModalAgendamento}>Cancelar</Button>
-          <Button onClick={handleClickConfirmarAgendamento} disabled={horarioAgendamento === "" || observacao === ""}>Confirmar</Button>
+          <ButtonWithLoader 
+            disabled={horarioAgendamento === "" || observacao === ""}
+            onClick={handleClickConfirmarAgendamento} 
+          >
+            Confirmar
+          </ButtonWithLoader>
         </DialogActions>
       </Dialog>
     </>

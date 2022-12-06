@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { FormControl } from "@material-ui/core/";
 import api from "../../services/api";
+import ButtonWithLoader from "../ButtonWithLoader";
 
 export default function DialogEnviarMensagem({ open, advogado, onClose }) {
   const [mensagem, setMensagem] = useState("");
@@ -80,12 +81,12 @@ export default function DialogEnviarMensagem({ open, advogado, onClose }) {
 
         <DialogActions>
           <Button onClick={ handleClickFecharModalEnvioMensagem }>Cancelar</Button>
-          <Button 
+          <ButtonWithLoader
             onClick={ handleClickConfirmarEnvioMensagem }
             disabled={mensagem.length < 20}
           >
             Confirmar
-          </Button>
+          </ButtonWithLoader>
         </DialogActions>
       </Dialog>
     </>

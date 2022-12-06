@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { FormControl } from "@material-ui/core/";
 import api from "../../services/api";
+import ButtonWithLoader from "../ButtonWithLoader";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -96,7 +97,7 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose }) {
               id="nota"
               name="nota" 
               defaultValue={3} 
-              precision={0.5}
+              precision={0.1}
               size='large'
               required 
               
@@ -126,9 +127,12 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose }) {
 
         <DialogActions>
           <Button onClick={ handleClickFecharDialogAvaliacaoAdvogado }>Cancelar</Button>
-          <Button onClick={ handleClickConfirmarAvaliacaoAdvogado }>
+          <ButtonWithLoader 
+            disabled={descricao == ""}
+            onClick={ handleClickConfirmarAvaliacaoAdvogado }
+          >
             Confirmar
-          </Button>
+          </ButtonWithLoader>
         </DialogActions>
       </Dialog>
     </>

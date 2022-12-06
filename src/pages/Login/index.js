@@ -12,6 +12,8 @@ import { TitleJustissimo, TitlePage } from "../../components/Utils/title";
 import TextFieldPassword from "../../components/TextFieldPassword";
 import Stack from "@mui/material/Stack";
 import Footer from "./../../pages/Main/Footer";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
-    
+  const [backdropOpen, setBackdropOpen] = useState(false);
   const classes = useStyles();
 
   const [email, setEmail] = useState("");
@@ -37,8 +39,9 @@ export default function Login() {
   const [redirect, setState] = useState(false);
     
   async function handleLogin(e) {
-        
     e.preventDefault();
+
+    setBackdropOpen(true);
         
     const dados = {
       email,
@@ -46,53 +49,43 @@ export default function Login() {
     };
         
     try {
-            
-      // Verifica se todos os campos foram preenchidos
-      if (email !== "" && senha !== "") {
-        // Envia ao backend/api os dados inseridos no login
-        const login = await api.post("login", dados);
-        // Pega o token
-        const login_token = (login).data.token;
-        // Pega o tipo do usuario
-        const tipo_usuario = (login).data.tipo_usuario;
-        const id_usuario = login.data.id_usuario;
-        const url_foto_perfil = login.data.url_foto_perfil;
-                
-        // Seta o token na sessionStorage
-        sessionStorage.setItem("token", login_token);
-        sessionStorage.setItem("tipo_usuario", tipo_usuario);
-        sessionStorage.setItem("id_usuario", id_usuario);
-        sessionStorage.setItem("url_foto_perfil", url_foto_perfil);
-                
-        // Pega o id e seta na sessionStorage, de acordo o tipo do usuario
-        if (tipo_usuario === "Cliente") {
-          const id_cliente = (login).data.id_cliente;
-          sessionStorage.setItem("id_cliente", id_cliente);
-        } else if (tipo_usuario === "Advogado") {
-          const id_advogado = (login).data.id_advogado;
-          sessionStorage.setItem("id_advogado", id_advogado);
-        }
-    
-        // Verifica o 'status code' recebido
-        switch ((login).status) {
-        case 200:
-          setState({ redirect: true });
-          break;
-        default:
-          alert("🤨 Algo deu errado! Tente novamente mais tarde");
-          break;
-        }
+      // Envia ao backend/api os dados inseridos no login
+      const login = await api.post("login", dados);
+      // Pega o token
+      const login_token = (login).data.token;
+      // Pega o tipo do usuario
+      const tipo_usuario = (login).data.tipo_usuario;
+      const id_usuario = login.data.id_usuario;
+      const url_foto_perfil = login.data.url_foto_perfil;
+              
+      // Seta o token na sessionStorage
+      sessionStorage.setItem("token", login_token);
+      sessionStorage.setItem("tipo_usuario", tipo_usuario);
+      sessionStorage.setItem("id_usuario", id_usuario);
+      sessionStorage.setItem("url_foto_perfil", url_foto_perfil);
+              
+      // Pega o id e seta na sessionStorage, de acordo o tipo do usuario
+      if (tipo_usuario === "Cliente") {
+        const id_cliente = (login).data.id_cliente;
+        sessionStorage.setItem("id_cliente", id_cliente);
+      } else if (tipo_usuario === "Advogado") {
+        const id_advogado = (login).data.id_advogado;
+        sessionStorage.setItem("id_advogado", id_advogado);
+      }
 
-      } else {
-        alert("Preencha todos os campos!")
-      }
+      setBackdropOpen(false);
+      setState({ redirect: true });
     } catch (error) {
-      if (error.response.status === 401) {
-        alert("Login Inválido! " + error.response.data.message); 
+      setBackdropOpen(false);
+
+      const mensagem_retorno_api = error?.response?.data?.message;
+
+      if (mensagem_retorno_api == null) {
+        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        return ;
       }
-      else {
-        alert("Login Inválido! " + error.message);
-      } 
+
+      alert(mensagem_retorno_api);
     }
   }
 
@@ -102,69 +95,75 @@ export default function Login() {
   }
 
   return (
-  // Form
-    <Container component="main" maxWidth="xs">
-      <Stack
-        justifyContent="center"
-        alignItems="center"
-        sx={{ height: "100vh" }}
+    <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
       >
-        <TitleJustissimo/>
-        <TitlePage internal="ENTRAR" />
-        <div className={classes.paper}>
-          <form className={classes.form} /*onSubmit={handleLogin}*/>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Container component="main" maxWidth="xs">
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          sx={{ height: "100vh" }}
+        >
+          <TitleJustissimo/>
+          <TitlePage internal="ENTRAR" />
+          <div className={classes.paper}>
+            <form className={classes.form} onSubmit={handleLogin}>
 
-            {/* Input 'Email' */}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="E-mail"
-              name="email"
-              autoComplete="email"
-              
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-                      
-            {/* Input 'Senha' */}
-            <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
+              {/* Input 'Email' */}
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="E-mail"
+                name="email"
+                autoComplete="email"
+                
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+                        
+              {/* Input 'Senha' */}
+              <TextFieldPassword onChange={e => setSenha(e.target.value)}></TextFieldPassword>
 
-            {/* Button 'Login' */}
-            <Button className={classes.submit}
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={handleLogin}
-            >
-                      Login
-            </Button>
+              {/* Button 'Login' */}
+              <Button className={classes.submit}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
+                Login
+              </Button>
 
-            <Grid container>
-              <Grid item>
-                <Link href="redefinirsenha/email" variant="body2">
-                  Esqueceu a senha?
-                </Link>
+              <Grid container>
+                <Grid item>
+                  <Link href="redefinirsenha/email" variant="body2">
+                    Esqueceu a senha?
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
 
-            <br />
+              <br />
 
-            <Grid container>
-              <Grid item>
-                <Link href="home" variant="body2">
-                  Voltar para home
-                </Link>
+              <Grid container>
+                <Grid item>
+                  <Link href="home" variant="body2">
+                    Voltar para home
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
 
-          </form>
-        </div>
-        <Footer />
-      </Stack>
-    </Container>
+            </form>
+          </div>
+          <Footer />
+        </Stack>
+      </Container>
+    </>
   );
 }
