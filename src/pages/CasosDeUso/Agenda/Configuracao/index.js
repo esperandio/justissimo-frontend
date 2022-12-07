@@ -49,6 +49,7 @@ export default function ConfiguracaoAgenda() {
       const agenda = await api.get(`lawyers/${fk_advogado}/config-schedule`);
 
       if (agenda.data.length == 0) {
+        setBackdropOpen(false);
         return;
       }
 
