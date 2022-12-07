@@ -189,8 +189,8 @@ export default function CadastroUsuario() {
                     <FormControl fullWidth>
                       <InputLabel id="Tipo"></InputLabel>
                       {tipoPessoa === "Física"
-                        ? <InputCpfMask required onChange={e => setCPF(e.target.value)} />
-                        : <InputCnpjMask required onChange={e => setCNPJ(e.target.value)} />
+                        ? <InputCpfMask value={cpf} required onChange={e => setCPF(e.target.value)} />
+                        : <InputCnpjMask value={cnpj} required onChange={e => setCNPJ(e.target.value)} />
                       }
                     </FormControl>
                   </Grid>
@@ -209,6 +209,7 @@ export default function CadastroUsuario() {
                   <Grid item xs={12} sm={4}>
                     <FormControl fullWidth>
                       <Autocomplete
+                        value={estado}
                         options={estados}
                         isOptionEqualToValue={(option, value) => option.value === value.value}
                         onChange={ (_, v) => { setEstado(v); } }
