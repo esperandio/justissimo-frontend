@@ -46,6 +46,7 @@ export default function InformacoesAdvogado() {
   const [advogado, setAdvogado] = useState({});
   const [advogadoAreas, setAdvogadoAreas] = useState([]);
   const [avaliacoes, setAvaliacoes] = useState([]);
+  const [podeAvaliarAdvogado, setPodeAvaliarAdvogado] = useState(false);
 
   const[autenticado, setAutenticado] = useState(false);
 
@@ -57,17 +58,27 @@ export default function InformacoesAdvogado() {
     async function buscarInformacoesAdvogado() {
       const resultado = await api.get(`lawyers/${params.id}`);
       setAdvogado(resultado.data);
-      setAdvogadoAreas(resultado.data.areas)
-      setAvaliacoes(resultado.data.avaliacoes)
+      setAdvogadoAreas(resultado.data.areas);
+      setAvaliacoes(resultado.data.avaliacoes);
 
-      setBackdropOpen(false)
+      setBackdropOpen(false);
     }
 
-    buscarInformacoesAdvogado();
+    async function buscarPodeAvaliarAdvogado() {
+      const fk_advogado = params.id;
+      const fk_cliente = parseInt(sessionStorage.getItem("id_cliente"));
+
+      const resultado = await api.get(`/lawyers/${fk_advogado}/clients/${fk_cliente}/pode_avaliar`);
+
+      setPodeAvaliarAdvogado(resultado.data?.pode_avaliar ?? false);
+    }
 
     if (sessionStorage.getItem("token") !== null || sessionStorage.getItem("tipo_usuario") === "Cliente") {
       setAutenticado(true);
+      buscarPodeAvaliarAdvogado();
     }
+
+    buscarInformacoesAdvogado();
   }, [params.id]);
 
   function handleClickAbrirModalAgendamento() {
@@ -177,14 +188,16 @@ export default function InformacoesAdvogado() {
             Agendar uma consulta
           </ButtonWithTooltip>
 
-          <ButtonWithTooltip
-            startIcon={<StarHalfIcon/>}
-            disabled={!autenticado}
-            tooltip="Você precisa estar autenticado para acessar esse recurso."
-            onClick={ handleClickAbrirModalAvaliacaoAdvogado }
-          >
-            Avaliar advogado
-          </ButtonWithTooltip>
+          {podeAvaliarAdvogado && (
+            <ButtonWithTooltip
+              startIcon={<StarHalfIcon/>}
+              disabled={!autenticado}
+              tooltip="Você precisa estar autenticado para acessar esse recurso."
+              onClick={ handleClickAbrirModalAvaliacaoAdvogado }
+            >
+              Avaliar advogado
+            </ButtonWithTooltip>
+          )}
         </Stack>
 
         <br />
