@@ -15,6 +15,12 @@ import BalanceIcon from "@mui/icons-material/Balance";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -36,8 +42,10 @@ const Header = () => {
   useEffect(() => {
     let pages = ["Home", "Pesquisar Advogado", "Cadastrar Cliente", "Cadastrar Advogado"];
 
-    if (sessionStorage.getItem("tipo_usuario") === "Advogado") {
+    if (sessionStorage.getItem("tipo_usuario") === "Advogado" && sessionStorage.getItem("autorizado") === "true") {
       pages = ["Home", "Meus agendamentos", "Buscar Divulgações", "Configuração da agenda"];
+    } else if (sessionStorage.getItem("tipo_usuario") === "Advogado" && sessionStorage.getItem("autorizado") === "false") {
+      pages = ["Home", "Configuração da agenda"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
       pages = ["Home", "Meus agendamentos", "Minhas Divulgações", "Pesquisar Advogado", "Cadastrar Divulgação"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Administrador") {
@@ -121,6 +129,12 @@ const Header = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <AppBar position="sticky" >
+        {sessionStorage.getItem("autorizado") === "false" && (
+          <Alert severity="warning">
+            Seu perfil como advogado ainda não foi autenticado pela nossa equipe. Em caso de dúvidas, entre em contato pelo e-mail <b>justissimo.corporation@gmail.com</b>.
+          </Alert>
+        )}
+
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <BalanceIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />

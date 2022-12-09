@@ -70,7 +70,10 @@ export default function Login() {
         sessionStorage.setItem("id_cliente", id_cliente);
       } else if (tipo_usuario === "Advogado") {
         const id_advogado = (login).data.id_advogado;
+        const autorizado = (login).data.autorizado;
+
         sessionStorage.setItem("id_advogado", id_advogado);
+        sessionStorage.setItem("autorizado", autorizado);
       }
 
       setBackdropOpen(false);
