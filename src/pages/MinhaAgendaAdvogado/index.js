@@ -377,6 +377,7 @@ export default function MinhaAgenda() {
                 required
                 id="email"
                 label="E-mail"
+                type="email"
                 placeholder="meuemail@email.com"
                 variant="outlined"
                 margin="normal"

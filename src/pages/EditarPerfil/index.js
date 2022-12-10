@@ -258,6 +258,7 @@ export default function EditarPerfil() {
                     required
                     id="email"
                     label="E-mail"
+                    type="email"
                     placeholder="meuemail@email.com"
                     multiline
                     variant="outlined"

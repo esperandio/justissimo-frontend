@@ -343,6 +343,7 @@ export default function CadastroAdvogado() {
                         required
                         id="email"
                         label="E-mail"
+                        type="email"
                         placeholder="meuemail@email.com"
                         variant="outlined"
                         value={email}

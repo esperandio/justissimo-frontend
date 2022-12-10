@@ -126,7 +126,7 @@ export default function Login() {
                 label="E-mail"
                 name="email"
                 autoComplete="email"
-                
+                type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
