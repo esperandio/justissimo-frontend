@@ -49,7 +49,7 @@ const Header = () => {
     } else if (sessionStorage.getItem("tipo_usuario") === "Cliente") {
       pages = ["Home", "Meus agendamentos", "Minhas Divulgações", "Pesquisar Advogado", "Cadastrar Divulgação"];
     } else if (sessionStorage.getItem("tipo_usuario") === "Administrador") {
-      pages = ["Home", "Pesquisar Advogado", "Aprovar Advogados"];
+      pages = ["Home", "Aprovar Advogados"];
     }
 
     setPages(pages);
