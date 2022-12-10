@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { InputLabel, Select, MenuItem, FormControl } from "@material-ui/core/";
 import { UserService } from "../../services";
+import ButtonWithLoader from "../ButtonWithLoader";
 
 export default function EncerrarAgendamento({ id_agenda, encerrado, afterSubmit }) {
   const [motivosEncerramento] = useState(["Cancelamento", "Atendimento encerrado"]);
@@ -116,12 +117,12 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, afterSubmit 
 
         <DialogActions>
           <Button onClick={ handleClickFecharDialogEncerrarAgendamento }>Cancelar</Button>
-          <Button 
+          <ButtonWithLoader 
             onClick={ handleClickConfirmarDialogEncerrarAgendamento } 
             disabled={motivoEncerramento === "" || justificativa === "" || justificativa.length < 10}
           >
             Confirmar
-          </Button>
+          </ButtonWithLoader>
         </DialogActions>
       </Dialog>
     </>
