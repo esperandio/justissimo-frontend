@@ -163,7 +163,7 @@ export default function MinhaAgenda() {
         <Grid container spacing={2}>
           <Grid item xs={12} sm container spacing={1}>
             {agendas.map((agenda) => (
-              <Grid key={agenda.id_agenda} item xs={12} sm={4}>
+              <Grid key={agenda.id_agenda} item xs={12} md={4}>
                 <Card>
                   <CardContent>
                     <Stack direction="row" alignItems="center" gap={1}>
