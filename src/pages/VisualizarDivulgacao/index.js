@@ -11,10 +11,14 @@ import {
   Divider,
   Backdrop,
   CircularProgress,
-  TextField
+  TextField,
+  Stack,
+  Avatar
 } from "@mui/material";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SendIcon from "@mui/icons-material/Send";
+import { grey } from "@mui/material/colors";
 import { LawyerService } from "../../services";
 
 export default function VisualizarDivulgacao() {
@@ -112,6 +116,21 @@ export default function VisualizarDivulgacao() {
           label={`Postado em ${formatDate(divulgacao.dt_cadastro)}`}
         />
         <br />
+        <br />
+        <Stack spacing={2} direction={"row"}>
+          <Avatar />
+          <Stack>
+            <Typography fontWeight={700}>{divulgacao.cliente?.nome}</Typography>
+            <Stack direction={"row"}>
+              <LocationOnIcon fontSize="small" sx={{ color: grey[500] }}/> 
+              <Typography variant="body2" color="text.secondary">
+                {divulgacao.cliente?.endereco?.cidade}, {divulgacao.cliente?.endereco?.estado}
+              </Typography>
+            </Stack>
+          </Stack>
+        </Stack>
+        <br />
+        <Divider />
         <br />
         <Typography variant="h4">{divulgacao.titulo}</Typography>
         <br />
