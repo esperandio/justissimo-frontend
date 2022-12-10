@@ -13,7 +13,9 @@ import {
   Dialog, 
   DialogTitle,
   DialogContent,
-  TextField
+  TextField,
+  Backdrop,
+  CircularProgress
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -24,6 +26,7 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { ClientService } from "../../services";
 
 export default function MinhasDivulgacoes() {
+  const [backdropOpen, setBackdropOpen] = useState(true);
   const [divulgacoes, setDivulgacoes] = useState([]); 
   const [isOpenDialogFiltrarDivulgacoes, setOpenDialogFiltrarDivulgacoes] = useState(false);
   const [dataDivulgacaoDe, setDataDivulgacaoDe] = useState(new Date());
@@ -36,6 +39,8 @@ export default function MinhasDivulgacoes() {
       const resultado = await ClientService.getAllDivulgations(id);
 
       setDivulgacoes(resultado.data);
+
+      setBackdropOpen(false);
     }
 
     buscarMinhasDivulgacoes();
@@ -112,6 +117,12 @@ export default function MinhasDivulgacoes() {
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <ValidarAutenticacaoCliente />
       <Header />
       <Container maxWidth="lg">
