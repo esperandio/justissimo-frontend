@@ -18,7 +18,15 @@ import {
   Backdrop,
   CircularProgress
 } from "@mui/material";
-import { InputLabel, Select, MenuItem, Container, FormControl, Grid } from "@material-ui/core/";
+import { 
+  InputLabel, 
+  Select, 
+  MenuItem, 
+  Container, 
+  FormControl, 
+  Grid, 
+  Switch
+} from "@material-ui/core/";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ptBR } from "date-fns/locale";
@@ -42,6 +50,7 @@ export default function MinhaAgenda() {
   const [isOpenDialogAgendamentoManual, setOpenDialogAgendamentoManual] = useState(false);
   const [dataAgendamentoDe, setDataAgendamentoDe] = useState(new Date());
   const [dataAgendamentoAte, setDataAgendamentoAte] = useState(new Date());
+  const [somenteAgendamentoEmAberto, setSomenteAgendamentosEmAberto] = useState(true);
   const [dias] = useState(["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"]);
 
   const [nome, setNome] = useState("");
@@ -108,7 +117,7 @@ export default function MinhaAgenda() {
       + `${dataAgendamentoAte.getDate()}`.padStart(2, 0);
 
     try {
-      const resultado = await api.get(`schedulings/lawyer/${fk_advogado}?data_inicial=${dataAgendamentoDeFormatada}&data_final=${dataAgendamentoAteFormatada}&area=${id_area_atuacao}`);
+      const resultado = await api.get(`schedulings/lawyer/${fk_advogado}?data_inicial=${dataAgendamentoDeFormatada}&data_final=${dataAgendamentoAteFormatada}&area=${id_area_atuacao}&somenteAgendamentosEmAberto=${somenteAgendamentoEmAberto}`);
       setAgendas(resultado.data)
       setOpenDialogFiltrarAgendamentos(false);
     } catch (error) {
@@ -519,25 +528,36 @@ export default function MinhaAgenda() {
                   </LocalizationProvider>
                 </FormControl>
               </Grid>
-            </Grid>
 
-            <FormControl fullWidth variant="outlined" margin="normal">
-              <InputLabel id="Area">Área de atuação</InputLabel>
-              <Select
-                required
-                labelId="Área de atuação"
-                id="AreaSelect"
-                multiline
-                variant="outlined"
-                value={id_area_atuacao}
-                onChange={e => setAreaAtuacao(e.target.value)}
-                label="Tipo de Usuario"
-              >
-                {areas.map((area)=>{
-                  return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
-                })}
-              </Select>
-            </FormControl>
+              <Grid item xs={12}>
+                <FormControl fullWidth variant="outlined" margin="normal">
+                  <InputLabel id="Area">Área de atuação</InputLabel>
+                  <Select
+                    required
+                    labelId="Área de atuação"
+                    id="AreaSelect"
+                    multiline
+                    variant="outlined"
+                    value={id_area_atuacao}
+                    onChange={e => setAreaAtuacao(e.target.value)}
+                    label="Tipo de Usuario"
+                  >
+                    {areas.map((area)=>{
+                      return <MenuItem key={area.id_area_atuacao} value={area.id_area_atuacao}>{area.titulo}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Switch checked={somenteAgendamentoEmAberto} color="primary" onChange={() => {
+                    setSomenteAgendamentosEmAberto((prev) => !prev);
+                  }} />}
+                  label="Somente agendamentos em aberto"
+                />
+              </Grid>
+            </Grid>
 
             <br />
             <br />
