@@ -15,6 +15,8 @@ import {
   DialogTitle,
   DialogContent,
   TextField, 
+  Backdrop,
+  CircularProgress
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -29,6 +31,7 @@ import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 export default function MinhaAgenda() {
   const history = useHistory();
   
+  const [backdropOpen, setBackdropOpen] = useState(true);
   const [agendas, setAgendas] = useState([]); 
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
 
@@ -64,6 +67,8 @@ export default function MinhaAgenda() {
     const id = parseInt(sessionStorage.getItem("id_cliente"));
     const resultado = await ClientService.getAllSchedulings(id);
     setAgendas(resultado.data);
+
+    setBackdropOpen(false);
   }
 
   function handleClickVisualizarPerfilAdvogado(id_advogado) {
@@ -131,6 +136,12 @@ export default function MinhaAgenda() {
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <ValidarAutenticacaoCliente />
       <Header />
       <Container maxWidth="lg">

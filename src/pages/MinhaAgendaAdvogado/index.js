@@ -14,7 +14,9 @@ import {
   DialogActions,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
+  Backdrop,
+  CircularProgress
 } from "@mui/material";
 import { InputLabel, Select, MenuItem, Container, FormControl, Grid } from "@material-ui/core/";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
@@ -33,6 +35,7 @@ import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticaca
 import EncerrarAgendamento from "../../components/EncerrarAgendamento";
 
 export default function MinhaAgenda() {
+  const [backdropOpen, setBackdropOpen] = useState(true);
   const [agendas, setAgendas] = useState([]);  
   const [areas, setAreas] = useState([]);
   const [isOpenDialogFiltrarAgendamentos, setOpenDialogFiltrarAgendamentos] = useState(false);
@@ -84,7 +87,9 @@ export default function MinhaAgenda() {
   async function buscarInformacoesAgendaAdvogado() {
     const id = parseInt(sessionStorage.getItem("id_advogado"));
     const resultado = await api.get(`schedulings/lawyer/${id}`);
-    setAgendas(resultado.data)
+    setAgendas(resultado.data);
+
+    setBackdropOpen(false);
   }
 
   async function buscarAgenda() {
@@ -248,6 +253,12 @@ export default function MinhaAgenda() {
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <ValidarAutenticacaoAdvogado />
       <Header />
       <Container maxWidth="lg">
