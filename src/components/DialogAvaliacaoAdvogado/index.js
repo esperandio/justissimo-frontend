@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DialogAvaliacaoAdvogado({ open, advogado, onClose }) {
+export default function DialogAvaliacaoAdvogado({ open, advogado, onClose, afterSubmit }) {
   const classes = useStyles();
 
   const [nota, setNota] = useState(0.0);
   const [descricao, setDescricao] = useState("");
 
   function handleClickFecharDialogAvaliacaoAdvogado() {
-    beforeClose();
+    limparCamposFormulario();
     onClose();
   }
 
@@ -56,8 +56,10 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose }) {
 
       alert("Avaliação registrada!!!");
 
-      beforeClose();
+      limparCamposFormulario();
       onClose();
+
+      afterSubmit();
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
@@ -70,7 +72,7 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose }) {
     }
   }
 
-  function beforeClose() {
+  function limparCamposFormulario() {
     setNota(0.0);
     setDescricao("");
   }

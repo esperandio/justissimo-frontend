@@ -55,24 +55,6 @@ export default function InformacoesAdvogado() {
   const [openAvaliacaoAdvogado, setOpenAvaliacaoAdvogado] = useState(false);
 
   useEffect(() => {
-    async function buscarInformacoesAdvogado() {
-      const resultado = await api.get(`lawyers/${params.id}`);
-      setAdvogado(resultado.data);
-      setAdvogadoAreas(resultado.data.areas);
-      setAvaliacoes(resultado.data.avaliacoes);
-
-      setBackdropOpen(false);
-    }
-
-    async function buscarPodeAvaliarAdvogado() {
-      const fk_advogado = params.id;
-      const fk_cliente = parseInt(sessionStorage.getItem("id_cliente"));
-
-      const resultado = await api.get(`/lawyers/${fk_advogado}/clients/${fk_cliente}/pode_avaliar`);
-
-      setPodeAvaliarAdvogado(resultado.data?.pode_avaliar ?? false);
-    }
-
     if (sessionStorage.getItem("token") !== null || sessionStorage.getItem("tipo_usuario") === "Cliente") {
       setAutenticado(true);
       buscarPodeAvaliarAdvogado();
@@ -80,6 +62,24 @@ export default function InformacoesAdvogado() {
 
     buscarInformacoesAdvogado();
   }, [params.id]);
+
+  async function buscarInformacoesAdvogado() {
+    const resultado = await api.get(`lawyers/${params.id}`);
+    setAdvogado(resultado.data);
+    setAdvogadoAreas(resultado.data.areas);
+    setAvaliacoes(resultado.data.avaliacoes);
+
+    setBackdropOpen(false);
+  }
+
+  async function buscarPodeAvaliarAdvogado() {
+    const fk_advogado = params.id;
+    const fk_cliente = parseInt(sessionStorage.getItem("id_cliente"));
+
+    const resultado = await api.get(`/lawyers/${fk_advogado}/clients/${fk_cliente}/pode_avaliar`);
+
+    setPodeAvaliarAdvogado(resultado.data?.pode_avaliar ?? false);
+  }
 
   function handleClickAbrirModalAgendamento() {
     setOpenRealizarAgendamento(true);
@@ -103,6 +103,13 @@ export default function InformacoesAdvogado() {
 
   function handleClickFecharModalAvaliacaoAdvogado() {
     setOpenAvaliacaoAdvogado(false);
+  }
+
+  async function handleClickAfterSubmitAvaliacaoAdvogado() {
+    setBackdropOpen(true);
+    await buscarInformacoesAdvogado();
+
+    setPodeAvaliarAdvogado(false);
   }
 
   function formatarDataAvaliacao(dt_avaliacao) {
@@ -244,6 +251,7 @@ export default function InformacoesAdvogado() {
           open={openAvaliacaoAdvogado}
           advogado={advogado}
           onClose={ handleClickFecharModalAvaliacaoAdvogado }
+          afterSubmit={ handleClickAfterSubmitAvaliacaoAdvogado }
         />
       </Container>
       <Footer />
