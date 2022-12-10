@@ -3,8 +3,9 @@ import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } 
 import { InputLabel, Select, MenuItem, FormControl } from "@material-ui/core/";
 import { UserService } from "../../services";
 import ButtonWithLoader from "../ButtonWithLoader";
+import ButtonWithTooltip from "../ButtonWithTooltip";
 
-export default function EncerrarAgendamento({ id_agenda, encerrado, afterSubmit }) {
+export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encerramento, afterSubmit }) {
   const [motivosEncerramento] = useState(["Cancelamento", "Atendimento encerrado"]);
   const [isOpenDialogEncerrarAgendamento, setOpenDialogEncerrarAgendamento] = useState(false);
 
@@ -56,15 +57,14 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, afterSubmit 
 
   return (
     <>
-      {encerrado == true
+      {encerrado == true && motivo_encerramento != ""
         ? <>
-          <Button
-            type="submit"
-            color="error"
+          <ButtonWithTooltip
+            tooltip={motivo_encerramento}
             disabled={true}
           >
             Já encerrado
-          </Button>
+          </ButtonWithTooltip>
         </>
         : <>
           <Button

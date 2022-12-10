@@ -327,6 +327,7 @@ export default function MinhaAgenda() {
                       <EncerrarAgendamento 
                         id_agenda={agenda.id_agenda}
                         encerrado={agenda.encerrado}
+                        motivo_encerramento={agenda.motivo_encerramento}
                         afterSubmit={ handleAfterSubmitEncerramento }
                       />
                     </CardActions>
