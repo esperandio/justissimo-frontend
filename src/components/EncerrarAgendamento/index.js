@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions, Stack, IconButton } from "@mui/material";
 import { InputLabel, Select, MenuItem, FormControl } from "@material-ui/core/";
 import { UserService } from "../../services";
 import ButtonWithLoader from "../ButtonWithLoader";
 import ButtonWithTooltip from "../ButtonWithTooltip";
 import AlertSuccess from "../alerts/AlertSuccess";
 import AlertError from "../alerts/AlertError";
+import MessageIcon from "@mui/icons-material/Message";
+import DialogDetalhesEncerramento from "../DialogDetalhesEncerramento";
 
-export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encerramento, afterSubmit }) {
+export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encerramento, justificativa_encerramento, afterSubmit }) {
   const [motivosEncerramento] = useState(["Cancelamento", "Atendimento encerrado"]);
   const [isOpenDialogEncerrarAgendamento, setOpenDialogEncerrarAgendamento] = useState(false);
+  const [openDetalhesEncerramento, setOpenDetalhesEncerramento] = useState(false);
 
   const [motivoEncerramento, setMotivoEncerramento] = useState("");
   const [justificativa, setJustificativa] = useState("");
@@ -56,17 +59,33 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encer
     }
   }
 
+  function handleClickAbrirModalDetalhesEncerramento() {
+    setOpenDetalhesEncerramento(true);
+  }
+
+  function handleClickFecharModalDetalhesEncerramento() {
+    setOpenDetalhesEncerramento(false);
+  }
 
   return (
     <>
       {encerrado == true && motivo_encerramento != ""
         ? <>
-          <ButtonWithTooltip
-            tooltip={motivo_encerramento}
-            disabled={true}
+          <Stack
+            direction={{ sm: "row" }} 
+            spacing={1}
           >
-            Já encerrado
-          </ButtonWithTooltip>
+            <ButtonWithTooltip
+              tooltip={motivo_encerramento}
+              disabled={true}
+            >
+              Já encerrado
+            </ButtonWithTooltip>
+
+            <IconButton color="primary" onClick={ handleClickAbrirModalDetalhesEncerramento }>
+              <MessageIcon />
+            </IconButton>
+          </Stack>
         </>
         : <>
           <Button
@@ -78,6 +97,13 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encer
           </Button> 
         </>
       }
+
+      <DialogDetalhesEncerramento 
+        open={openDetalhesEncerramento} 
+        motivo={motivo_encerramento}
+        justificativa={justificativa_encerramento}
+        onClose={handleClickFecharModalDetalhesEncerramento}
+      />
 
       {/* Encerramento de agendamento */}
       <Dialog open={isOpenDialogEncerrarAgendamento} onClose={ handleCloseDialogEncerrarAgendamento }>

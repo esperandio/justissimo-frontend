@@ -350,6 +350,7 @@ export default function MinhaAgenda() {
                         id_agenda={agenda.id_agenda}
                         encerrado={agenda.encerrado}
                         motivo_encerramento={agenda.motivo_encerramento}
+                        justificativa_encerramento={agenda.justificativa}
                         afterSubmit={ handleAfterSubmitEncerramento }
                       />
                     </CardActions>
