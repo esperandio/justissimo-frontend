@@ -6,6 +6,9 @@ import Container from "@material-ui/core/Container";
 import api from "../../../services/api";
 import { Redirect } from "react-router-dom";
 import { TitleJustissimo, TitlePage } from "../../../components/Utils/title";
+import AlertError from "../../../components/alerts/AlertError";
+import AlertWarning from "../../../components/alerts/AlertWarning";
+import AlertSuccess from "../../../components/alerts/AlertSuccess";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -61,14 +64,14 @@ export default function RedefinirSenha_NovaSenha() {
       if (nova_senha !== "" && confirmacao_nova_senha !== "") {
         // Verifica se a senha e confirmação de senha são diferentes
         if (nova_senha !== confirmacao_nova_senha) {
-          alert("A senha e confirmação de senha não conferem!");
+          AlertError("A senha e confirmação de senha não conferem!");
           return;
         }
                 
         const passwordReg = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/
 
         if (!passwordReg.test(dados.nova_senha)) {
-          alert("A senha não está de acordo os requisitos");
+          AlertWarning("A senha não está de acordo os requisitos, verifique novamente!");
           return;
         }
                 
@@ -78,7 +81,7 @@ export default function RedefinirSenha_NovaSenha() {
         // Verifica o 'status code' recebido
         switch ((senha).status) {
         case 200:
-          alert("Senha redefinida com sucesso!");
+          await AlertSuccess("Senha redefinida!")
                         
           setState({ redirect: true });
                         
@@ -86,17 +89,17 @@ export default function RedefinirSenha_NovaSenha() {
                         
           break;
         default:
-          alert("🤨 Algo deu errado! Tente novamente mais tarde");
+          AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
 
           break;
         }
 
 
       } else {
-        alert("Preencha todos os campos!")
+        AlertWarning("Preencha todos os campos!");
       }
     } catch (error) {
-      alert("Algo deu errado!");
+      AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
     }
   }
 

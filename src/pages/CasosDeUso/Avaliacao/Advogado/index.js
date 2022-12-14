@@ -12,6 +12,9 @@ import Footer from "../../../Main/Footer";
 import { TextField } from "@mui/material";
 import { FormControl } from "@material-ui/core/";
 import { ValidarAutenticacaoCliente } from "../../../../components/ValidarAutenticacao";
+import AlertWarning from "../../../../components/alerts/AlertWarning";
+import AlertSuccess from "../../../../components/alerts/AlertSuccess";
+import AlertError from "../../../../components/alerts/AlertError";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +76,7 @@ export default function AvaliacaoAdvogado() {
       if (dados.nota !== "" && dados.nota > 0) {
         dados.id_cliente = Number(sessionStorage.getItem("id_cliente"));
         if(dados.descricao.length > 200) {
-          alert("Por gentileza informe uma descrição de até 200 caracteres!")
+          AlertWarning("Por gentileza informe uma descrição de até 200 caracteres!");
           return
         }
         // Converte os dados necessários para o tipo Number
@@ -86,27 +89,19 @@ export default function AvaliacaoAdvogado() {
         // Verifica o 'status code' recebido
         switch ((lawyer_review).status) {
         case 200:
-          alert("Obrigado! Advogado avaliado com sucesso!");
+          await AlertSuccess("Obrigado! Advogado avaliado!");
           history.push(`/advogado/${id_advogado}`);
           break;
         default:
-          alert("🤨 Algo deu errado! Tente novamente mais tarde");
+          AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
           break;
         }
 
       } else {
-        alert("Por favor, selecione as estrelas, para avaliar o advogado")
+        AlertWarning("Por favor, selecione as estrelas, para avaliar o advogado");
       }
     } catch (error) {
-      alert("Algo deu errado!\n\n"
-                + "Nota: " + dados.nota + "\n" 
-                + "Descrição: " + dados.descricao + "\n" 
-                + "ID Cliente: " + dados.id_cliente + "\n" 
-                + "ID Advogado: " + id_advogado + "\n\n"
-                + "Tipo da nota: " + typeof(dados.nota) + "\n" 
-                + "Tipo do ID Cliente: " + typeof(dados.id_cliente) + "\n" 
-                + "Tipo do ID Advogado: " + typeof(id_advogado) + "\n" 
-                + "Tipo da Descrição: " + typeof(dados.descricao)); 
+      AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
     }
   }
 

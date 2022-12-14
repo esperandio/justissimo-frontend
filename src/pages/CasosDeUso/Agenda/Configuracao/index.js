@@ -13,6 +13,8 @@ import MuiAlert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import AlertSuccess from "../../../../components/alerts/AlertSuccess";
+import AlertError from "../../../../components/alerts/AlertError";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -107,17 +109,17 @@ export default function ConfiguracaoAgenda() {
         
     try {
       await api.post("lawyers/config-schedule", { dados });
-  
-      alert("Cadastro de horarios efetuado com sucesso!");
+
+      await AlertSuccess("Cadastro de horarios efetuado!");
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      AlertError("🤨 " + mensagem_retorno_api);
     }
   }
 

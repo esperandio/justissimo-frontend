@@ -13,6 +13,8 @@ import {
 import { FormControl } from "@material-ui/core/";
 import api from "../../services/api";
 import ButtonWithLoader from "../ButtonWithLoader";
+import AlertSuccess from "../alerts/AlertSuccess";
+import AlertError from "../alerts/AlertError";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -53,8 +55,8 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose, after
       }
 
       await api.post(`lawyers/${fk_advogado}/review`, dados);
-
-      alert("Avaliação registrada!!!");
+      
+      AlertSuccess("Avaliação registrada!");
 
       limparCamposFormulario();
       onClose();
@@ -64,11 +66,11 @@ export default function DialogAvaliacaoAdvogado({ open, advogado, onClose, after
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      AlertError(mensagem_retorno_api);
     }
   }
 

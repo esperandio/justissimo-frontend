@@ -20,6 +20,9 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { grey } from "@mui/material/colors";
 import { ClientService } from "../../services";
+import AlertError from "../../components/alerts/AlertError";
+import AlertConfirm from "../../components/alerts/AlertConfirm";
+import AlertSuccess from "../../components/alerts/AlertSuccess";
 
 export default function InformacoesDivulgacao() {
   const params = useParams();
@@ -58,7 +61,7 @@ export default function InformacoesDivulgacao() {
   }
 
   async function handleClickEncerrarDivulgacao() {
-    const confirmaEncerramento = confirm("Tem certeza que deseja prosseguir com o encerramento da divulgação?");
+    const confirmaEncerramento = await AlertConfirm("Tem certeza que deseja prosseguir com o encerramento da divulgação?");
 
     if (!confirmaEncerramento) {
       return;
@@ -70,6 +73,7 @@ export default function InformacoesDivulgacao() {
   
       await ClientService.closeDivulgation(id_usuario, id_divulgacao);
 
+      await AlertSuccess("Divulgação encerrada com sucesso!");
       buscarInformacoesDivulgacao();
     } catch (error) {
       let retorno = "Erro ao encerrar divulgacao!";
@@ -80,7 +84,7 @@ export default function InformacoesDivulgacao() {
         retorno += "\n" + error.message;
       }
 
-      alert(retorno);
+      AlertError(retorno);
     }
   }
 

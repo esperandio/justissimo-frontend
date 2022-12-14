@@ -25,6 +25,7 @@ import api from "../../../services/api";
 import { Rating } from "@mui/material";
 import Header from "../../Main/Header";
 import Footer from "../../Main/Footer";
+import AlertError from "../../../components/alerts/AlertError";
 
 const useStyles = makeStyles((theme) => ({
   user: {
@@ -90,11 +91,11 @@ export default function ListarAdvogado() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        AlertError("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      AlertError(mensagem_retorno_api);
     }
   }
 

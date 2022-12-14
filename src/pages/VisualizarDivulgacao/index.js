@@ -20,6 +20,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SendIcon from "@mui/icons-material/Send";
 import { grey } from "@mui/material/colors";
 import { LawyerService } from "../../services";
+import AlertSuccess from "../../components/alerts/AlertSuccess";
+import AlertError from "../../components/alerts/AlertError";
 
 export default function VisualizarDivulgacao() {
   const params = useParams();
@@ -70,8 +72,6 @@ export default function VisualizarDivulgacao() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let retorno = "";
-
     setBackdropOpen(true);
 
     try {   
@@ -79,17 +79,17 @@ export default function VisualizarDivulgacao() {
       const fk_advogado = parseInt(sessionStorage.getItem("id_advogado"));
 
       await LawyerService.sendMessageDivulgation(fk_advogado, id, mensagem);
-      retorno = "Mensagem enviada com sucesso!";
+      await AlertSuccess("Mensagem enviada!")
+  
     } catch (error) {
       if (error.response.status === 400) {
-        retorno = "Erro ao enviar mensagem! \n\n" + error.response.data.message;
+        AlertError(error.response.data.message);
       } else {
-        retorno = "Erro ao enviar mensagem! \n" + error.message;
+        AlertError("Erro ao enviar mensagem!");
       }
     }
 
     setBackdropOpen(false);
-    alert(retorno);
 
     await buscarInformacoesDivulgacao();
 

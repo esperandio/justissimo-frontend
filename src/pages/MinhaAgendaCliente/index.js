@@ -27,6 +27,7 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { ClientService } from "../../services";
 import { ValidarAutenticacaoCliente } from "../../components/ValidarAutenticacao";
 import EncerrarAgendamento from "../../components/EncerrarAgendamento";
+import AlertError from "../../components/alerts/AlertError";
 
 export default function MinhaAgenda() {
   const history = useHistory();
@@ -106,11 +107,11 @@ export default function MinhaAgenda() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        AlertError("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      AlertError(mensagem_retorno_api);
     }
   }
 

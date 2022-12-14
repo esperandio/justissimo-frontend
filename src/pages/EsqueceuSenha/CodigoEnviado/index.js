@@ -6,6 +6,8 @@ import Container from "@material-ui/core/Container";
 import { Redirect } from "react-router";
 import api from "../../../services/api";
 import { TitleJustissimo, TitlePage } from "../../../components/Utils/title";
+import AlertError from "../../../components/alerts/AlertError";
+import AlertWarning from "../../../components/alerts/AlertWarning";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -55,15 +57,19 @@ export default function RedefinirSenha_Codigo() {
                         
           break;
         default:
-          alert("🤨 Algo deu errado! Tente novamente mais tarde");
+          AlertError("🤨 Algo deu errado! Tente novamente mais tarde." );
           break;
         }
 
       } else {
-        alert("Preencha todos os campos!")
+        AlertWarning("Preencha todos os campos!")
       }
     } catch (error) {
-      alert("Código incorreto");
+      if (error.response.status === 404) {
+        await AlertError("🤨 Código inválido! Tente novamente.");
+      } else {
+        await AlertError(error.message);
+      } 
     }
   }
 

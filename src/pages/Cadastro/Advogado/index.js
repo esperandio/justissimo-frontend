@@ -30,6 +30,9 @@ import {
   InputLabel
 } from "@material-ui/core";
 
+import AlertError from "../../../components/alerts/AlertError";
+import AlertSuccess from "../../../components/alerts/AlertSuccess";
+
 const steps = ["Dados pessoais", "Dados da OAB", "Dados de acesso"];
 
 export default function CadastroAdvogado() {
@@ -75,7 +78,7 @@ export default function CadastroAdvogado() {
     e.preventDefault();
 
     if (senha !== senhaConfirmacao) {
-      alert("A senha e confirmação de senha não conferem!");
+      AlertError("A senha e confirmação de senha não conferem!");
       return;
     }
 
@@ -109,17 +112,17 @@ export default function CadastroAdvogado() {
       // Verifica o 'status code' recebido
       switch ((response).status) {
       case 201:
-        alert("Cadastro realizado com sucesso!"); 
+        await AlertSuccess("Cadastro realizado! Você será redirecionado para a tela de login.");
         setState({ redirect: true });
         break;
       default:   
       }
     } catch (error) {
       if (error.response.status === 400) {
-        alert("Cadastro Inválido! " + error.response.data.message); 
+        AlertError(error.response.data.message);
       }
       else {
-        alert("Cadastro Inválido! " + error.message);
+        AlertError(error.message)
       } 
     }
   }
