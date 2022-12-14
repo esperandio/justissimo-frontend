@@ -50,13 +50,13 @@ export default function AprovarAdvogados() {
       try {
         const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
         const resultado = await adminService.getAllLawyersPending(id_usuario);
-        console.log(resultado.data);
+        
         setAdvogados(resultado.data);
       } catch (error) {
         const mensagem_retorno_api = error?.response?.data?.message;
 
         if (mensagem_retorno_api == null) {
-          AlertError("🤨 Algo deu errado! Tente novamente mais tarde");
+          await AlertError("🤨 Algo deu errado! Tente novamente mais tarde");
           
           setState(true);
         }
@@ -71,18 +71,18 @@ export default function AprovarAdvogados() {
       const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
       const resultado = await adminService.approveLawyer(id_usuario, id_advogado);
       
-      AlertSuccess(resultado.data.message);
+      await AlertSuccess(resultado.data.message);
       window.location.reload();
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         setState(true);
         return ;
       }
 
-      AlertError(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 
@@ -91,17 +91,17 @@ export default function AprovarAdvogados() {
       const id_usuario = parseInt(sessionStorage.getItem("id_usuario"));
       const resultado = await adminService.rejectLawyer(id_usuario, id_advogado);
       
-      AlertSuccess(resultado.data.message);
+      await AlertSuccess(resultado.data.message);
       window.location.reload();
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
       
-      AlertError(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 

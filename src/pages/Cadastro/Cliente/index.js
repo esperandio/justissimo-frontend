@@ -57,7 +57,7 @@ export default function CadastroUsuario() {
     e.preventDefault();
 
     if (senha !== senhaConfirmacao) {
-      AlertError("A senha e confirmação de senha não conferem!");
+      await AlertError("A senha e confirmação de senha não conferem!");
       return;
     }
 
@@ -93,10 +93,10 @@ export default function CadastroUsuario() {
       }
     } catch (error) {
       if (error.response.status === 400) {
-        AlertError("Cadastro Inválido! " + error.response.data.message);
+        await AlertError("Cadastro Inválido! " + error.response.data.message);
       }
       else {
-        AlertError("Cadastro Inválido! " + error.message);
+        await AlertError("Cadastro Inválido! " + error.message);
       } 
     }
 

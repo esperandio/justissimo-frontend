@@ -67,7 +67,7 @@ export default function RealizarAgendamento({ open, advogado, areas, onClose }) 
 
       await api.post("clients/scheduling", dados);
 
-      AlertSuccess("Agendamento confirmado!")
+      await  AlertSuccess("Agendamento confirmado!")
 
       setDataAgendamento(new Date());
       setAreaAtuacao("");
@@ -80,11 +80,11 @@ export default function RealizarAgendamento({ open, advogado, areas, onClose }) 
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        AlertError("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
       
-      AlertError(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 
@@ -118,11 +118,11 @@ export default function RealizarAgendamento({ open, advogado, areas, onClose }) 
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      AlertWarning(mensagem_retorno_api);
+      await AlertWarning(mensagem_retorno_api);
     }
   }
 

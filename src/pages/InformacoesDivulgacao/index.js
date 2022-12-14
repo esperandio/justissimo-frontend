@@ -84,7 +84,7 @@ export default function InformacoesDivulgacao() {
         retorno += "\n" + error.message;
       }
 
-      AlertError(retorno);
+      await AlertError(retorno);
     }
   }
 

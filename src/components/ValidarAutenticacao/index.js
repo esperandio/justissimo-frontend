@@ -8,13 +8,13 @@ function ValidarAutenticacaoCliente() {
   useEffect(() => {
     function validarSessao() {
       if (sessionStorage.getItem("token") === null) {
-        AlertWarning("Você precisa estar conectado a sua conta para acessar essa tela!")
+        AlertWarning("Você precisa estar conectado a sua conta para acessar essa tela!");
         setRedirect({ redirect: true });
         return;
       }
 
       if (sessionStorage.getItem("tipo_usuario") !== "Cliente") {
-        AlertWarning("Você precisa estar conectado como cliente para acessar essa tela!")
+        AlertWarning("Você precisa estar conectado como cliente para acessar essa tela!");
         setRedirect({ redirect: true });
       }
     }

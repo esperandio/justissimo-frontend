@@ -57,12 +57,12 @@ export default function RedefinirSenha_Codigo() {
                         
           break;
         default:
-          AlertError("🤨 Algo deu errado! Tente novamente mais tarde." );
+          await AlertError("🤨 Algo deu errado! Tente novamente mais tarde." );
           break;
         }
 
       } else {
-        AlertWarning("Preencha todos os campos!")
+        await AlertWarning("Preencha todos os campos!")
       }
     } catch (error) {
       if (error.response.status === 404) {

@@ -57,22 +57,22 @@ export default function RedefinirSenha_Email() {
           setState({ redirect: true });
           break;
         default:
-          AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+          await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
           break;
         }
 
       } else {
-        AlertWarning("Preencha todos os campos!");
+        await AlertWarning("Preencha todos os campos!");
       }
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      AlertError(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 

@@ -76,7 +76,7 @@ export default function AvaliacaoAdvogado() {
       if (dados.nota !== "" && dados.nota > 0) {
         dados.id_cliente = Number(sessionStorage.getItem("id_cliente"));
         if(dados.descricao.length > 200) {
-          AlertWarning("Por gentileza informe uma descrição de até 200 caracteres!");
+          await AlertWarning("Por gentileza informe uma descrição de até 200 caracteres!");
           return
         }
         // Converte os dados necessários para o tipo Number
@@ -93,15 +93,15 @@ export default function AvaliacaoAdvogado() {
           history.push(`/advogado/${id_advogado}`);
           break;
         default:
-          AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+          await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
           break;
         }
 
       } else {
-        AlertWarning("Por favor, selecione as estrelas, para avaliar o advogado");
+        await AlertWarning("Por favor, selecione as estrelas, para avaliar o advogado");
       }
     } catch (error) {
-      AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+      await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
     }
   }
 

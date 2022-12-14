@@ -83,9 +83,9 @@ export default function VisualizarDivulgacao() {
   
     } catch (error) {
       if (error.response.status === 400) {
-        AlertError(error.response.data.message);
+        await AlertError(error.response.data.message);
       } else {
-        AlertError("Erro ao enviar mensagem!");
+        await AlertError("Erro ao enviar mensagem!");
       }
     }
 

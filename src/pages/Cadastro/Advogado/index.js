@@ -78,7 +78,7 @@ export default function CadastroAdvogado() {
     e.preventDefault();
 
     if (senha !== senhaConfirmacao) {
-      AlertError("A senha e confirmação de senha não conferem!");
+      await AlertError("A senha e confirmação de senha não conferem!");
       return;
     }
 
@@ -119,10 +119,10 @@ export default function CadastroAdvogado() {
       }
     } catch (error) {
       if (error.response.status === 400) {
-        AlertError(error.response.data.message);
+        await AlertError(error.response.data.message);
       }
       else {
-        AlertError(error.message)
+        await AlertError(error.message)
       } 
     }
   }

@@ -64,14 +64,14 @@ export default function RedefinirSenha_NovaSenha() {
       if (nova_senha !== "" && confirmacao_nova_senha !== "") {
         // Verifica se a senha e confirmação de senha são diferentes
         if (nova_senha !== confirmacao_nova_senha) {
-          AlertError("A senha e confirmação de senha não conferem!");
+          await AlertError("A senha e confirmação de senha não conferem!");
           return;
         }
                 
         const passwordReg = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/
 
         if (!passwordReg.test(dados.nova_senha)) {
-          AlertWarning("A senha não está de acordo os requisitos, verifique novamente!");
+          await AlertWarning("A senha não está de acordo os requisitos, verifique novamente!");
           return;
         }
                 
@@ -89,17 +89,17 @@ export default function RedefinirSenha_NovaSenha() {
                         
           break;
         default:
-          AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+          await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
 
           break;
         }
 
 
       } else {
-        AlertWarning("Preencha todos os campos!");
+        await AlertWarning("Preencha todos os campos!");
       }
     } catch (error) {
-      AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+      await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
     }
   }
 

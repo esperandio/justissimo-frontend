@@ -34,7 +34,7 @@ export default function DialogEnviarMensagem({ open, advogado, onClose }) {
 
       await api.post(`user/${id_usuario}/message`, dados);
       
-      AlertSuccess("Mensagem enviada!");
+      await AlertSuccess("Mensagem enviada!");
 
       beforeClose();
       onClose();
@@ -42,11 +42,11 @@ export default function DialogEnviarMensagem({ open, advogado, onClose }) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      AlertError(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 

@@ -38,7 +38,7 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encer
 
       await UserService.closeScheduling(id_usuario, id_agenda, justificativa, motivoEncerramento);
 
-      AlertSuccess("Agendamento encerrado!");
+      await AlertSuccess("Agendamento encerrado!");
 
       fecharDialogEncerrarAgendamento();
 
@@ -52,7 +52,7 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encer
         retorno += "\n" + error.message;
       }
 
-      AlertError(retorno);
+      await AlertError(retorno);
     }
   }
 
