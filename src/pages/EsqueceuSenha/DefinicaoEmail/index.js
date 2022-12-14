@@ -8,6 +8,8 @@ import api from "../../../services/api";
 import { TitleJustissimo, TitlePage } from "../../../components/Utils/title";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
+import AlertError from "../../../components/alerts/AlertError";
+import AlertWarning from "../../../components/alerts/AlertWarning";
 
 // Style
 const useStyles = makeStyles((theme) => ({
@@ -55,22 +57,22 @@ export default function RedefinirSenha_Email() {
           setState({ redirect: true });
           break;
         default:
-          alert("Algo deu errado! Tente novamente mais tarde");
+          await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
           break;
         }
 
       } else {
-        alert("Preencha todos os campos!")
+        await AlertWarning("Preencha todos os campos!");
       }
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 

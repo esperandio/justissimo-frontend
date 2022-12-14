@@ -23,6 +23,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { UserService } from "../../services";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import AlertSuccess from "../../components/alerts/AlertSuccess";
+import AlertError from "../../components/alerts/AlertError";
 
 export default function EditarPerfil() {
   const [backdropOpen, setBackdropOpen] = useState(true);
@@ -76,8 +78,6 @@ export default function EditarPerfil() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let retorno = "";
-
     setBackdropOpen(true);
 
     try {   
@@ -102,17 +102,17 @@ export default function EditarPerfil() {
       }
 
       await UserService.updateProfile(user_id, user);
-      retorno = "Perfil atualizado com sucesso!";
+
+      await AlertSuccess("Perfil atualizado!");
     } catch (error) {
       if (error.response.status === 400) {
-        retorno = "Erro ao atualizar o perfil! \n\n" + error.response.data.message;
+        await AlertError(error.response.data.message);
       } else {
-        retorno = "Erro ao atualizar o perfil! \n" + error.message;
+        await AlertError(error.message);
       } 
     }
 
     setBackdropOpen(false);
-    alert(retorno);
   }
 
   return (

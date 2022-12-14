@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import AlertWarning from "../alerts/AlertWarning";
 
 function ValidarAutenticacaoCliente() {
   const [redirect, setRedirect] = useState(false);
@@ -7,13 +8,13 @@ function ValidarAutenticacaoCliente() {
   useEffect(() => {
     function validarSessao() {
       if (sessionStorage.getItem("token") === null) {
-        alert("Você precisa estar conectado a sua conta para acessar essa tela!");
+        AlertWarning("Você precisa estar conectado a sua conta para acessar essa tela!");
         setRedirect({ redirect: true });
         return;
       }
 
       if (sessionStorage.getItem("tipo_usuario") !== "Cliente") {
-        alert("Você precisa estar conectado como cliente para acessar essa tela!");
+        AlertWarning("Você precisa estar conectado como cliente para acessar essa tela!");
         setRedirect({ redirect: true });
       }
     }
@@ -36,13 +37,13 @@ function ValidarAutenticacaoAdvogado() {
   useEffect(() => {
     function validarSessao() {
       if (sessionStorage.getItem("token") === null) {
-        alert("Você precisa estar conectado a sua conta para acessar essa tela!");
+        AlertWarning("Você precisa estar conectado a sua conta para acessar essa tela!")
         setRedirect({ redirect: true });
         return;
       }
 
       if (sessionStorage.getItem("tipo_usuario") !== "Advogado") {
-        alert("Você precisa estar conectado como advogado para acessar essa tela!");
+        AlertWarning("Você precisa estar conectado como advogado para acessar essa tela!")
         setRedirect({ redirect: true });
       }
     }
@@ -65,13 +66,13 @@ function ValidarAutenticacaoAdmin() {
   useEffect(() => {
     function validarSessao() {
       if (sessionStorage.getItem("token") === null) {
-        alert("Você precisa estar conectado a sua conta para acessar essa tela!");
+        AlertWarning("Você precisa estar conectado a sua conta para acessar essa tela!")
         setRedirect({ redirect: true });
         return;
       }
 
       if (sessionStorage.getItem("tipo_usuario") !== "Administrador") {
-        alert("Você precisa estar conectado como administrador para acessar essa tela!");
+        AlertWarning("Você precisa estar conectado como administrador para acessar essa tela!")
         setRedirect({ redirect: true });
       }
     }

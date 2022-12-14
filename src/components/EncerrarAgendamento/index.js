@@ -4,6 +4,8 @@ import { InputLabel, Select, MenuItem, FormControl } from "@material-ui/core/";
 import { UserService } from "../../services";
 import ButtonWithLoader from "../ButtonWithLoader";
 import ButtonWithTooltip from "../ButtonWithTooltip";
+import AlertSuccess from "../alerts/AlertSuccess";
+import AlertError from "../alerts/AlertError";
 
 export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encerramento, afterSubmit }) {
   const [motivosEncerramento] = useState(["Cancelamento", "Atendimento encerrado"]);
@@ -36,7 +38,7 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encer
 
       await UserService.closeScheduling(id_usuario, id_agenda, justificativa, motivoEncerramento);
 
-      alert("Agendamento encerrado com sucesso!");
+      await AlertSuccess("Agendamento encerrado!");
 
       fecharDialogEncerrarAgendamento();
 
@@ -50,7 +52,7 @@ export default function EncerrarAgendamento({ id_agenda, encerrado, motivo_encer
         retorno += "\n" + error.message;
       }
 
-      alert(retorno);
+      await AlertError(retorno);
     }
   }
 

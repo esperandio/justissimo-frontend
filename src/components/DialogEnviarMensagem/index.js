@@ -11,6 +11,8 @@ import {
 import { FormControl } from "@material-ui/core/";
 import api from "../../services/api";
 import ButtonWithLoader from "../ButtonWithLoader";
+import AlertSuccess from "../alerts/AlertSuccess";
+import AlertError from "../alerts/AlertError";
 
 export default function DialogEnviarMensagem({ open, advogado, onClose }) {
   const [mensagem, setMensagem] = useState("");
@@ -31,8 +33,8 @@ export default function DialogEnviarMensagem({ open, advogado, onClose }) {
       }
 
       await api.post(`user/${id_usuario}/message`, dados);
-
-      alert("Mensagem enviada!!!");
+      
+      await AlertSuccess("Mensagem enviada!");
 
       beforeClose();
       onClose();
@@ -40,11 +42,11 @@ export default function DialogEnviarMensagem({ open, advogado, onClose }) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 

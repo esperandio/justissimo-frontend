@@ -28,6 +28,8 @@ import {
   Grid,
   InputLabel
 } from "@material-ui/core";
+import AlertError from "../../../components/alerts/AlertError";
+import AlertSuccess from "../../../components/alerts/AlertSuccess";
 
 export default function CadastroUsuario() {
   const [nome, setNome] = useState("");
@@ -55,7 +57,7 @@ export default function CadastroUsuario() {
     e.preventDefault();
 
     if (senha !== senhaConfirmacao) {
-      alert("A senha e confirmação de senha não conferem!");
+      await AlertError("A senha e confirmação de senha não conferem!");
       return;
     }
 
@@ -84,17 +86,17 @@ export default function CadastroUsuario() {
       // Verifica o 'status code' recebido
       switch ((clients).status) {
       case 201:
-        alert("Cadastro realizado com sucesso!"); 
+        await AlertSuccess("Cadastro realizado! Você será redirecionado para a tela de login.");
         setState({ redirect: true });
         break;
       default:   
       }
     } catch (error) {
       if (error.response.status === 400) {
-        alert("Cadastro Inválido! " + error.response.data.message); 
+        await AlertError("Cadastro Inválido! " + error.response.data.message);
       }
       else {
-        alert("Cadastro Inválido! " + error.message);
+        await AlertError("Cadastro Inválido! " + error.message);
       } 
     }
 

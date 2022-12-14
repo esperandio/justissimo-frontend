@@ -15,6 +15,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import api from "../../../services/api";
 import { TitlePage } from "../../../components/Utils/title";
 import { ValidarAutenticacaoCliente } from "../../../components/ValidarAutenticacao"
+import AlertSuccess from "../../../components/alerts/AlertSuccess";
+import AlertError from "../../../components/alerts/AlertError";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,18 +73,18 @@ export default function CadastroDivulgacao() {
     try {
       await api.post(`clients/${id_cliente}/divulgations`, dados);
 
-      alert("Divulgacação cadastrada com sucesso!");
+      await AlertSuccess("Divulgacação cadastrada! Você será redirecionado para a página de minhas divulgações.");
 
-      history.push("/home");
+      history.push("/cliente/minhas-divulgacoes");
     } catch (error) {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 

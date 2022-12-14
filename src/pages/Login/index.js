@@ -14,6 +14,7 @@ import Stack from "@mui/material/Stack";
 import Footer from "./../../pages/Main/Footer";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import AlertError from "../../components/alerts/AlertError";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -84,11 +85,11 @@ export default function Login() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 

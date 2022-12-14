@@ -41,6 +41,8 @@ import api from "../../services/api";
 import { LawyerService } from "../../services";
 import { ValidarAutenticacaoAdvogado } from "../../components/ValidarAutenticacao";
 import EncerrarAgendamento from "../../components/EncerrarAgendamento";
+import AlertError from "../../components/alerts/AlertError";
+import AlertSuccess from "../../components/alerts/AlertSuccess";
 
 export default function MinhaAgenda() {
   const [backdropOpen, setBackdropOpen] = useState(true);
@@ -124,11 +126,11 @@ export default function MinhaAgenda() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 
@@ -181,11 +183,11 @@ export default function MinhaAgenda() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 
@@ -213,7 +215,7 @@ export default function MinhaAgenda() {
         observacao
       });
 
-      alert("Agendamento confirmado!!!");
+      await AlertSuccess("Agendamento confirmado!");
 
       buscarAgenda();
       fecharDialogAgendamentoManual();
@@ -221,11 +223,11 @@ export default function MinhaAgenda() {
       const mensagem_retorno_api = error?.response?.data?.message;
 
       if (mensagem_retorno_api == null) {
-        alert("🤨 Algo deu errado! Tente novamente mais tarde");
+        await AlertError("🤨 Algo deu errado! Tente novamente mais tarde.");
         return ;
       }
 
-      alert(mensagem_retorno_api);
+      await AlertError(mensagem_retorno_api);
     }
   }
 
