@@ -73,7 +73,7 @@ export default function CadastroDivulgacao() {
     try {
       await api.post(`clients/${id_cliente}/divulgations`, dados);
 
-      await AlertSuccess("Divulgacação cadastrada! Você será redirecionado para a página de minhas divulgações.");
+      await AlertSuccess("Divulgação cadastrada! Você será redirecionado para a página de minhas divulgações.");
 
       history.push("/cliente/minhas-divulgacoes");
     } catch (error) {
